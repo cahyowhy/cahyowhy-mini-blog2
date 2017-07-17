@@ -1,0 +1,73 @@
+<div id="post-detail-wrapper">
+  <div id="post-detail">
+    <article class="article">
+      <header class="header">
+        <div class="inner">
+          <div class="category">Life</div>
+          <h1 class="headline">
+            {{post.title}}
+          </h1>
+          <div class="meta">
+            <span class="author">by <span class="author-name">{{post.user.name}}</span></span>
+            <span class="pub-date">Posted {{post.created_at}}</span>
+          </div>
+        </div>
+      </header>
+
+      {{{post.description}}}
+    </article>
+    <div class="post-arrow">
+      {{#link-to 'post-detail' nextPost.id tagName="div" class="post-right"}}
+        <i class="ion-chevron-right ion"></i>
+        <div class="inner"><p>{{nextPost.title}}</p>
+          <p>{{nextPost.created_at}}</p></div>
+      {{/link-to}}
+      {{#link-to 'post-detail' prevPost.id tagName="div" class="post-left"}}
+        <i class="ion-chevron-left ion"></i>
+        <div class="inner"><p>{{prevPost.title}}</p>
+          <p>{{prevPost.created_at}}</p></div>
+      {{/link-to}}
+    </div>
+  </div>
+  <div id="post-detail-comment">
+    <div class="comments-container">
+      <ul class="list-group">
+        <p class="resptext">Responses</p>
+        <li class="list-group-item comment-input hide">
+          <div class="comment-inner">
+            <div class="title  pull-left">
+              <img src="http://loremflickr.com/30/30" alt="">
+            </div>
+              <div class="contentcomment media-body">
+                {{textarea class="form-control" value=comment}}
+              </div>
+            </div>
+          <div class="btn-wrapper"><a class="btn btn-sm btn-primary" disabled={{isBtnDisabled}} onclick={{action 'doSave'}}>comment</a></div>
+        </li>
+        {{#each comments as |comment|}}
+          <li class="list-group-item">
+            <div class="hearticon"><i class="fa fa-heart-o"></i></div>
+            <div class="comment-inner">
+              <div class="pull-left">
+                <img src="http://loremflickr.com/30/30" alt="">
+              </div>
+              <div class="media-body">
+                <div class="namecomment">
+                  <p>{{comment.user.username}}</p>
+                </div>
+                <div class="contentcomment">
+                  <p>
+                    {{comment.comment}}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+  </div>
+  <div class="width920">
+    {{facebook-comment fbAPPID=fbAPPID url=url}}
+  </div>
+</div>

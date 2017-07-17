@@ -1,0 +1,27 @@
+import Ember from 'ember';
+//router sign up using model, adapter and serializer
+export default Ember.Route.extend({
+ model(){
+ return Ember.RSVP.hash({
+ users: this.store.findAll("user"),
+ user: this.store.findRecord('user', 1)
+ });
+ },
+ afterModel(model, transition){
+ this.debug(model.user);
+ },
+ setupController(controller, model){
+ this.controllerFor('sign-up').set('users', model.users);
+ this.controllerFor('sign-up').set('user', model.user);
+ }
+ });
+
+
+//user model using ember data
+import DS from 'ember-data';
+
+export default DS.Model.extend({
+  // id: DS.attr("integer"),
+  name: DS.attr("string"),
+  username: DS.attr("string")
+});

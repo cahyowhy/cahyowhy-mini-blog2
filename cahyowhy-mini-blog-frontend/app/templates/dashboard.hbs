@@ -1,0 +1,36 @@
+<div id="work" class="create-post">
+    <div class="container content-lg paddingbot0px width800">
+        <div class="row">
+            <div class="col-sm-12 sm-margin-b-50 margin-top30 dashboard-index">
+                <div class="header-profile">
+                    <div class="pull-left">
+                        <img class="img-circle" src="http://loremflickr.com/150/150">
+                    </div>
+                    <div class="media-body">
+                        <div class="inner">
+                            <h1>Cahyo wibowo</h1>
+                            <p>Asu</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="navigation">
+                    <div class="col-sm-4 textCenter">
+                        {{#link-to 'dashboard.index' tagName='i' class="ion-ios-bookmarks-outline ion"}}
+                        {{/link-to}}
+                    </div>
+                    <div class="col-sm-4 textCenter">
+                        {{#link-to 'dashboard.images' tagName='i' class="ion-images ion"}}
+                        {{/link-to}}
+                    </div>
+                    <div class="col-sm-4 textCenter">
+                        {{#link-to 'dashboard.setting' tagName='i' class="ion-android-settings ion"}}
+                        {{/link-to}}
+                    </div>
+                </div>
+                <div class="content overflow-hiden">
+                    {{outlet}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

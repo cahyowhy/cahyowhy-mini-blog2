@@ -1,0 +1,5 @@
+curl
+-i -H  "Authorization":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE0OTk5MTY5MzF9.Xrw1EFwZbHp7f3QT7-xBLHv9wj-ZhnQllleTCfdcB3E" \
+-F "image[imagepath_data][]=@event_tiket.jpg" \
+-F "image[imagepath_data][]=@wda.jpg" \
+localhost:3000/images

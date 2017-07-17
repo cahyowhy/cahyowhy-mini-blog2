@@ -1,0 +1,22 @@
+<div class="work-section width800" id="work">
+  <div class="container content-lg padding0px width800">
+    <div id="post-container" class="post">
+      {{#each posts as |post|}}
+        <div class="col-sm-4 sm-margin-b-50 post-item">
+          <div class="margin-b-20">
+            <div class="wow zoomIn pos-relative">
+              <div class="category-post">
+                <h5>{{post.category}}</h5></div>
+              {{#link-to 'post-detail' post.id}}
+                <img class="img-responsive" src="{{post.img}}" alt="{{post.title}}">
+              {{/link-to}}
+            </div>
+          </div>
+          <h4>{{#link-to 'post-detail' post.id}}{{post.title}}{{/link-to}}</h4>
+          <p>{{post.description}}</p>
+          {{#link-to 'post-detail' post.id class="link"}}Read More{{/link-to}}
+        </div>
+      {{/each}}
+    </div>
+  </div>
+</div>

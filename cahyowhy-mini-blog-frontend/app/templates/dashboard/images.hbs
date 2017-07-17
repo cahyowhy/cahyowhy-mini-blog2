@@ -1,0 +1,13 @@
+<div class="work-section width800" id="work">
+  <div class="container content-lg padding0px width800">
+    <div id="image-container" class="post">
+      {{#each images as |image|}}
+        <div class="col-sm-4">
+          <a href="{{image.src}}" data-lightbox="user-image">
+          <div class="inner" style="background-image:url('{{image.src}}')"></div>
+          </a>
+        </div>
+      {{/each}}
+    </div>
+  </div>
+</div>

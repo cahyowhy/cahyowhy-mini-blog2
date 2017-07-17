@@ -1,0 +1,22 @@
+<div id="login-wrapper">
+  <div id="wrapper">
+    <div class="main-content">
+      <div class="header">
+        <img src="http://imgh.us/instagram-logo_4.jpg"/>
+      </div>
+      <div class="l-part">
+        {{input type="text" value=username placeholder="Username" class="input-1"}}
+        <div class="overlap-text">
+          {{input type="password" value=password placeholder="Pasword" class="input-2"}}
+          {{!--#link-to 'sign-up'}}Forgot?{{/link-to--}}
+        </div>
+        <input disabled={{btnDisabled}} type="button" value="Log in" class="btn" onclick={{action "doSave"}}/>
+      </div>
+    </div>
+    <div class="sub-content">
+      <div class="s-part">
+        {{#link-to 'sign-up'}}Don't have an account?{{/link-to}}
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,45 @@
+<div id="work" class="create-post">
+  <div class="container content-lg padding0px">
+    <div class="row">
+      <div class="col-sm-12 sm-margin-b-50 margin-top30">
+        <div class="posting">
+          <div class="margin-bot10">
+            <a type="button" class="btn btn-primary pull-right bt-save"
+               onclick={{action "doSave"}} disabled={{isBtnDisable}}>Save</a>
+            <div class="media-body">
+              <div class="input-group">
+            <span class="input-group-btn">
+              <a class="btn btn-default" type="button" >
+                <span class="ion-image ion"></span>
+                <span>Upload gambar</span>
+              </a>
+            </span>
+                {{input class="form-control" placeholder="Masukkan Judul posting" type="text" value = title}}
+              </div>
+            </div>
+          </div>
+        <div id="z-index-1" class="addpict collapse">'
+          {{#each images as |image index|}}
+            <div class="grid-del animated fadeIn" style="background-image: url(
+            '{{image.src}}')" >
+            <i onclick={{action "onAddImageToPost" index image.url}} class="ion-plus-circled"></i>
+            <i {{action "onDeleteImage" index image.id image.src}} class="ion ion-close-circled"></i>
+
+          <div class="black-shadow"></div>
+          </div>
+          {{/each}}
+          <div class="grid-add animated fadeIn">
+            {{image-uploader class="upload cust-input"
+                             name="file" type="file"
+                             accept="image/*"
+                             url=url files=files
+                             action="onImageChange"}}
+            <i class="ion ion-ios-plus"></i>
+          </div>
+        </div>
+      </div>
+      {{tinymce-editor options=options value=description onValueChanged=(action "onTypeSomething")}}
+    </div>
+  </div>
+</div>
+</div>
