@@ -1,5 +1,5 @@
 class PostSerializer < ActiveModel::Serializer
-  attributes :id, :title, :description, :created_at, :category
+  attributes :id, :title, :description, :created_at, :category, :image
   has_one :user
 
   def created_at

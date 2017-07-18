@@ -63,13 +63,22 @@ export default Ember.Controller.extend(Basecontroller, {
     onAddImageToPost(index, url){
       this.debug(index + " ", url);
       let img = `<img id="${index}" class="imgPost" src="${url}" style="width: 100%; height: auto"> `;
+      Post.image = `${img}, ${Post.image}`;
       this.set("description", this.get("description") + img);
     },
     onDeleteImage(index, id, src){
       const context = this;
       let descriptionhtml = Ember.$(this.get("description"));
       let editEl = Ember.$("<p>").append(descriptionhtml);
-      editEl.find("img#" + index).remove();
+      let image = editEl.find("img#" + index);
+      let imagesearchstring = "";
+      Post.image.split(",").forEach(function (item) {
+        if(item!==image.removeAttr("style").removeAttr("width").removeAttr("height")[0].outerHTML){
+          imagesearchstring += `${item}, ${imagesearchstring}`
+        }
+      });
+      Post.image = imagesearchstring;
+      image.remove();
       let newDescriptionHtml = editEl.html();
 
       this.doRemove("image", id).then(function (response) {

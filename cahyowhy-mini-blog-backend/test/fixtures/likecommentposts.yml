@@ -2,8 +2,8 @@
 
 one:
   user: one
-  postcomment: one
+  commentpost: one
 
 two:
   user: two
-  postcomment: two
+  commentpost: two

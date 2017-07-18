@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
-  resources :postcommentlikes
-  resources :postcomments
+  resources :likecommentposts
   resources :commentposts
   resources :images
   resources :posts
