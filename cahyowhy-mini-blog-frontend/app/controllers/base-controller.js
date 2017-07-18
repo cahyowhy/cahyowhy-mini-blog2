@@ -4,10 +4,10 @@ export default Ember.Mixin.create({
   init(){
     this._super(...arguments);
     Ember.run.schedule('afterRender', this, function () {
-      this.didInsertElment();
+      this.didInsertElement();
     });
   },
-  didInsertElment(){
+  didInsertElement(){
     this._super(...arguments);
   },
   checkBtnSaveDisabled(event){
@@ -32,6 +32,7 @@ export default Ember.Mixin.create({
   },
   doSave(type = "", obj = null){
     let post;
+    const context = this;
     switch (type) {
       case "user":
         post = this.userService.saveUser(obj);
@@ -49,9 +50,20 @@ export default Ember.Mixin.create({
         break;
     }
 
-    return new Ember.RSVP.Promise(function (resolve) {
+    return new Ember.RSVP.Promise(function (resolve, reject) {
       post.then(function (response) {
-        resolve(response);
+        // context.commonService.showNotification(response.status); my response status is empty still searching for merging object to rails json serializer
+        context.commonService.showNotification(202);
+        Ember.run.later(function () {
+          resolve(response);
+        }, 1200);
+      }).catch(function (err) {
+        if (type === "login") {
+          context.commonService.showNotification(404);
+        } else {
+          context.commonService.showNotification(400);
+        }
+        reject(err);
       });
     });
   }

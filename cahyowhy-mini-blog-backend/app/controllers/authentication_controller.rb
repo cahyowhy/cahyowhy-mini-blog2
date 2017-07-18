@@ -6,9 +6,9 @@ class AuthenticationController < ApplicationController
 
     if command.success?
       @user = User.find_by_username(params[:username])
-      render json:{auth_token: command.result, user: @user}
+      render json: {auth_token: command.result, user: @user, status: authsucces}
     else
-      render json:{message: "WRONG PASSWORD! OR USERNAME!"}, status: :unauthorized
+      render json: {message: "not authorized", status: authfailed}, status: :unauthorized
     end
   end
 end

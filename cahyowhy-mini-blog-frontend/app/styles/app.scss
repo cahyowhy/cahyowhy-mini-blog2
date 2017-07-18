@@ -17,6 +17,10 @@ $greyYoung: #fafafa;
 $almostWhite: #f0f0f0;
 $textTittle: #515769;
 $textDefault: #a6a7aa;
+#navbar{
+  margin-bottom: 50px;
+}
+
 .margin-top30 {
     margin-top: 30px;
 }
@@ -495,4 +499,8 @@ nav {
 
 .img-responsive{
   width: 100%;
+}
+
+.z-index{
+  z-index: 100000 !important;
 }

@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: [:show, :update, :destroy,:show_post_next,:show_post_prev]
+  before_action :set_post, only: [:show, :update, :destroy, :show_post_next, :show_post_prev]
   before_action :authenticate_request, only: [:destroy, :create, :update]
   before_action :set_post_by_user, only: [:show_post_by_user]
 
@@ -13,7 +13,7 @@ class PostsController < ApplicationController
   # GET /posts/next/2
   def show_post_next
     begin
-      render json: {id:@post.next.id, title:@post.next.title, created_at:normalize_date(@post.next.created_at)}
+      render json: {id: @post.next.id, title: @post.next.title, created_at: normalize_date(@post.next.created_at)}
     rescue
       render json: @post.next
     end
@@ -22,7 +22,7 @@ class PostsController < ApplicationController
   # GET /posts/prev/2
   def show_post_prev
     begin
-      render json: {id:@post.prev.id, title:@post.prev.title, created_at:normalize_date(@post.prev.created_at)}
+      render json: {id: @post.prev.id, title: @post.prev.title, created_at: normalize_date(@post.prev.created_at)}
     rescue
       render json: @post.prev
     end
@@ -45,7 +45,7 @@ class PostsController < ApplicationController
     if @post.save
       render json: @post, status: :created, location: @post
     else
-      render json: @post.errors, status: :unprocessable_entity
+      render json: {data: @post.errors, status: postfailed}, status: :unprocessable_entity
     end
   end
 
@@ -54,13 +54,14 @@ class PostsController < ApplicationController
     if @post.update(post_params)
       render json: @post
     else
-      render json: @post.errors, status: :unprocessable_entity
+      render json: {data: @post.errors, status: updatefailed}, status: :unprocessable_entity
     end
   end
 
   # DELETE /posts/1
   def destroy
     @post.destroy
+    render json: {status: deletesuccess}
   end
 
   private
@@ -84,6 +85,6 @@ class PostsController < ApplicationController
 
   # do authentication
   def authenticate_request
-    authenticateUserModule()
+    authenticateUserModule
   end
 end

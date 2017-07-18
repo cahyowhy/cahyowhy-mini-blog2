@@ -4,15 +4,9 @@ import BaseService from './base-services';
 
 export default Ember.Service.extend(BaseService, {
   init(){
-    this._super(ENV.APP.API_USER);
+    this._super(ENV.APP.API_POST_LIKE_COMMENT);
   },
-  findAllUser(){
-    return this.find();
-  },
-  findUserById(param){
-    return this.find(param);
-  },
-  saveUser(user){
-    return this.save(user);
+  saveLikecommentpost(post, authorization){
+    return this.save(post, authorization);
   }
 });

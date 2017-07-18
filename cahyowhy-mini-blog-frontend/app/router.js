@@ -18,11 +18,12 @@ Router.map(function () {
   this.route('base-router');
   this.route('post');
   this.route('post-detail', {path: '/post-detail/:id'});
-  this.route('dashboard', function () {
+  this.route('dashboard', {path: '/dashboard/:id'}, function () {
     this.route('create-post');
     this.route('images');
     this.route('setting');
   });
+  this.route('not-found', {path: '/*path'});
 });
 
 export default Router;

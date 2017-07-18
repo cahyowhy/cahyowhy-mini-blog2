@@ -1,6 +1,6 @@
 class LikecommentpostsController < ApplicationController
-  before_action :set_likecommentpost, only: [:show, :update, :destroy]
-  before_action :authenticate_request, only: [:destroy, :create, :update]
+  before_action :set_likecommentpost, only: [:show]
+  before_action :authenticate_request, only: [:create]
 
   # GET /likecommentposts
   def index
@@ -24,29 +24,15 @@ class LikecommentpostsController < ApplicationController
       @delete_like.each do |item|
         item.destroy
       end
-      
-      render json: {message:"successfully delete like"}
+
+      render json: {message: "successfully delete like", status: deletesuccess}
     else
       if @likecommentpost.save
         render json: @likecommentpost, status: :created, location: @likecommentpost
       else
-        render json: @likecommentpost.errors, status: :unprocessable_entity
+        render json: {data: @likecommentpost.errors, status: deletefailed}, status: :unprocessable_entity
       end
     end
-  end
-
-  # PATCH/PUT /likecommentposts/1
-  def update
-    if @likecommentpost.update(likecommentpost_params)
-      render json: @likecommentpost
-    else
-      render json: @likecommentpost.errors, status: :unprocessable_entity
-    end
-  end
-
-  # DELETE /likecommentposts/1
-  def destroy
-    @likecommentpost.destroy
   end
 
   private
@@ -66,6 +52,6 @@ class LikecommentpostsController < ApplicationController
 
   # do authentication
   def authenticate_request
-    authenticateUserModule()
+    authenticateUserModule
   end
 end

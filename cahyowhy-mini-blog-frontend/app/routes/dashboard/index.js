@@ -1,10 +1,9 @@
 import Ember from 'ember';
-import ENV from '../../config/environment'
 
 export default Ember.Route.extend({
   model(){
     return Ember.RSVP.hash({
-      posts: null
+      posts: this.postService.findPostByUserid(this.modelFor('dashboard').id)
     })
   },
   setupController(controller, model){
@@ -13,7 +12,7 @@ export default Ember.Route.extend({
   afterModel(model){
     const context = this;
     Ember.run.schedule('afterRender', function () {
-      context.controllerFor('dashboard.index').setPost();
+      context.controllerFor('dashboard.index').setPost(model.posts);
     });
   }
 });

@@ -1,4 +1,6 @@
 export function initialize(application) {
+  application.inject('service:commonService', 'notificationService', 'service:notification-messages');
+
   application.inject('route', 'headData', 'service:headData');
   application.inject('route', 'userService', 'service:userService');
   application.inject('route', 'loginService', 'service:loginService');
@@ -29,6 +31,6 @@ export function initialize(application) {
 }
 
 export default {
-  name: 'inject-application',
+  name: 'inject-notifications',
   initialize
 };

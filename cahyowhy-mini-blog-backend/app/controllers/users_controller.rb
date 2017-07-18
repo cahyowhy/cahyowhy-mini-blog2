@@ -19,12 +19,12 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     @username = params[:user][:username]
     if check_username_exist(@username)
-      render json: {message: "user is exist, using another username"}, status: :unprocessable_entity
+      render json: {message: "user is exist, using another username", status: deletesuccess}, status: :unprocessable_entity
     else
       if @user.save
         render json: @user, status: :created, location: @user
       else
-        render json: @user.errors, status: :unprocessable_entity
+        render json: {data:@user.errors, status: postfailed}, status: :unprocessable_entity
       end
     end
   end
@@ -34,13 +34,14 @@ class UsersController < ApplicationController
     if @user.update(user_params)
       render json: @user
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render json: {data:@user.errors, status: updatefailed}, status: :unprocessable_entity
     end
   end
 
   # DELETE /users/1
   def destroy
     @user.destroy
+    render json: {status: deletesuccess}
   end
 
   private
@@ -60,6 +61,6 @@ class UsersController < ApplicationController
 
   # do authentication
   def authenticate_request
-    authenticateUserModule()
+    authenticateUserModule
   end
 end

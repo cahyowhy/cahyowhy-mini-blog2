@@ -11,7 +11,7 @@ class CommentpostsController < ApplicationController
   end
 
   # GET /commentposts/post/1
-  def show_commentpost_by_post 
+  def show_commentpost_by_post
     render json: @commentpost
   end
 
@@ -27,7 +27,7 @@ class CommentpostsController < ApplicationController
     if @commentpost.save
       render json: @commentpost, status: :created, location: @commentpost
     else
-      render json: @commentpost.errors, status: :unprocessable_entity
+      render json: {data: @commentpost.errors, status: postfailed}, status: :unprocessable_entity
     end
   end
 
@@ -36,7 +36,7 @@ class CommentpostsController < ApplicationController
     if @commentpost.update(commentpost_params)
       render json: @commentpost
     else
-      render json: @commentpost.errors, status: :unprocessable_entity
+      render json: {data: @commentpost.errors, status: updatefailed}, status: :unprocessable_entity
     end
   end
 
@@ -58,10 +58,10 @@ class CommentpostsController < ApplicationController
 
   # do authentication
   def authenticate_request
-    authenticateUserModule()
+    authenticateUserModule
   end
 
-  def set_commentpost_by_post 
+  def set_commentpost_by_post
     @commentpost = Commentpost.where(:post_id => params[:id])
   end
 end

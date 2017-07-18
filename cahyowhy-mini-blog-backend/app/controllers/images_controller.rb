@@ -33,7 +33,7 @@ class ImagesController < ApplicationController
           break
         end
       else
-        render json: {message: "SOME FILE CAN'T BE SAVED!"}
+        render json: {message: "SOME FILE CAN'T BE SAVED!", status: postfailed}
         break
       end
     end
@@ -43,7 +43,7 @@ class ImagesController < ApplicationController
   def destroy
     remove_img(@image.path.url)
     @image.destroy
-    render json:{message: "delete success!"}
+    render json: {message: "delete success!", status: deletesuccess}
   end
 
   private
@@ -68,6 +68,6 @@ class ImagesController < ApplicationController
 
   # do authentication
   def authenticate_request
-    authenticateUserModule()
+    authenticateUserModule
   end
 end

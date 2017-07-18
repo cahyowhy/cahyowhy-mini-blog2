@@ -7,6 +7,9 @@ module.exports = function (environment) {
     environment,
     rootURL: '/',
     locationType: 'auto',
+    'ember-cli-notifications': {
+      includeFontAwesome: true
+    },
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
@@ -21,7 +24,7 @@ module.exports = function (environment) {
     APP: {
       LOGGER: false,
       API_URL: 'http://127.0.0.1:3000/',
-      APP_FB_ID:'106474983194157'
+      APP_FB_ID: '106474983194157'
       // Here you can pass flags/options to your application instance
       // when it is created
     }
@@ -64,9 +67,11 @@ module.exports = function (environment) {
   ENV.APP.API_USER = ENV.APP.API_URL + "users/";
   ENV.APP.API_AUTH = ENV.APP.API_URL + "auth/";
   ENV.APP.API_POST_COMMENT = ENV.APP.API_URL + "commentposts/";
+  ENV.APP.API_POST_LIKE_COMMENT = ENV.APP.API_URL + "likecommentposts/";
   ENV.APP.API_POST = ENV.APP.API_URL + "posts/";
   ENV.APP.API_IMAGE = ENV.APP.API_URL + "images/";
   ENV.APP.API_LOGIN = ENV.APP.API_URL + "authenticate/";
   ENV.APP.API_IMAGE_PARAM_NAME = "image[imagepath_data]";
   return ENV;
-};
+}
+;

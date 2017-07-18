@@ -14,41 +14,38 @@ export default Ember.Controller.extend({
       });
     });
   },
-  setPost(){
+  setPost(params){
     const context = this;
     let posts = [];
-    this.postService.findPostByUserid(this.commonService.getId()).then(function (response) {
-      response.forEach(function (item) {
-        let postHtml = Ember.$(item.description);
-        let editEl = Ember.$("<p>").append(postHtml);
-        let imgHtml = editEl.find('img')['0'];
-        let src = Ember.$(imgHtml).attr('src');
-        editEl.find('img').remove();
-        let category = function () {
-          if (item.category === undefined || item.category === null) {
-            return "uncategorized"
-          } else {
-            return item.category
-          }
-        };
-
-        let post = {
-          id: item.id,
-          title: item.title,
-          description: editEl.find('p').text().substring(0, 125) + ".....",
-          category: category()
-        };
-        if (src === undefined) {
-          post.img = '/img/no-image.png';
+    params.forEach(function (item) {
+      let postHtml = Ember.$(item.description);
+      let editEl = Ember.$("<p>").append(postHtml);
+      let imgHtml = editEl.find('img')['0'];
+      let src = Ember.$(imgHtml).attr('src');
+      editEl.find('img').remove();
+      let category = function () {
+        if (item.category === undefined || item.category === null) {
+          return "uncategorized"
         } else {
-          post.img = src;
+          return item.category
         }
+      };
 
-        posts.push(post);
-      });
-      context.set('posts', posts);
-      context.debug(posts);
-      context.applyLayout();
+      let post = {
+        id: item.id,
+        title: item.title,
+        description: editEl.find('p').text().substring(0, 125) + ".....",
+        category: category()
+      };
+      if (src === undefined) {
+        post.img = '/img/no-image.png';
+      } else {
+        post.img = src;
+      }
+
+      posts.push(post);
     });
+    context.set('posts', posts);
+    context.applyLayout();
   }
 });
