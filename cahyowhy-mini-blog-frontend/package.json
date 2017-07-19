@@ -12,12 +12,13 @@
   "repository": "",
   "scripts": {
     "build": "ember build",
-    "start": "gulp default && ember server --environment=development",
+    "start": "gulp default && ember server --environment development --livereload false",
     "test": "ember test"
   },
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.5",
     "ember-ajax": "^3.0.0",
+    "ember-cable": "^0.6.1",
     "ember-cli": "~2.14.0",
     "ember-cli-app-version": "^3.0.0",
     "ember-cli-babel": "^6.3.0",

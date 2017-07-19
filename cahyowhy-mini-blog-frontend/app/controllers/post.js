@@ -1,6 +1,7 @@
 import Ember from 'ember';
-
-export default Ember.Controller.extend({
+import BaseController from './base-controller';
+import Likepost from '../models/likepost';
+export default Ember.Controller.extend(BaseController, {
   images: '',
   posts: "",
   applyLayout(){
@@ -14,40 +15,45 @@ export default Ember.Controller.extend({
       });
     });
   },
-  setPost(){
+  setPost(params){
     const context = this;
     let posts = [];
-    this.postService.findAllPost().then(function (response) {
-      response.forEach(function (item) {
-        let postHtml = Ember.$(item.description);
-        let editEl = Ember.$("<p>").append(postHtml);
-        let imgHtml = editEl.find('img')['0'];
-        let src = Ember.$(imgHtml).attr('src');
-        editEl.find('img').remove();
-        let category = function () {
-          if (item.category === undefined || item.category === null) {
-            return "uncategorized"
-          } else {
-            return item.category
-          }
-        };
-
-        let post = {
-          id: item.id,
-          title: item.title,
-          description: editEl.find('p').text().substring(0, 125) + ".....",
-          category: category()
-        };
-        if (src === undefined) {
-          post.img = '/img/no-image.png';
+    params.forEach(function (item) {
+      let postHtml = Ember.$(item.description);
+      let editEl = Ember.$("<p>").append(postHtml);
+      let imgHtml = editEl.find('img')['0'];
+      let src = Ember.$(imgHtml).attr('src');
+      editEl.find('img').remove();
+      let category = function () {
+        if (item.category === undefined || item.category === null) {
+          return "uncategorized"
         } else {
-          post.img = src;
+          return item.category
         }
+      };
 
-        posts.push(post);
-      });
-      context.set('posts', posts);
-      context.applyLayout();
+      let post = {
+        id: item.id,
+        title: item.title,
+        description: editEl.find('p').text().substring(0, 125) + ".....",
+        category: category()
+      };
+      if (src === undefined) {
+        post.img = '/img/no-image.png';
+      } else {
+        post.img = src;
+      }
+
+      posts.push(post);
     });
+    context.set('posts', posts);
+    context.applyLayout();
+  },
+  actions: {
+    onFavouritePost(id, param){
+      Likepost.user_id = this.commonService.getId();
+      Likepost.post_id = id;
+      this.doSave("likepost", Likepost).then();
+    }
   }
 });

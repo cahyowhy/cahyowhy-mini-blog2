@@ -1,4 +1,3 @@
-{{notification-container position="top-right" class="z-index"}}
 <div id="post-detail-wrapper">
   <div id="post-detail">
     <article class="article">
@@ -39,15 +38,16 @@
             <div class="title  pull-left">
               <img src="http://loremflickr.com/30/30" alt="">
             </div>
-              <div class="contentcomment media-body">
-                {{textarea class="form-control" value=comment}}
-              </div>
+            <div class="contentcomment media-body">
+              {{textarea class="form-control" value=comment}}
             </div>
-          <div class="btn-wrapper"><a class="btn btn-sm btn-primary" disabled={{isBtnDisabled}} onclick={{action 'doSave'}}>comment</a></div>
+          </div>
+          <div class="btn-wrapper"><a class="btn btn-sm btn-primary" disabled={{isBtnDisabled}} onclick={{action
+            'doSave'}}>comment</a></div>
         </li>
         {{#each comments as |comment|}}
           <li class="list-group-item">
-            <div class="hearticon"><i class="fa fa-heart-o"></i></div>
+            {{fav-icon _id = comment.id likes=comment.likecommentposts action="onFavouriteComment"}}
             <div class="comment-inner">
               <div class="pull-left">
                 <img src="http://loremflickr.com/30/30" alt="">

@@ -15,6 +15,8 @@ export default Ember.Route.extend({
     this.set('headData.title', model.post.title);
     this.set('headData.description', model.post.description);
     this.set('headData.image', "http://lorempixel.com/210/210");
+
+    const context = this;
     if (model.nextPost === null || model.nextPost === undefined) {
       this.hideArrow("post-right");
     }

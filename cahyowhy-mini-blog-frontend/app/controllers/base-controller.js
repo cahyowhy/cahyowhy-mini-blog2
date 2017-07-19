@@ -46,13 +46,18 @@ export default Ember.Mixin.create({
       case "comment":
         post = this.commentpostService.saveCommentPost(obj, this.commonService.getToken());
         break;
+      case "likecomment":
+        post = this.likecommentpostService.saveLikecommentpost(obj, this.commonService.getToken());
+        break;
+      case "likepost":
+        post = this.likepostService.saveLikepost(obj, this.commonService.getToken());
+        break;
       default :
         break;
     }
 
     return new Ember.RSVP.Promise(function (resolve, reject) {
       post.then(function (response) {
-        // context.commonService.showNotification(response.status); my response status is empty still searching for merging object to rails json serializer
         context.commonService.showNotification(202);
         Ember.run.later(function () {
           resolve(response);

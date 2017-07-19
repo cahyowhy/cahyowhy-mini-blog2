@@ -19,7 +19,7 @@ export default Ember.Controller.extend(BaseController, {
         this.debug(Login);
         this.doSave("login", Login).then(function (response) {
           context.localStorage.setItem('user', response);
-          context.transitionToRoute('dashboard.index', response.user.id);
+          context.transitionToRoute('dashboard', response.user.id);
         }).catch(function (err) {
           context.debug(err);
         });

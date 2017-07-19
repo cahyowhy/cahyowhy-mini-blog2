@@ -10,6 +10,8 @@ export function initialize(application) {
   application.inject('route', 'commonService', 'service:commonService');
   application.inject('route', 'authService', 'service:authService');
   application.inject('route', 'commentpostService', 'service:commentpostService');
+  application.inject('route', 'likecommentpostService', 'service:likecommentpostService');
+  application.inject('route', 'likepostService', 'service:likepostService');
 
   application.inject('controller', 'userService', 'service:userService');
   application.inject('controller', 'loginService', 'service:loginService');
@@ -19,6 +21,8 @@ export function initialize(application) {
   application.inject('controller', 'postService', 'service:postService');
   application.inject('controller', 'authService', 'service:authService');
   application.inject('controller', 'commentpostService', 'service:commentpostService');
+  application.inject('controller', 'likecommentpostService', 'service:likecommentpostService');
+  application.inject('controller', 'likepostService', 'service:likepostService');
 
   application.inject('component', 'localStorage', 'service:local-storage');
   application.inject('component', 'commonService', 'service:commonService');
@@ -28,6 +32,8 @@ export function initialize(application) {
   application.inject('component', 'imageService', 'service:imageService');
   application.inject('component', 'authService', 'service:authService');
   application.inject('component', 'commentpostService', 'service:commentpostService');
+  application.inject('component', 'likecommentpostService', 'service:likecommentpostService');
+  application.inject('component', 'likepostService', 'service:likepostService');
 }
 
 export default {

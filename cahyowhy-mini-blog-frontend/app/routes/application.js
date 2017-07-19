@@ -27,6 +27,12 @@ export default Ember.Route.extend({
             Ember.$("li.list-group-item.comment-input").addClass('hide');
           }
 
+          if ((context.get("router.url") === "/post" || context.get("router.url") === "/post/") && response.status == 204) {
+            Ember.$(".hearticon").removeClass('hide');
+          } else {
+            Ember.$(".hearticon").addClass('hide');
+          }
+
           Ember.run.later(function () {
             Ember.$(".loading").css("width", "50%");
           }, 50);

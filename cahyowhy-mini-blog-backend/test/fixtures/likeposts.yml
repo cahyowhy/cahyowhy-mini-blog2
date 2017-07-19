@@ -2,10 +2,8 @@
 
 one:
   user: one
-  commentpost: one
   post: one
 
 two:
   user: two
-  commentpost: two
   post: two

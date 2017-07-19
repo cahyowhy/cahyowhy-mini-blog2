@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170718070630) do
+ActiveRecord::Schema.define(version: 20170718162949) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,10 +36,21 @@ ActiveRecord::Schema.define(version: 20170718070630) do
   create_table "likecommentposts", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "commentpost_id"
+    t.integer  "post_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.index ["commentpost_id"], name: "index_likecommentposts_on_commentpost_id", using: :btree
+    t.index ["post_id"], name: "index_likecommentposts_on_post_id", using: :btree
     t.index ["user_id"], name: "index_likecommentposts_on_user_id", using: :btree
+  end
+
+  create_table "likeposts", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "post_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_likeposts_on_post_id", using: :btree
+    t.index ["user_id"], name: "index_likeposts_on_user_id", using: :btree
   end
 
   create_table "posts", force: :cascade do |t|
@@ -67,6 +78,9 @@ ActiveRecord::Schema.define(version: 20170718070630) do
   add_foreign_key "commentposts", "users"
   add_foreign_key "images", "users"
   add_foreign_key "likecommentposts", "commentposts"
+  add_foreign_key "likecommentposts", "posts"
   add_foreign_key "likecommentposts", "users"
+  add_foreign_key "likeposts", "posts"
+  add_foreign_key "likeposts", "users"
   add_foreign_key "posts", "users"
 end

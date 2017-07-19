@@ -68,6 +68,7 @@ module.exports = function (environment) {
   ENV.APP.API_AUTH = ENV.APP.API_URL + "auth/";
   ENV.APP.API_POST_COMMENT = ENV.APP.API_URL + "commentposts/";
   ENV.APP.API_POST_LIKE_COMMENT = ENV.APP.API_URL + "likecommentposts/";
+  ENV.APP.API_POST_LIKE = ENV.APP.API_URL + "likeposts/";
   ENV.APP.API_POST = ENV.APP.API_URL + "posts/";
   ENV.APP.API_IMAGE = ENV.APP.API_URL + "images/";
   ENV.APP.API_LOGIN = ENV.APP.API_URL + "authenticate/";
