@@ -34,15 +34,18 @@ export default EmberUploader.FileField.extend({
       // Handle unsuccessful upload
       console.log(textStatus);
     });
-
     this.get('files').pushObject(files[0]);
 
-    uploader.upload(this.get('files')).then(response => {
-      context.sendAction("action", files[0], response[0].id, response[0].path.url);
-      files = null;
-    }, error => {
-      context.debug(error);
-    });
+    if (!this.get("isEditFirst")) {
+      uploader.upload(this.get('files')).then(response => {
+        context.sendAction("action", files[0], response[0].id, response[0].path.url);
+        files = null;
+      }, error => {
+        context.debug(error);
+      });
+    } else {
+      this.sendAction("action", files[0]);
+    }
 
     /*if ((files[0].size < 10000000) && (this.get("files").length < 5)) {
      this.get('files').pushObject(files[0]);

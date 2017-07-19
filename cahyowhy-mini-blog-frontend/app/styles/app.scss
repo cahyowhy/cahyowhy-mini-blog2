@@ -10,6 +10,7 @@
 @import "animate";
 @import "contextMenu";
 @import "lightbox";
+@import "cropper.min";
 
 $blueInstagram: #3897F0;
 $greyDark: #eaeaea;
@@ -17,6 +18,11 @@ $greyYoung: #fafafa;
 $almostWhite: #f0f0f0;
 $textTittle: #515769;
 $textDefault: #a6a7aa;
+
+.post-item {
+  border-right: 0px !important;
+}
+
 #navbar {
   margin-bottom: 50px;
 }
@@ -376,14 +382,16 @@ nav {
   }
 }
 
-.post-detail-inner{
+.post-detail-inner {
   position: relative;
   height: auto;
   //overflow: auto;
-  .hearticon{
-    /*i{
+  .hearticon {
+    i {
       color: white !important;
-    }*/
+      text-shadow: 1px 1px 5px $textTittle;
+    }
+    font-size: 20px;
     top: 15px;
     right: 15px;
     position: absolute;
@@ -452,9 +460,28 @@ nav {
     }
   }
   .header-profile {
+    overflow: hidden;
     .pull-left {
       margin-right: 30px;
+      position: relative;
+      i {
+        &:hover {
+          opacity: 1.0;
+        }
+        opacity: 0.0;
+        color: white;
+        position: absolute;
+        right: 10px;
+        z-index: 2;
+        border: 2px solid white;
+        bottom: 10px;
+        font-size: 20px;
+        border-radius: 50%;
+        background: $textTittle;
+        padding: 6px 8px;
+      }
       img {
+        position: relative;
         width: 150px;
         height: 150px;
       }

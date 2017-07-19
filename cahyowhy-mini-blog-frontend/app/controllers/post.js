@@ -36,7 +36,8 @@ export default Ember.Controller.extend(BaseController, {
         id: item.id,
         title: item.title,
         description: editEl.find('p').text().substring(0, 125) + ".....",
-        category: category()
+        category: category(),
+        likeposts: item.likeposts
       };
       if (src === undefined) {
         post.img = '/img/no-image.png';

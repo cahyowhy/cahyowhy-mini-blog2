@@ -9,11 +9,11 @@ export default Ember.Component.extend({
     this._super(...arguments);
     const context = this;
     this.debug(this.get("likes"));
-    /*this.get("likes").forEach(function (item) {
+    this.get("likes").forEach(function (item) {
       if (item.user.id === context.commonService.getId()) {
         context.set("currentUsserLikes", true);
       }
-    });*/
+    });
   },
   actions: {
     onFav(event){

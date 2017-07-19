@@ -30,6 +30,29 @@ export default Ember.Mixin.create({
       });
     });
   },
+  doUpdate(type = "", obj = null){
+    let update;
+    const context = this;
+    switch (type) {
+      case "user":
+        update = this.userService.doUpdateUser(this.commonService.getId(), obj, this.commonService.getToken());
+        break;
+      default:
+        break;
+    }
+
+    return new Ember.RSVP.Promise(function (resolve, reject) {
+      update.then(function (response) {
+        context.commonService.showNotification(202);
+        Ember.run.later(function () {
+          resolve(response);
+        }, 1200);
+      }).catch(function (err) {
+        context.commonService.showNotification(402);
+        reject(err);
+      });
+    });
+  },
   doSave(type = "", obj = null){
     let post;
     const context = this;
@@ -58,7 +81,7 @@ export default Ember.Mixin.create({
 
     return new Ember.RSVP.Promise(function (resolve, reject) {
       post.then(function (response) {
-        context.commonService.showNotification(202);
+        context.commonService.showNotification(201);
         Ember.run.later(function () {
           resolve(response);
         }, 1200);

@@ -14,5 +14,8 @@ export default Ember.Service.extend(BaseService, {
   },
   saveUser(user){
     return this.save(user);
+  },
+  doUpdateUser(param, user, authorization){
+    return this.update(param, user, authorization)
   }
 });

@@ -4,5 +4,6 @@ export default Ember.Object.create({
   id: "",
   name: "",
   username: "",
-  password: ""
+  password: "",
+  imageurl: ""
 });
