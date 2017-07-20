@@ -9,23 +9,14 @@
     </div>
     <div id="post-container" class="row post">
       {{#each posts as |post|}}
-        <div class="col-sm-4 sm-margin-b-50 post-item">
-          <div class="post-detail-inner">
-            {{fav-icon action="onFavouritePost" _id=post.id likes=post.likeposts}}
-            <div class="margin-b-20">
-              <div class="wow zoomIn pos-relative">
-                <div class="category-post">
-                  <h5>{{post.category}}</h5></div>
-                {{#link-to 'post-detail' post.id}}
-                  <img class="img-responsive" src="{{post.img}}" alt="{{post.title}}">
-                {{/link-to}}
-              </div>
-            </div>
-            <h4>{{#link-to 'post-detail' post.id}}{{post.title}}{{/link-to}}</h4>
-            <p>{{post.description}}</p>
-            {{#link-to 'post-detail' post.id class="link"}}Read More{{/link-to}}
-          </div>
-        </div>
+        {{post-item
+          idPost=post.id
+          likes=post.likeposts
+          category=post.category
+          img =  post.img
+          title = post.title
+          description = post.description
+        }}
       {{/each}}
     </div>
   </div>

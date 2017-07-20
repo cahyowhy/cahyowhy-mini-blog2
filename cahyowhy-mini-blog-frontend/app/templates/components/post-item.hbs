@@ -1,0 +1,17 @@
+<div class="col-sm-4 sm-margin-b-50 post-item">
+  <div class="post-detail-inner">
+    {{fav-icon action="onFavouritePost" _id=idPost likes=likes}}
+    <div class="margin-b-20">
+      <div class="wow zoomIn pos-relative">
+        <div class="category-post">
+          <h5>{{category}}</h5></div>
+        {{#link-to 'post-detail' idPost}}
+          <img class="img-responsive" src="{{img}}" alt="{{title}}">
+        {{/link-to}}
+      </div>
+    </div>
+    <h4>{{#link-to 'post-detail' idPost}}{{title}}{{/link-to}}</h4>
+    <p>{{description}}</p>
+    {{#link-to 'post-detail' idPost class="link"}}Read More{{/link-to}}
+  </div>
+</div>

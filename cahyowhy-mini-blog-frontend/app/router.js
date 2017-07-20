@@ -21,6 +21,7 @@ Router.map(function () {
     this.route('create-post');
     this.route('images');
     this.route('setting');
+    this.route('post');
   });
   this.route('not-found', {path: '/*path'});
 });

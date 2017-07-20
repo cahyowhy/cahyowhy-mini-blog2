@@ -1,12 +1,6 @@
 import Ember from 'ember';
 
 export default Ember.Mixin.create({
-  init(){
-    this._super(...arguments);
-    Ember.run.schedule('afterRender', this, function () {
-      this.didInsertElement();
-    });
-  },
   checkBtnSaveDisabled(event){
     return !(Ember.$(event.target).attr("disabled"));
   },

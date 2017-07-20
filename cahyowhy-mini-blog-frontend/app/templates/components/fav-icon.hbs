@@ -1,4 +1,4 @@
-<div class="hearticon" onclick={{action "onFav"}}>
+<div class="hearticon {{if isIconHide "hide"}}" onclick={{action "onFav"}}>
   {{#if currentUsserLikes}}
     <i class="fa fa-heart"></i>
   {{else}}

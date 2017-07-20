@@ -4,6 +4,12 @@ import CommentPost from '../models/commentpost';
 import Likecommentpost from '../models/likecommentpost';
 
 export default Ember.Controller.extend(BaseController, {
+  commentDisabled: true,
+  authentication: Ember.observer('applicationRoute.authentication', function () {
+    if (this.get("applicationRoute.authentication")) {
+      this.set("commentDisabled", false);
+    }
+  }),
   username: Ember.computed('commonService', function () {
     return this.commonService.getUsername();
   }),
