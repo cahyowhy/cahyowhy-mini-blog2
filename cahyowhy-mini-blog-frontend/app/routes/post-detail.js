@@ -19,15 +19,24 @@ export default Ember.Route.extend({
     const context = this;
     if (model.nextPost === null || model.nextPost === undefined) {
       this.hideArrow("post-right");
+    } else {
+      this.showArrow("post-right");
     }
 
     if (model.prevPost === null || model.prevPost === undefined) {
       this.hideArrow("post-left");
+    } else {
+      this.showArrow("post-left");
     }
   },
   hideArrow(param){
     Ember.run.schedule("afterRender", function () {
       Ember.$(`.${param}`).addClass('hide');
+    });
+  },
+  showArrow(param){
+    Ember.run.schedule("afterRender", function () {
+      Ember.$(`.${param}`).removeClass('hide');
     });
   },
   setupController(controller, model){

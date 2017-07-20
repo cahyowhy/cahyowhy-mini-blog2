@@ -17,16 +17,16 @@
       {{{post.description}}}
     </article>
     <div class="post-arrow">
-      {{#link-to 'post-detail' nextPost.id tagName="div" class="post-right"}}
-        <i class="ion-chevron-right ion"></i>
+      <div class="post-right">
+        {{#link-to 'post-detail' nextPost.id tagName="i" class="ion-chevron-right ion"}}{{/link-to}}
         <div class="inner"><p>{{nextPost.title}}</p>
           <p>{{nextPost.created_at}}</p></div>
-      {{/link-to}}
-      {{#link-to 'post-detail' prevPost.id tagName="div" class="post-left"}}
-        <i class="ion-chevron-left ion"></i>
+      </div>
+      <div class="post-left">
+        {{#link-to 'post-detail' prevPost.id class="ion-chevron-left ion" tagName="i"}}{{/link-to}}
         <div class="inner"><p>{{prevPost.title}}</p>
           <p>{{prevPost.created_at}}</p></div>
-      {{/link-to}}
+      </div>
     </div>
   </div>
   <div id="post-detail-comment">

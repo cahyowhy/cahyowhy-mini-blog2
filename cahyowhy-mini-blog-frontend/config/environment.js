@@ -74,5 +74,4 @@ module.exports = function (environment) {
   ENV.APP.API_LOGIN = ENV.APP.API_URL + "authenticate/";
   ENV.APP.API_IMAGE_PARAM_NAME = "image[imagepath_data]";
   return ENV;
-}
-;
+};

@@ -54,7 +54,7 @@ nav {
 
 .loading {
   position: absolute;
-  top: 0px;;
+  top: 30px;
   height: 3px;
   background: linear-gradient(90deg, #3897F0, transparent);
   z-index: 100000;
@@ -115,6 +115,7 @@ nav {
         i {
           color: $textTittle;
           font-size: 50px;
+          width: auto !important;
           text-shadow: 1px 1px 5px $textTittle;
         }
         > .inner {

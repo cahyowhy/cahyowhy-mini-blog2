@@ -7,9 +7,6 @@ export default Ember.Mixin.create({
       this.didInsertElement();
     });
   },
-  didInsertElement(){
-    this._super(...arguments);
-  },
   checkBtnSaveDisabled(event){
     return !(Ember.$(event.target).attr("disabled"));
   },
