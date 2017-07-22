@@ -1,66 +1,30 @@
-class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :update, :destroy]
+class UsersController < BaseController
+  before_action :check_username_exist, only: [:create]
+  before_action :set_entity, only: [:show, :update, :destroy, :following, :followers]
   before_action :authenticate_request, only: [:update, :destroy]
 
-  # GET /users
-  def index
-    @users = User.all
-
-    render json: @users
+  def following
+    render json: @entity.following, httpstatus: getsuccess
   end
 
-  # GET /users/1
-  def show
-    render json: @user
-  end
-
-  # POST /users
-  def create
-    @user = User.new(user_params)
-    @username = params[:user][:username]
-    if check_username_exist(@username)
-      render json: {message: "user is exist, using another username", status: deletesuccess}, status: :unprocessable_entity
-    else
-      if @user.save
-        render json: @user, status: :created, location: @user
-      else
-        render json: {data:@user.errors, status: postfailed}, status: :unprocessable_entity
-      end
-    end
-  end
-
-  # PATCH/PUT /users/1
-  def update
-    if @user.update(user_params)
-      render json: @user
-    else
-      render json: {data:@user.errors, status: updatefailed}, status: :unprocessable_entity
-    end
-  end
-
-  # DELETE /users/1
-  def destroy
-    @user.destroy
-    render json: {status: deletesuccess}
+  # GET users/:id/followers
+  def followers
+    render json: @entity.followers, httpstatus: getsuccess
   end
 
   private
-  # Use callbacks to share common setup or constraints between actions.
-  def set_user
-    @user = User.find(params[:id])
+  def init_value
+    super(USER)
   end
 
-  def check_username_exist(param)
-    User.exists?(:username => param)
+  def check_username_exist
+    if User.exists?(:username => params[:user][:username])
+      render json: {message: "user is exist, using another username", httpstatus: postfailed}, status: :unprocessable_entity
+    end
   end
 
   # Only allow a trusted parameter "white list" through.
   def user_params
     params.require(:user).permit(:username, :name, :password_confirmation, :password)
-  end
-
-  # do authentication
-  def authenticate_request
-    authenticateUserModule
   end
 end

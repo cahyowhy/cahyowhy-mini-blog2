@@ -1,7 +1,8 @@
-class PostSerializer < ActiveModel::Serializer
-  attributes :id, :title, :description, :created_at, :category, :image
+class PostSerializer < BaseSerializer
+  attributes :id, :title, :description, :created_at, :category
   has_one :user
   has_many :likeposts
+  has_many :imageposts
 
   def created_at
     object.created_at.to_s.split(" ")[0]

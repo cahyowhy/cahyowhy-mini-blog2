@@ -1,4 +1,4 @@
-class LikecommentpostSerializer < ActiveModel::Serializer
+class LikecommentpostSerializer < BaseSerializer
   attributes :id
   has_one :user
   has_one :commentpost

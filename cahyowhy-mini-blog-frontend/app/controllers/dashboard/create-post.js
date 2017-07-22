@@ -66,7 +66,7 @@ export default Ember.Controller.extend(Basecontroller, {
       Post.image = `${img}, ${Post.image}`;
       this.set("description", this.get("description") + img);
     },
-    onDeleteImage(index, id, src){
+    onDeleteImage(index, id){
       const context = this;
       let descriptionhtml = Ember.$(this.get("description"));
       let editEl = Ember.$("<p>").append(descriptionhtml);
@@ -81,7 +81,7 @@ export default Ember.Controller.extend(Basecontroller, {
       image.remove();
       let newDescriptionHtml = editEl.html();
 
-      this.doRemove("image", id).then(function (response) {
+      this.doRemove("image", id).then(function () {
         let images = [];
         context.get("images").forEach(function (item) {
           if (item.id !== id) {

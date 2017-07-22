@@ -8,11 +8,5 @@ export default Ember.Route.extend({
   },
   setupController(controller, model){
     this.controllerFor('dashboard.post').set('posts', model.posts);
-  },
-  afterModel(model){
-    const context = this;
-    Ember.run.schedule('afterRender', function () {
-      context.controllerFor('dashboard.post').setPost(model.posts);
-    });
   }
 });

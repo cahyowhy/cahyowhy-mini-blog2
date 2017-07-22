@@ -36,7 +36,7 @@ export default Ember.Component.extend({
     });
   },
   actions: {
-    onFav(event){
+    onFav(){
       this.set("currentUsserLikes", !this.get("currentUsserLikes"));
       this.sendAction("action", this.get("_id"));
     }

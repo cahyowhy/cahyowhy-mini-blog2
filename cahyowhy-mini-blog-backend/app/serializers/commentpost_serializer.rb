@@ -1,4 +1,4 @@
-class CommentpostSerializer < ActiveModel::Serializer
+class CommentpostSerializer < BaseSerializer
   attributes :id, :comment, :created_at
   has_one :user
   has_one :post

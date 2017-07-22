@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import EmberUploader from 'ember-uploader';
 import ENV from '../config/environment';
 
@@ -23,16 +24,16 @@ export default EmberUploader.FileField.extend({
 
     uploader.on('progress', e => {
       this.set('progress', parseInt(e.percent));
-      console.log(e);
+      context.debug(e);
     });
 
     uploader.on('didUpload', e => {
-      console.log(e);
+      context.debug(e);
     });
 
     uploader.on('didError', (jqXHR, textStatus) => {
       // Handle unsuccessful upload
-      console.log(textStatus);
+      context.debug(textStatus);
     });
     this.get('files').pushObject(files[0]);
 

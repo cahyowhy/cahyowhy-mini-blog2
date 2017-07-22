@@ -5,7 +5,11 @@ class ImagesController < ApplicationController
 
   # GET /images
   def index
-    @images = Image.all
+    if params[:limit].blank? && params[:offset].blank?
+      @images = Image.all
+    else
+      @images = Image.limit(params[:limit]).offset(params[:offset])
+    end
 
     render json: @images
   end

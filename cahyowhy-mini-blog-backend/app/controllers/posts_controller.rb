@@ -1,90 +1,57 @@
-class PostsController < ApplicationController
-  before_action :set_post, only: [:show, :update, :destroy, :show_post_next, :show_post_prev]
+class PostsController < BaseController
+  before_action :set_entity, only: [:show, :update, :destroy, :show_post_next, :show_post_prev]
   before_action :authenticate_request, only: [:destroy, :create, :update]
-  before_action :set_post_by_user, only: [:show_post_by_user]
+  before_action :delete_imageposts, only: [:destroy]
+  before_action :check_imageposts_params, only: [:update]
 
-  # GET /posts
-  def index
-    @posts = Post.all
-
-    render json: @posts
+  def after_create
+    params[:post][:imageposts].each do |item|
+      @entity.imagestatuses.create!(:imageurl => item[:imageurl], :user_id => curent_user.id)
+    end
   end
 
   # GET /posts/next/2
   def show_post_next
     begin
-      render json: {id: @post.next.id, title: @post.next.title, created_at: normalize_date(@post.next.created_at)}
+      render json: {id: @entity.next.id, title: @entity.next.title, created_at: normalize_date(@entity.next.created_at)}
     rescue
-      render json: @post.next
+      render json: @entity.next, httpstatus: getsuccess
     end
   end
 
   # GET /posts/prev/2
   def show_post_prev
     begin
-      render json: {id: @post.prev.id, title: @post.prev.title, created_at: normalize_date(@post.prev.created_at)}
+      render json: {id: @entity.prev.id, title: @entity.prev.title, created_at: normalize_date(@entity.prev.created_at)}
     rescue
-      render json: @post.prev
+      render json: @entity.prev, httpstatus: getsuccess
     end
-  end
-
-  # GET /posts/user/2
-  def show_post_by_user
-    render json: @post
-  end
-
-  # GET /posts/1
-  def show
-    render json: @post
-  end
-
-  # POST /posts
-  def create
-    @post = Post.new(post_params)
-
-    if @post.save
-      render json: @post, status: :created, location: @post
-    else
-      render json: {data: @post.errors, status: postfailed}, status: :unprocessable_entity
-    end
-  end
-
-  # PATCH/PUT /posts/1
-  def update
-    if @post.update(post_params)
-      render json: @post
-    else
-      render json: {data: @post.errors, status: updatefailed}, status: :unprocessable_entity
-    end
-  end
-
-  # DELETE /posts/1
-  def destroy
-    @post.destroy
-    render json: {status: deletesuccess}
   end
 
   private
-  # Use callbacks to share common setup or constraints between actions.
-  def set_post
-    @post = Post.find(params[:id])
+  def init_value
+    super(POST)
   end
 
-  def set_post_by_user
-    @post = Post.where(:user_id => params[:id])
+  # check weather if the imagestatuses params is visible, render a json
+  def check_imageposts_params
+    unless params[:post][:imageposts].blank?
+      render json: {message:"sory, we can't update image at this time", httpstatus:updatefailed}
+    end
+  end
+
+  def delete_imageposts
+    @entity.imageposts.each do |item|
+      item.destroy
+    end
   end
 
   # Only allow a trusted parameter "white list" through.
   def post_params
-    params.require(:post).permit(:title, :user_id, :description, :image, :category)
+    params.require(:post).permit(:title, :user_id, :description, :imageposts, :category)
   end
 
   def normalize_date(date)
     date.to_s.split(" ")[0]
-  end
-
-  # do authentication
-  def authenticate_request
-    authenticateUserModule
   end
 end

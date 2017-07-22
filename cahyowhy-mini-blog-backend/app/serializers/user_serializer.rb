@@ -1,4 +1,4 @@
-class UserSerializer < ActiveModel::Serializer
-  attributes :id, :username, :name, :imageurl
+class UserSerializer < BaseSerializer
   # attributes :id, :username, :name, :password_digest, :password
+  attributes :id, :username, :name, :imageurl
 end

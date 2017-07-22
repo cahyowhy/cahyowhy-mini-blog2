@@ -6,7 +6,7 @@ export default Ember.Component.extend(BaseController, {
   posts: "",
   applyLayout(){
     Ember.$(document).ready(function () {
-      let $grid = $('#post-container').imagesLoaded(function () {
+      let $grid = Ember.$('#post-container').imagesLoaded(function () {
         $grid.masonry({
           itemSelector: '.post-item',
           percentPosition: true,
@@ -34,6 +34,7 @@ export default Ember.Component.extend(BaseController, {
       }
     };
 
+    this.set('category', category());
     this.set("description", editEl.find('p').text().substring(0, 125) + ".....");
     if (src === undefined) {
       this.set("img", '/img/no-image.png');

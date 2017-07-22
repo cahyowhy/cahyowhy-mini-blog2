@@ -6,6 +6,7 @@ export default Ember.Route.extend(Ember.Evented, {
   onDocumentReady(){
     Ember.run.schedule('afterRender', this, function () {
       const context = this;
+      window.scrollTo(0,0);
       Ember.$(".loading").animate({
         width: "100%"
       }, {
@@ -23,14 +24,6 @@ export default Ember.Route.extend(Ember.Evented, {
       this.authService.auth(context.commonService.getToken()).then(function (response) {
         if (response.status === 204) {
           context.set("authentication", true);
-        }
-        if (response.status === 204) {
-          Ember.$("li.login").addClass('hide');
-          Ember.$("li.user").removeClass('hide');
-          Ember.$("li.user a").attr("href", "/dashboard/" + context.commonService.getId());
-        } else {
-          Ember.$("li.login").removeClass('hide');
-          Ember.$("li.user").addClass('hide');
         }
       });
     });

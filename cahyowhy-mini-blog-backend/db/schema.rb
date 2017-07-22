@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170718162949) do
+ActiveRecord::Schema.define(version: 20170722065303) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,12 +25,32 @@ ActiveRecord::Schema.define(version: 20170718162949) do
     t.index ["user_id"], name: "index_commentposts_on_user_id", using: :btree
   end
 
+  create_table "imageposts", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "post_id"
+    t.string   "imageurl"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_imageposts_on_post_id", using: :btree
+    t.index ["user_id"], name: "index_imageposts_on_user_id", using: :btree
+  end
+
   create_table "images", force: :cascade do |t|
     t.string   "path"
     t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_images_on_user_id", using: :btree
+  end
+
+  create_table "imagestatuses", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "status_id"
+    t.string   "imageurl"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["status_id"], name: "index_imagestatuses_on_status_id", using: :btree
+    t.index ["user_id"], name: "index_imagestatuses_on_user_id", using: :btree
   end
 
   create_table "likecommentposts", force: :cascade do |t|
@@ -60,8 +80,25 @@ ActiveRecord::Schema.define(version: 20170718162949) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.string   "category"
-    t.string   "image"
     t.index ["user_id"], name: "index_posts_on_user_id", using: :btree
+  end
+
+  create_table "relationships", force: :cascade do |t|
+    t.integer  "follower_id"
+    t.integer  "followed_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["followed_id"], name: "index_relationships_on_followed_id", using: :btree
+    t.index ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true, using: :btree
+    t.index ["follower_id"], name: "index_relationships_on_follower_id", using: :btree
+  end
+
+  create_table "statuses", force: :cascade do |t|
+    t.integer  "user_id"
+    t.text     "statustext"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_statuses_on_user_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
@@ -76,11 +113,16 @@ ActiveRecord::Schema.define(version: 20170718162949) do
 
   add_foreign_key "commentposts", "posts"
   add_foreign_key "commentposts", "users"
+  add_foreign_key "imageposts", "posts"
+  add_foreign_key "imageposts", "users"
   add_foreign_key "images", "users"
+  add_foreign_key "imagestatuses", "statuses"
+  add_foreign_key "imagestatuses", "users"
   add_foreign_key "likecommentposts", "commentposts"
   add_foreign_key "likecommentposts", "posts"
   add_foreign_key "likecommentposts", "users"
   add_foreign_key "likeposts", "posts"
   add_foreign_key "likeposts", "users"
   add_foreign_key "posts", "users"
+  add_foreign_key "statuses", "users"
 end

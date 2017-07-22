@@ -5,7 +5,11 @@ class CommentpostsController < ApplicationController
 
   # GET /commentposts
   def index
-    @commentposts = Commentpost.all
+    if params[:limit].blank? && params[:offset].blank?
+      @commentposts = Commentpost.all
+    else
+      @commentposts = Commentpost.limit(params[:limit]).offset(params[:offset])
+    end
 
     render json: @commentposts
   end
