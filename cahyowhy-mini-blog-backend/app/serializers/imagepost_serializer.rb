@@ -1,4 +1,4 @@
-class ImagepostSerializer < ActiveModel::Serializer
+class ImagepostSerializer < BaseSerializer
   attributes :id, :imageurl
   has_one :user
   has_one :post

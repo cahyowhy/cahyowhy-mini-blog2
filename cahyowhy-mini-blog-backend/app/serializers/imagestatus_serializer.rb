@@ -1,4 +1,4 @@
-class ImagestatusSerializer < ActiveModel::Serializer
+class ImagestatusSerializer < BaseSerializer
   attributes :id, :imageurl
   has_one :user
   has_one :status

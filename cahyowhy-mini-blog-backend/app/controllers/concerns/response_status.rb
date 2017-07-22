@@ -38,4 +38,20 @@ module Response_status
   def authfailed()
     404
   end
+
+  def followsucces()
+    205
+  end
+
+  def followfailed()
+    405
+  end
+
+  def unfollowsucces()
+    206
+  end
+
+  def unfollowfailed()
+    406
+  end
 end

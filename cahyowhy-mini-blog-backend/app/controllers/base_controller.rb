@@ -1,13 +1,20 @@
 class BaseController < ApplicationController
 =begin
-  semua text yang kapital adalah,
+  semua text yang depanya kapital adalah,
   model. yang besar semua konstan
-  untuk checking
+  untuk checking(pastikan tunggal dan bukan jamak nilainya!
+  nama model tapi gak kapital)
 =end
   USER = "user"
   STATUS = "status"
   POST = "post"
   LIKEPOST = "likepost"
+  LIKECOMMENTPOST = "likepost"
+  IMAGESTATUS = "imagestatus"
+  IMAGE = "image"
+  IMAGEPOST = "imagepost"
+  COMMENTPOST = "commentpost"
+  TIMELINE = "timeline"
   attr_accessor :entity
   before_action :init_value
   before_action :set_entity_params, only: [:update, :create]
@@ -26,6 +33,21 @@ class BaseController < ApplicationController
       when LIKEPOST
         @entity = Likepost
         @current_entity = LIKEPOST
+      when LIKECOMMENTPOST
+        @entity = Likecommentpost
+        @current_entity = LIKECOMMENTPOST
+      when IMAGESTATUS
+        @entity = Imagestatus
+        @current_entity = IMAGESTATUS
+      when IMAGE
+        @entity = Image
+        @current_entity = IMAGE
+      when IMAGEPOST
+        @entity = Imagepost
+        @current_entity = IMAGEPOST
+      when COMMENTPOST
+        @entity = Commentpost
+        @current_entity = COMMENTPOST
     end
   end
 
@@ -40,6 +62,7 @@ class BaseController < ApplicationController
         paramshash[key] = value.to_i
       end
     end
+    puts paramshash
 
     if params[:offset].blank? && params[:limit].blank?
       # @entities = @entity.where(paramshash) => actually this also work, wether the paramshash is empty
@@ -51,6 +74,7 @@ class BaseController < ApplicationController
   end
 
   def show
+    puts @current_entity
     render json: @entity, httpstatus: getsuccess
   end
 
@@ -95,6 +119,16 @@ class BaseController < ApplicationController
         @entity_params = post_params
       when LIKEPOST
         @entity_params = likepost_params
+      when LIKECOMMENTPOST
+        @entity_params = likecommentpost_params
+      when IMAGESTATUS
+        @entity_params = imagestatus_params
+      when IMAGE
+        @entity_params = image_params
+      when IMAGEPOST
+        @entity_params = imagepost_params
+      when COMMENTPOST
+        @entity_params = commentpost_params
     end
   end
 

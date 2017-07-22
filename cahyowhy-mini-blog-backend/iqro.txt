@@ -1,5 +1,4 @@
-curl
--i -H  "Authorization":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE0OTk5MTY5MzF9.Xrw1EFwZbHp7f3QT7-xBLHv9wj-ZhnQllleTCfdcB3E" \
--F "image[imagepath_data][]=@event_tiket.jpg" \
--F "image[imagepath_data][]=@wda.jpg" \
+curl -i -H  "Authorization":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE1MDA4MTE3NzV9.jYi3LZj_Iw8QqytIqGlCPoQkt87zsGCQLLjiLDOqH9k" \
+-F "image[imagepath_data][]=@ryzQM9.jpeg" \
+-F "image[imagepath_data][]=@outerseaarticle.jpg" \
 localhost:3000/images
