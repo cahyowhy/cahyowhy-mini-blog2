@@ -5,8 +5,11 @@ class PostsController < BaseController
   before_action :check_imageposts_params, only: [:update]
 
   def after_create
-    params[:post][:imageposts].each do |item|
-      @entity.imagestatuses.create!(:imageurl => item[:imageurl], :user_id => curent_user.id)
+    # params[:post][:imageposts].each do |item| sakjane iki yo iso walopun ra nggo strong parameter
+    #   @entity.imagestatuses.create!(:imageurl => item[:imageurl], :user_id => curent_user.id, :post_id => item[:post_id])
+    # end
+    curent_user.followers.each do |item|
+      item.notifications.create!(:user_id => item.id, :link => "posts/#{@entity.id}", :message => "#{@entity.user.username} baru saja membuat post baru dengan judul #{@entity.title}")
     end
   end
 
@@ -36,7 +39,7 @@ class PostsController < BaseController
   # check weather if the imagestatuses params is visible, render a json
   def check_imageposts_params
     unless params[:post][:imageposts].blank?
-      render json: {message:"sory, we can't update image at this time", httpstatus:updatefailed}
+      render json: {message: "sory, we can't update image at this time", httpstatus: updatefailed}
     end
   end
 
@@ -48,7 +51,7 @@ class PostsController < BaseController
 
   # Only allow a trusted parameter "white list" through.
   def post_params
-    params.require(:post).permit(:title, :user_id, :description, :imageposts, :category)
+    params.require(:post).permit(:title, :user_id, :description, :category, :imageposts_attributes => [:imageurl, :post_id, :user_id])
   end
 
   def normalize_date(date)

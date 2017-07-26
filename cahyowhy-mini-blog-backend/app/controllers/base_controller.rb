@@ -15,6 +15,7 @@ class BaseController < ApplicationController
   IMAGEPOST = "imagepost"
   COMMENTPOST = "commentpost"
   TIMELINE = "timeline"
+  NOTIFICATION = "notification"
   attr_accessor :entity
   before_action :init_value
   before_action :set_entity_params, only: [:update, :create]
@@ -48,6 +49,9 @@ class BaseController < ApplicationController
       when COMMENTPOST
         @entity = Commentpost
         @current_entity = COMMENTPOST
+      when NOTIFICATION
+        @entity = Notification
+        @current_entity = NOTIFICATION
     end
   end
 
@@ -74,10 +78,6 @@ class BaseController < ApplicationController
   end
 
   def show
-    # ActionCable.server.broadcast 'messages', #jajal websocket
-    #                              message: "message",
-    #                              user: "kontol"
-    # head :ok
     render json: @entity, httpstatus: getsuccess
   end
 
@@ -98,7 +98,8 @@ class BaseController < ApplicationController
     @entity = @entity.new(@entity_params)
 
     if @entity.save
-      after_create if @current_entity == STATUS && @current_entity == POST # invoke method in child after entity has been saved
+      puts @current_entity == POST
+      after_create if @current_entity == STATUS || @current_entity == POST # invoke method in child after entity has been saved
 
       render json: @entity, httpstatus: postsuccess, status: :created, location: @entity
     else
@@ -132,6 +133,8 @@ class BaseController < ApplicationController
         @entity_params = imagepost_params
       when COMMENTPOST
         @entity_params = commentpost_params
+      when NOTIFICATION
+        @entity_params = notification_params
     end
   end
 

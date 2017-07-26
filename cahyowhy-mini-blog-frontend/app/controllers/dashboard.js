@@ -28,43 +28,7 @@ export default Ember.Controller.extend(Basecontroller, {
 
     });
     this.set('subscription', subscription);
-
-    /*consumer.subscriptions.create("RoomChannel", {
-     connected() {
-     this.perform('hello', {foo: 'bar'});
-     this.perform('hello');
-     },
-     received(data) {
-     context.debug("received(data) -> " + context.inspect(data));
-     },
-     disconnected() {
-     context.debug("NotificationChannel#disconnected");
-     },
-     speak(){
-
-     }
-     });
-     // Passing Parameters to Channel
-     const subscription = consumer.subscriptions.create({channel: 'RoomChannel', room: 'Best Room'}, {
-     received: (data) => {
-     this.updateRecord(data);
-     }
-     });
-     // Using mixin and inject your services
-     var channelMixin = Ember.Mixin.create({
-     store: Ember.inject.service(),
-
-     received(data) {
-     this.get("store").pushPayload(data);
-     }
-     });
-     consumer.subscriptions.create({channel: 'RoomChannel'}, channelMixin);
-     // Send actions to your Action Cable channel class
-     subscription.perform("your_channel_action", {hey: "hello"});*/
   },
-  /*updateRecord(data) {
-   this.debug("updateRecord(data) -> " + data);
-   },*/
   actions: {
     sendMessage() {
       this.get('subscription').perform('speak', {message: 'bar'});
