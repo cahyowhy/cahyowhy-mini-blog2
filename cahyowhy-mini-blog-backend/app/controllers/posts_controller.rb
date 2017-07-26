@@ -8,9 +8,13 @@ class PostsController < BaseController
     # params[:post][:imageposts].each do |item| sakjane iki yo iso walopun ra nggo strong parameter
     #   @entity.imagestatuses.create!(:imageurl => item[:imageurl], :user_id => curent_user.id, :post_id => item[:post_id])
     # end
+    link = "#{@entity.id}"
+    message = "#{@entity.user.username} baru saja membuat post baru dengan judul #{@entity.title}"
     curent_user.followers.each do |item|
-      item.notifications.create!(:user_id => item.id, :link => "posts/#{@entity.id}", :message => "#{@entity.user.username} baru saja membuat post baru dengan judul #{@entity.title}")
+      item.notifications.create!(:user_id => item.id, :link => "posts/#{link}", :message => "#{message}")
     end
+
+    ActionCable.server.broadcast 'notification_channel', message: message
   end
 
   # GET /posts/next/2

@@ -19,19 +19,19 @@ export default Ember.Controller.extend(Basecontroller, {
     return new Blob([blobArray], {type: mimetypeFile});
   },
   afterRender(){
-    const context = this;
-    let consumer = this.cableService.createConsumer('ws://localhost:3000/cable?token=' + this.commonService.getToken());
-    let subscription = consumer.subscriptions.create("RoomChannel", {
-      received: (data) => {
-        alert(data.message)
-      }
-
-    });
-    this.set('subscription', subscription);
+    // const context = this;
+    // let consumer = this.cableService.createConsumer('ws://localhost:3000/cable?token=' + this.commonService.getToken());
+    // let subscription = consumer.subscriptions.create("RoomChannel", {
+    //   received: (data) => {
+    //     alert(data.message)
+    //   }
+    //
+    // });
+    // this.set('subscription', subscription);
   },
   actions: {
     sendMessage() {
-      this.get('subscription').perform('speak', {message: 'bar'});
+      // this.get('subscription').perform('speak', {message: 'bar'});
     },
     onImageChange(file){
       let reader = new FileReader();
