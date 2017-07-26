@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170726040216) do
+ActiveRecord::Schema.define(version: 20170726083944) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -77,9 +77,11 @@ ActiveRecord::Schema.define(version: 20170726040216) do
     t.integer  "user_id"
     t.string   "link"
     t.string   "message"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.integer  "userhasresponse_id"
     t.index ["user_id"], name: "index_notifications_on_user_id", using: :btree
+    t.index ["userhasresponse_id"], name: "index_notifications_on_userhasresponse_id", using: :btree
   end
 
   create_table "posts", force: :cascade do |t|
@@ -133,6 +135,7 @@ ActiveRecord::Schema.define(version: 20170726040216) do
   add_foreign_key "likeposts", "posts"
   add_foreign_key "likeposts", "users"
   add_foreign_key "notifications", "users"
+  add_foreign_key "notifications", "users", column: "userhasresponse_id"
   add_foreign_key "posts", "users"
   add_foreign_key "statuses", "users"
 end

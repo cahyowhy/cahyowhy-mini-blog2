@@ -99,7 +99,7 @@ class BaseController < ApplicationController
 
     if @entity.save
       puts @current_entity == POST
-      after_create if @current_entity == STATUS || @current_entity == POST # invoke method in child after entity has been saved
+      after_create if @current_entity == STATUS || @current_entity == POST || @current_entity == LIKEPOST # invoke method in child after entity has been saved
 
       render json: @entity, httpstatus: postsuccess, status: :created, location: @entity
     else

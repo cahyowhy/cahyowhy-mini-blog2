@@ -8,6 +8,16 @@ class LikepostsController < BaseController
     super(LIKEPOST)
   end
 
+  def after_create
+    link = "#{@entity.post.id}"
+    message = "#{@entity.user.username} baru saja melike post kamu dengan judul #{@entity.post.title}"
+
+    userhaspost = @entity.post.user
+    unless @entity.user==userhaspost
+      userhaspost.notifications.create!(:user_id => userhaspost.id, :link => "posts/#{link}", :message => "#{message}")
+    end
+  end
+
   # Only allow a trusted parameter "white list" through.
   def likepost_params
     params.require(:likepost).permit(:user_id, :post_id)

@@ -11,10 +11,10 @@ class PostsController < BaseController
     link = "#{@entity.id}"
     message = "#{@entity.user.username} baru saja membuat post baru dengan judul #{@entity.title}"
     curent_user.followers.each do |item|
-      item.notifications.create!(:user_id => item.id, :link => "posts/#{link}", :message => "#{message}")
+      item.notifications.create!(:user_id => item.id, :link => "posts/#{link}", :message => "#{message}", :userhasresponse_id => curent_user.id)
     end
 
-    ActionCable.server.broadcast 'notification_channel', message: message
+      # ActionCable.server.broadcast 'notification_channel', message: message #asu iki ngebroadcast ng kabeh
   end
 
   # GET /posts/next/2

@@ -8,9 +8,13 @@ class StatusesController < BaseController
     # params[:status][:imagestatuses].each do |item| #sakjane iki yo iso walopun ra nggo strong parameter
     #   @entity.imagestatuses.create!(:imageurl => item[:imageurl], :user_id => curent_user.id)
     # end
+    link = "statuses/#{@entity.id}"
+    message = "#{@entity.user.username} baru saja membuat status#{@entity.title}"
     curent_user.followers.each do |item|
-      item.notifications.create!(:user_id => item.id, :link => "statuses/#{@entity.id}", :message => "#{@entity.user.username} baru saja membuat status baru #{@entity.statustext}")
+      item.notifications.create!(:user_id => item.id, :link => "#{link}", :message => "#{message}")
     end
+
+    # ActionCable.server.broadcast 'notification_channel', message: message
   end
 
   private
