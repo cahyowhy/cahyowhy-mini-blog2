@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount ActionCable.server => '/cable'
   resources :imageposts
   resources :imagestatuses
   resources :statuses
@@ -17,6 +18,6 @@ Rails.application.routes.draw do
   get 'posts/next/:id', to: 'posts#show_post_next'
   get 'posts/prev/:id', to: 'posts#show_post_prev'
   get 'auth', to: 'authtoken#auth_token'
-  get 'timelines', to: 'timeline#index' #coba
+  get 'timelines', to: 'timeline#index' #iseh ngebug jancuk
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

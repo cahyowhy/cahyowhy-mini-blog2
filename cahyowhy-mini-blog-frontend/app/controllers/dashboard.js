@@ -6,6 +6,7 @@ import User from '../models/user';
 
 let imgWidth, imgHeight;
 export default Ember.Controller.extend(Basecontroller, {
+  subscription: '',
   url: ENV.APP.API_IMAGE,
   dataURLtoBlob(dataurl) {
     let data = dataurl.split(','),
@@ -17,7 +18,57 @@ export default Ember.Controller.extend(Basecontroller, {
     }
     return new Blob([blobArray], {type: mimetypeFile});
   },
+  afterRender(){
+    const context = this;
+    let consumer = this.cableService.createConsumer('ws://localhost:3000/cable?token=' + this.commonService.getToken());
+    let subscription = consumer.subscriptions.create("RoomChannel", {
+      received: (data) => {
+        alert(data.message)
+      }
+
+    });
+    this.set('subscription', subscription);
+
+    /*consumer.subscriptions.create("RoomChannel", {
+     connected() {
+     this.perform('hello', {foo: 'bar'});
+     this.perform('hello');
+     },
+     received(data) {
+     context.debug("received(data) -> " + context.inspect(data));
+     },
+     disconnected() {
+     context.debug("NotificationChannel#disconnected");
+     },
+     speak(){
+
+     }
+     });
+     // Passing Parameters to Channel
+     const subscription = consumer.subscriptions.create({channel: 'RoomChannel', room: 'Best Room'}, {
+     received: (data) => {
+     this.updateRecord(data);
+     }
+     });
+     // Using mixin and inject your services
+     var channelMixin = Ember.Mixin.create({
+     store: Ember.inject.service(),
+
+     received(data) {
+     this.get("store").pushPayload(data);
+     }
+     });
+     consumer.subscriptions.create({channel: 'RoomChannel'}, channelMixin);
+     // Send actions to your Action Cable channel class
+     subscription.perform("your_channel_action", {hey: "hello"});*/
+  },
+  /*updateRecord(data) {
+   this.debug("updateRecord(data) -> " + data);
+   },*/
   actions: {
+    sendMessage() {
+      this.get('subscription').perform('speak', {message: 'bar'});
+    },
     onImageChange(file){
       let reader = new FileReader();
       reader.onload = function () {

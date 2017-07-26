@@ -6,8 +6,7 @@ export default Ember.Route.extend(Ember.Evented, {
   onDocumentReady(){
     Ember.run.schedule('afterRender', this, function () {
       const context = this;
-      window.scrollTo(0,0);
-      Ember.$(".loading").animate({
+      /*Ember.$(".loading").animate({
         width: "100%"
       }, {
         duration: 500,
@@ -17,7 +16,7 @@ export default Ember.Route.extend(Ember.Evented, {
         complete: function () {
           Ember.$(this).css("width", "0%");
         }
-      });
+      });*/
 
       this.trigger("onDocumentReady");
       this.set("documentReady", true);

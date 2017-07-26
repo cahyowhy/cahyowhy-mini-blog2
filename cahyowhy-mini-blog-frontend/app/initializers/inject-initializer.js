@@ -12,6 +12,7 @@ export function initialize(application) {
   application.inject('route', 'commentpostService', 'service:commentpostService');
   application.inject('route', 'likecommentpostService', 'service:likecommentpostService');
   application.inject('route', 'likepostService', 'service:likepostService');
+  application.inject('route', 'cableService', 'service:cable');
 
   application.inject('controller', 'userService', 'service:userService');
   application.inject('controller', 'loginService', 'service:loginService');
@@ -24,6 +25,7 @@ export function initialize(application) {
   application.inject('controller', 'likecommentpostService', 'service:likecommentpostService');
   application.inject('controller', 'likepostService', 'service:likepostService');
   application.inject('controller', 'applicationRoute', 'route:application');
+  application.inject('controller', 'cableService', 'service:cable');
 
   application.inject('component', 'localStorage', 'service:local-storage');
   application.inject('component', 'commonService', 'service:commonService');
@@ -36,6 +38,7 @@ export function initialize(application) {
   application.inject('component', 'likecommentpostService', 'service:likecommentpostService');
   application.inject('component', 'likepostService', 'service:likepostService');
   application.inject('component', 'applicationRoute', 'route:application');
+  application.inject('component', 'cableService', 'service:cable');
 }
 
 export default {

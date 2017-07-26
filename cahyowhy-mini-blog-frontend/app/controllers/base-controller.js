@@ -1,6 +1,18 @@
 import Ember from 'ember';
 
 export default Ember.Mixin.create({
+  init(){
+    let afterRenderExist = this.afterRender !== undefined && typeof this.afterRender === "function";
+    if (this.applicationRoute.documentReady && afterRenderExist) {
+      Ember.run.schedule('afterRender', this, function () {
+        this.afterRender();
+      });
+    } else if (afterRenderExist) {
+      this.applicationRoute.on('onDocumentReady', this, function () {
+        this.afterRender();
+      });
+    }
+  },
   checkBtnSaveDisabled(event){
     return !(Ember.$(event.target).attr("disabled"));
   },

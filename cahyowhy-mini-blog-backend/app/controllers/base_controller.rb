@@ -74,7 +74,10 @@ class BaseController < ApplicationController
   end
 
   def show
-    puts @current_entity
+    # ActionCable.server.broadcast 'messages', #jajal websocket
+    #                              message: "message",
+    #                              user: "kontol"
+    # head :ok
     render json: @entity, httpstatus: getsuccess
   end
 

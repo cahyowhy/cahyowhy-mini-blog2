@@ -12,7 +12,7 @@
   "repository": "",
   "scripts": {
     "build": "ember build",
-    "start": "gulp default && ember server",
+    "start": "gulp default && ember server --live-reload=false",
     "test": "ember test"
   },
   "devDependencies": {
