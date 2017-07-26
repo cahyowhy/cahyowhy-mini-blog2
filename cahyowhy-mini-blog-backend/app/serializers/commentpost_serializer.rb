@@ -4,10 +4,6 @@ class CommentpostSerializer < BaseSerializer
   has_one :post
   has_many :likecommentposts
 
-  def created_at
-    object.created_at.to_s.split(" ")[0]
-  end
-
   def post
     {id:object.post.id, title:object.post.title}
   end

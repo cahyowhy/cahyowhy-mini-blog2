@@ -14,6 +14,7 @@ class BaseController < ApplicationController
   IMAGE = "image"
   IMAGEPOST = "imagepost"
   COMMENTPOST = "commentpost"
+  COMMENTSTATUS = "commentstatus"
   TIMELINE = "timeline"
   NOTIFICATION = "notification"
   attr_accessor :entity
@@ -49,6 +50,9 @@ class BaseController < ApplicationController
       when COMMENTPOST
         @entity = Commentpost
         @current_entity = COMMENTPOST
+      when COMMENTSTATUS
+        @entity = Commentstatus
+        @current_entity = COMMENTSTATUS
       when NOTIFICATION
         @entity = Notification
         @current_entity = NOTIFICATION
@@ -99,7 +103,7 @@ class BaseController < ApplicationController
 
     if @entity.save
       puts @current_entity == POST
-      after_create if @current_entity == STATUS || @current_entity == POST || @current_entity == LIKEPOST # invoke method in child after entity has been saved
+      after_create if @current_entity == STATUS || @current_entity == POST || @current_entity == COMMENTPOST || @current_entity == COMMENTSTATUS || @current_entity == LIKEPOST || @current_entity == LIKECOMMENTPOST # invoke method in child after entity has been saved
 
       render json: @entity, httpstatus: postsuccess, status: :created, location: @entity
     else
@@ -133,6 +137,8 @@ class BaseController < ApplicationController
         @entity_params = imagepost_params
       when COMMENTPOST
         @entity_params = commentpost_params
+      when COMMENTSTATUS
+        @entity_params = commentstatus_params
       when NOTIFICATION
         @entity_params = notification_params
     end

@@ -3,6 +3,16 @@ class LikecommentpostsController < BaseController
   before_action :authenticate_request, only: [:create]
   before_action :check_current_user_like, only: [:create]
 
+  def after_create
+    link = "#{@entity.post.id}"
+    message = "#{@entity.user.username} melike komenmu yang #{@entity.commentpost.comment}"
+
+    userhaspost = @entity.commentpost.user
+    unless @entity.user==userhaspost
+      userhaspost.notifications.create!(:user_id => userhaspost.id, :link => "posts/#{link}", :message => "#{message}")
+    end
+  end
+
   private
   def init_value
     super(LIKECOMMENTPOST)

@@ -5,19 +5,18 @@ class PostsController < BaseController
   before_action :check_imageposts_params, only: [:update]
 
   def after_create
-    # params[:post][:imageposts].each do |item| sakjane iki yo iso walopun ra nggo strong parameter
-    #   @entity.imagestatuses.create!(:imageurl => item[:imageurl], :user_id => curent_user.id, :post_id => item[:post_id])
-    # end
     link = "#{@entity.id}"
     chanels=[]
+    params=[]
     message = "#{@entity.user.username} baru saja membuat post baru dengan judul #{@entity.title}"
     curent_user.followers.each do |item|
-      chanels << (ActionCable.server.broadcast "notification_channel_#{item.id}", message: message)
+      # params << {id: item.id, message: message} its doesnt work :(
       item.notifications.create!(:user_id => item.id, :link => "posts/#{link}", :message => "#{message}", :userhasresponse_id => curent_user.id)
+      chanels << (ActionCable.server.broadcast "notification_channel_#{item.id}", message: message)
     end
-    # ActionCable.server.broadcast('messages', {message: message.content, chatroom_id: message.chatroom_id})
-    # ActionCable.server.broadcast "notification_channel_1", message: message
-    ActionCable.server.broadcaster_for chanels #, {message: message}
+
+    # BroadcastNotificationJob.perform_later(params) its doesnt work :(
+    ActionCable.server.broadcaster_for chanels
   end
 
   # GET /posts/next/2

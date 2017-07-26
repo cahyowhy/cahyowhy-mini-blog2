@@ -3,11 +3,6 @@ class LikepostsController < BaseController
   before_action :authenticate_request, only: [:create]
   before_action :check_current_user_like, only: [:create]
 
-  private
-  def init_value
-    super(LIKEPOST)
-  end
-
   def after_create
     link = "#{@entity.post.id}"
     message = "#{@entity.user.username} baru saja melike post kamu dengan judul #{@entity.post.title}"
@@ -16,6 +11,11 @@ class LikepostsController < BaseController
     unless @entity.user==userhaspost
       userhaspost.notifications.create!(:user_id => userhaspost.id, :link => "posts/#{link}", :message => "#{message}")
     end
+  end
+
+  private
+  def init_value
+    super(LIKEPOST)
   end
 
   # Only allow a trusted parameter "white list" through.

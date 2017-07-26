@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :commentstatuses
   resources :notifications
   mount ActionCable.server => '/cable'
   resources :imageposts

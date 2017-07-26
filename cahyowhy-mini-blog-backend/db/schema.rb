@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170726083944) do
+ActiveRecord::Schema.define(version: 20170726163650) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,16 @@ ActiveRecord::Schema.define(version: 20170726083944) do
     t.datetime "updated_at", null: false
     t.index ["post_id"], name: "index_commentposts_on_post_id", using: :btree
     t.index ["user_id"], name: "index_commentposts_on_user_id", using: :btree
+  end
+
+  create_table "commentstatuses", force: :cascade do |t|
+    t.text     "comment"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "status_id"
+    t.index ["status_id"], name: "index_commentstatuses_on_status_id", using: :btree
+    t.index ["user_id"], name: "index_commentstatuses_on_user_id", using: :btree
   end
 
   create_table "imageposts", force: :cascade do |t|
@@ -124,6 +134,8 @@ ActiveRecord::Schema.define(version: 20170726083944) do
 
   add_foreign_key "commentposts", "posts"
   add_foreign_key "commentposts", "users"
+  add_foreign_key "commentstatuses", "statuses"
+  add_foreign_key "commentstatuses", "users"
   add_foreign_key "imageposts", "posts"
   add_foreign_key "imageposts", "users"
   add_foreign_key "images", "users"
