@@ -6,11 +6,10 @@ export default Ember.Controller.extend(BaseController, {
   afterRender(){
     const context = this;
     let consumer = this.cableService.createConsumer('ws://localhost:3000/cable?token=' + this.commonService.getToken());
-    let subscription = consumer.subscriptions.create("NotificationChannel", {
+    let subscription = consumer.subscriptions.create({channel: 'NotificationChannel', user_id: this.commonService.getId()}, {
       received: (data) => {
-        alert(data.message)
+        context.debug(data);
       }
-
     });
   }
 });

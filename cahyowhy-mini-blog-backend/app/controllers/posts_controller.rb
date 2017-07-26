@@ -9,12 +9,15 @@ class PostsController < BaseController
     #   @entity.imagestatuses.create!(:imageurl => item[:imageurl], :user_id => curent_user.id, :post_id => item[:post_id])
     # end
     link = "#{@entity.id}"
+    chanels=[]
     message = "#{@entity.user.username} baru saja membuat post baru dengan judul #{@entity.title}"
     curent_user.followers.each do |item|
+      chanels << (ActionCable.server.broadcast "notification_channel_#{item.id}", message: message)
       item.notifications.create!(:user_id => item.id, :link => "posts/#{link}", :message => "#{message}", :userhasresponse_id => curent_user.id)
     end
-
-      # ActionCable.server.broadcast 'notification_channel', message: message #asu iki ngebroadcast ng kabeh
+    # ActionCable.server.broadcast('messages', {message: message.content, chatroom_id: message.chatroom_id})
+    # ActionCable.server.broadcast "notification_channel_1", message: message
+    ActionCable.server.broadcaster_for chanels #, {message: message}
   end
 
   # GET /posts/next/2
