@@ -12,6 +12,7 @@ export default Ember.Controller.extend(BaseController, {
       const context = this;
       let user = this.get('user');
       if (this.checkBtnSaveDisabled(event)) {
+        this.debug(user.getChild());
         this.doSave("login", user.getChild()).then(function (response) {
           context.localStorage.setItem('user', response);
           context.transitionToRoute('dashboard', response.user.id);

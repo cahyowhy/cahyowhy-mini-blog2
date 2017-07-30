@@ -41,6 +41,8 @@ export default EmberUploader.FileField.extend({
       uploader.upload(this.get('files')).then(response => {
         context.sendAction("action", files[0], response[0].id, response[0].path.url);
         files = null;
+        context.debug(response);
+        context.commonService.showNotification(response.httpstatus);
       }, error => {
         context.debug(error);
       });

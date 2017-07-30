@@ -41,14 +41,15 @@ export default Ember.Mixin.create({
    * return only the property that we need
    * */
   select(param){
+    let data = JSON.parse(JSON.stringify(this));
+    let objectkey = "";
+    for (let key in data) {
+      objectkey = key;
+    }
     let result = {};
-    const context = this;
-    result[currentEntity] = {};
-    /*param.forEach(function (item) {
-      result[currentEntity][item] = context.get(`${currentEntity}.${item}`)
-    });*/
+
     param.forEach(function (item) {
-      result[currentEntity][item] = context.get(`${currentEntity}.${item}`)
+      result[objectkey][item] = data[objectkey][item];
     });
 
     return result;
@@ -57,35 +58,33 @@ export default Ember.Mixin.create({
    * return only inside the mother property
    * */
   getChild(){
+    let data = JSON.parse(JSON.stringify(this));
+    let objectkey = "";
+    for (let key in data) {
+      objectkey = key;
+    }
     let result = {};
-    // for (let key in this.get(currentEntity)) {
-    //   result[key] = this.get(`${currentEntity}.${key}`)
-    // }
-    for (let key in JSON.parse(JSON.stringify(this))) {
-      result[key] = JSON.parse(JSON.stringify(this))[key]
+
+    for (let key in data[objectkey]) {
+      result[key] = data[objectkey][key];
     }
 
     return result;
   },
+  /*
+   * return only child with property that we need
+   * */
   getChildWithSelection(param){
-    /*
-     * return only child with property that we need
-     * */
-    console.log(this.get(currentEntity));
-    console.log(this[currentEntity]);
-    console.log(currentEntity);
-    console.log(JSON.stringify(this));
-    console.log(this);
     let result = {};
-    const context = this;
+    let data = JSON.parse(JSON.stringify(this));
+    let objectkey = "";
+    for (let key in data) {
+      objectkey = key;
+    }
+
     param.forEach(function (item) {
-      result[item] = JSON.parse(JSON.stringify(this))[item]
+      result[item] = data[objectkey][item];
     });
-    /*
-     * param.forEach(function (item) {
-     result[item] = context.get(`${currentEntity}.${item}`)
-     });
-     * */
 
     return result;
   }

@@ -19,6 +19,7 @@ export default Ember.Mixin.create({
   },
   doRemove(type = "", param){
     let del;
+    const context = this;
     this.debug(this.commonService.getToken());
     switch (type) {
       case "image":
