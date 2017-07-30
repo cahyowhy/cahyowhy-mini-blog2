@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import BaseController from './base-controller';
 import CommentPost from '../models/commentpost';
-import Likecommentpost from '../models/likecommentpost';
+import Likecommentpost from '../entity/likecommentpost';
 
 export default Ember.Controller.extend(BaseController, {
   commentDisabled: true,
@@ -23,10 +23,12 @@ export default Ember.Controller.extend(BaseController, {
   },
   actions: {
     onFavouriteComment(id, param){
-      Likecommentpost.user_id = this.commonService.getId();
-      Likecommentpost.post_id = this.get("post").id;
-      Likecommentpost.commentpost_id = id;
-      this.doSave("likecomment", Likecommentpost).then();
+      let likecommentpost = Likecommentpost.create();
+      likecommentpost.set('likecommentpost.user_id', this.commonService.getId());
+      likecommentpost.set('likecommentpost.commentpost_id', id);
+      likecommentpost.set('likecommentpost.post_id', this.get("post").id);
+
+      this.doSave("likecommentpost", likecommentpost.getChild()).then();
     },
     doSave(event){
       const context = this;

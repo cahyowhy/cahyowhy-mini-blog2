@@ -18,6 +18,10 @@ export default Ember.Component.extend(BaseController, {
   init(){
     this._super(...arguments);
   },
+  didReceiveAttrs(){
+    this._super(...arguments);
+    this.applyLayout();
+  },
   didInsertElement(){
     this._super(...arguments);
     const context = this;

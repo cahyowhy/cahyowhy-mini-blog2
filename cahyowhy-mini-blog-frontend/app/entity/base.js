@@ -6,6 +6,7 @@ import Ember from 'ember';
 let currentEntity;
 export default Ember.Mixin.create({
   user: "user",
+  image: "image",
   post: "post",
   likepost: "likepost",
   commentpost: "commentpost",

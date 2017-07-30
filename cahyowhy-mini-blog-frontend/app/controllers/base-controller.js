@@ -40,18 +40,21 @@ export default Ember.Mixin.create({
     });
   },
   doFind(type = "", param){
-    let del;
+    let find;
     const context = this;
     switch (type) {
       case "post":
-        del = this.postService.find(param);
+        find = this.postService.find(param);
+        break;
+      case "image":
+        find = this.imageService.find(param);
         break;
       default:
         break;
     }
 
     return new Ember.RSVP.Promise(function (resolve, reject) {
-      del.then(function (response) {
+      find.then(function (response) {
         resolve(response);
       }).catch(function (err) {
         reject(err);
@@ -96,8 +99,8 @@ export default Ember.Mixin.create({
       case "comment":
         post = this.commentpostService.saveCommentPost(obj, this.commonService.getToken());
         break;
-      case "likecomment":
-        post = this.likecommentpostService.saveLikecommentpost(obj, this.commonService.getToken());
+      case "likecommentpost":
+        post = this.likecommentpostService.save(obj, this.commonService.getToken());
         break;
       case "likepost":
         post = this.likepostService.save(obj, this.commonService.getToken());

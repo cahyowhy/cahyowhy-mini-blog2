@@ -10,6 +10,7 @@ export default Ember.Route.extend({
     for (let key in offsetlimit()) {
       post[key] = offsetlimit()[key];
     }
+
     return Ember.RSVP.hash({
       posts: this.postService.find(post)
     })
