@@ -52,44 +52,45 @@ export default Ember.Controller.extend(Basecontroller, {
       let imagepost = this.get('imagepost');
       imagepost.set('imageposts_attributes.imageurl', url);
       imagepost.set('imageposts_attributes.user_id', this.commonService.getId());
-      imageposts.push(JSON.parse(JSON.stringify(imagepost.getChildWithSelection(['imageurl','user_id']))));
+      imageposts.push(JSON.parse(JSON.stringify(imagepost.getChildWithSelection(['imageurl', 'user_id']))));
 
-      // this.debug(imageposts);
-      // this.debug(imagepost);
-      // this.debug(imagepost.getChildWithSelection(['imageurl','user_id']));
-      // this.debug(JSON.stringify(this.get('imagepost')));
+      this.debug(imageposts);
       this.set("post.post.description", this.get("post.post.description") + img);
     },
-    onDeleteImage(index, id){
+    onDeleteImage(index, id, src){
       const context = this;
-      let descriptionhtml = Ember.$(this.get("description"));
-      let editEl = Ember.$("<p>").append(descriptionhtml);
-      let image = editEl.find("img#" + index);
+      Ember.$('#modal-delete-photo').modal('show');
+      Ember.$('#modal-delete-photo').on('shown.bs.modal', function () {
+        Ember.$(this).find('a.delete-photo').on('click', function () {
+          let descriptionhtml = Ember.$(context.get("post.post.description"));
+          let editEl = Ember.$("<p>").append(descriptionhtml);
+          let image = editEl.find("img#" + index);
 
-      this.debug(image.attr('src'));
-      let imageposts_ = [];
-      imageposts.forEach(function (item) {
-        if (item.imageurl !== image.attr('src')) {
-          imageposts_.push(item);
-        }
+          image.removeAttr("style").removeAttr("width").removeAttr("height");
+          let imageposts_ = [];
+          imageposts.forEach(function (item) {
+            if (item.imageurl !== src) {
+              imageposts_.push(item);
+            }
+          });
+
+          imageposts = imageposts_;
+          image.remove();
+          let newDescriptionHtml = editEl.html();
+          context.set("post.post.description", newDescriptionHtml);
+          context.doRemove("image", id).then(function () {
+            let images = [];
+            context.get("images").forEach(function (item) {
+              if (item.id !== id) {
+                images.push(item);
+              }
+            });
+            context.set("images", images);
+            context.set("post.post.description", newDescriptionHtml);
+            Ember.$('#modal-delete-photo').modal('hide');
+          });
+        });
       });
-
-      imageposts = imageposts_;
-      this.debug(imageposts);
-      image.remove();
-      let newDescriptionHtml = editEl.html();
-
-      this.set("post.post.description", newDescriptionHtml);
-      /*this.doRemove("image", id).then(function () {
-       let images = [];
-       context.get("images").forEach(function (item) {
-       if (item.id !== id) {
-       images.push(item);
-       }
-       });
-       context.set("images", images);
-       context.set("post.post.description", newDescriptionHtml);
-       });*/
     },
     onTypeSomething(value){
       this.debug(value);
@@ -115,11 +116,9 @@ export default Ember.Controller.extend(Basecontroller, {
         post.set('post.user_id', this.commonService.getId());
         post.set('post.imageposts_attributes', imageposts);
 
-        this.debug(JSON.stringify(post));
-        // this.doSave("post", Post).then(function (response) {
-        //   context.emptyField();
-        //   context.transitionToRoute('post-detail', response.id);
-        // });
+        let postEl = Ember.$("<p>").append(Ember.$(post.get('post.description')));
+        this.debug(post.get('post.description'));
+        this.debug(post.text());
       }
     }
   }
