@@ -50,6 +50,9 @@ export default Ember.Mixin.create({
       case "image":
         find = this.imageService.find(param);
         break;
+      case "comment":
+        find = this.commentpostService.find(param);
+        break;
       default:
         break;
     }
@@ -95,7 +98,7 @@ export default Ember.Mixin.create({
         post = this.loginService.save(obj);
         break;
       case "post":
-        post = this.postService.savePost(obj, this.commonService.getToken());
+        post = this.postService.save(obj, this.commonService.getToken());
         break;
       case "comment":
         post = this.commentpostService.save(obj, this.commonService.getToken());

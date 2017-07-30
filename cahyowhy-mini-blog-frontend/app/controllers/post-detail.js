@@ -1,9 +1,11 @@
 import Ember from 'ember';
 import BaseController from './base-controller';
-import CommentPost from '../models/commentpost';
 import Likecommentpost from '../entity/likecommentpost';
 import Commentpost from '../entity/commentpost';
+import Offsetlimit from '../entity/offsetlimit';
+import ENV from '../config/environment';
 
+let offset = 0;
 export default Ember.Controller.extend(BaseController, {
   commentDisabled: true,
   commentpost: Commentpost.create(),
@@ -26,6 +28,22 @@ export default Ember.Controller.extend(BaseController, {
       likecommentpost.set('likecommentpost.commentpost_id', id);
       likecommentpost.set('likecommentpost.post_id', this.get("post").id);
       this.doSave("likecommentpost", likecommentpost.getChild()).then();
+    },
+    onloadcomment(){
+      offset = offset + ENV.APP.DEFAULT_LIMIT;
+      const context = this;
+      let commentpost = Commentpost.create();
+      let offsetlimit = Offsetlimit(offset);
+      commentpost.set('commentpost.post_id', this.get("post").id);
+      for (let key in offsetlimit) {
+        commentpost.set(`commentpost.${key}`, offsetlimit[key]);
+      }
+
+      this.commentpostService.find(commentpost.getChildWithSelection(['post_id', 'offset', 'limit'])).then(function (response) {
+        response.forEach(function (item) {
+          context.get('comments').pushObject(item);
+        });
+      })
     },
     doSave(event){
       const context = this;

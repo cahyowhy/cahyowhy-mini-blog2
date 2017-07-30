@@ -9,6 +9,8 @@ export default Ember.Object.extend(BaseEntity, {
         category: "",
         imageposts_attributes: [],
         description: '',
+        review: '',
+        descriptiontext: ''
       }
     });
   }

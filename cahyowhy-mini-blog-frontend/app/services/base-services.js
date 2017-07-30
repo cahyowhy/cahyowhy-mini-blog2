@@ -28,6 +28,7 @@ export default Ember.Mixin.create({
     return this.service(this.method.get, api, authorization);
   },
   save(obj, authorization = ""){
+    this.debug(obj);
     return this.service(this.method.post, this.api, authorization, this.convertJSON(obj));
   },
   update(param = "", obj, authorization = ""){
