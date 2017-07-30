@@ -7,16 +7,24 @@ export default Ember.Mixin.create({
     put: 'PUT',
     delete: 'DELETE'
   },
-  init(api, param = null) {
+  init(api) {
     this.api = api;
-    this.param = param;
   },
   delete(param = "", authorization = ""){
     let api = this.api + param;
     return this.service(this.method.delete, api, authorization);
   },
   find(param = "", authorization = "") {
-    let api = this.api + param;
+    let api = "?";
+    if (typeof param === 'object' && param !== null) {
+      for (let key in param) {
+        api = api + key + "=" + param[key] + "&";
+      }
+
+      api = this.api + api;
+    } else {
+      api = this.api + param;
+    }
     return this.service(this.method.get, api, authorization);
   },
   save(obj, authorization = ""){

@@ -9,7 +9,7 @@ class BaseController < ApplicationController
   STATUS = "status"
   POST = "post"
   LIKEPOST = "likepost"
-  LIKECOMMENTPOST = "likepost"
+  LIKECOMMENTPOST = "likecommentpost"
   IMAGESTATUS = "imagestatus"
   IMAGE = "image"
   IMAGEPOST = "imagepost"

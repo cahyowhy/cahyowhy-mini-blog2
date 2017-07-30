@@ -1,26 +1,22 @@
 import Ember from 'ember';
-import User from '../models/user';
+import User from '../entity/user';
 import BaseController from './base-controller';
 
+
 export default Ember.Controller.extend(BaseController, {
-  name: "",
-  username: "",
-  password: "",
+  user: User.create(),
   passwordConfirmation: "",
-  btnDisable: Ember.computed.empty('passwordConfirmation', 'password', 'username', 'name') && Ember.computed("password", "passwordConfirmation", function () {
-    let password = this.get("password"), confirmPwd = this.get("passwordConfirmation");
+  btnDisable: Ember.computed.empty('passwordConfirmation', 'user.user.password', 'user.user.username', 'user.user.name') &&
+  Ember.computed("user.user.password", "passwordConfirmation", function () {
+    let password = this.get("user.user.password"), confirmPwd = this.get("passwordConfirmation");
     return !((password === confirmPwd) && (password.length >= 8));
-  }),
-  onObjectChange: Ember.observer('name', 'username', 'password', function () {
-    User.name = this.get("name");
-    User.username = this.get("username");
-    User.password = this.get("password");
   }),
   actions: {
     doSave(event){
       const context = this;
+      let user = this.get('user');
       if (this.checkBtnSaveDisabled(event)) {
-        this.doSave("user", User).then(function (response) {
+        this.doSave("user", user).then(function (response) {
           context.transitionToRoute('login');
         });
       }

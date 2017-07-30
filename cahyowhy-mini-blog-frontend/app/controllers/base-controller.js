@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Mixin.create({
   init(){
+    this._super(...arguments);
     let afterRenderExist = this.afterRender !== undefined && typeof this.afterRender === "function";
     if (this.applicationRoute.documentReady && afterRenderExist) {
       Ember.run.schedule('afterRender', this, function () {
@@ -27,9 +28,33 @@ export default Ember.Mixin.create({
         break;
     }
 
-    return new Ember.RSVP.Promise(function (resolve) {
+    return new Ember.RSVP.Promise(function (resolve, reject) {
+      del.then(function (response) {
+        context.commonService.showNotification(response.httpstatus);
+        Ember.run.later(function () {
+          resolve(response);
+        }, 1200);
+      }).catch(function (err) {
+        reject(err);
+      });
+    });
+  },
+  doFind(type = "", param){
+    let del;
+    const context = this;
+    switch (type) {
+      case "post":
+        del = this.postService.find(param);
+        break;
+      default:
+        break;
+    }
+
+    return new Ember.RSVP.Promise(function (resolve, reject) {
       del.then(function (response) {
         resolve(response);
+      }).catch(function (err) {
+        reject(err);
       });
     });
   },
@@ -46,12 +71,11 @@ export default Ember.Mixin.create({
 
     return new Ember.RSVP.Promise(function (resolve, reject) {
       update.then(function (response) {
-        context.commonService.showNotification(202);
+        context.commonService.showNotification(response.httpstatus);
         Ember.run.later(function () {
           resolve(response);
         }, 1200);
       }).catch(function (err) {
-        context.commonService.showNotification(402);
         reject(err);
       });
     });
@@ -61,10 +85,10 @@ export default Ember.Mixin.create({
     const context = this;
     switch (type) {
       case "user":
-        post = this.userService.saveUser(obj);
+        post = this.userService.save(obj);
         break;
       case "login":
-        post = this.loginService.login(obj);
+        post = this.loginService.save(obj);
         break;
       case "post":
         post = this.postService.savePost(obj, this.commonService.getToken());
@@ -76,7 +100,7 @@ export default Ember.Mixin.create({
         post = this.likecommentpostService.saveLikecommentpost(obj, this.commonService.getToken());
         break;
       case "likepost":
-        post = this.likepostService.saveLikepost(obj, this.commonService.getToken());
+        post = this.likepostService.save(obj, this.commonService.getToken());
         break;
       default :
         break;
@@ -84,16 +108,11 @@ export default Ember.Mixin.create({
 
     return new Ember.RSVP.Promise(function (resolve, reject) {
       post.then(function (response) {
-        context.commonService.showNotification(201);
+        context.commonService.showNotification(response.httpstatus);
         Ember.run.later(function () {
           resolve(response);
         }, 1200);
       }).catch(function (err) {
-        if (type === "login") {
-          context.commonService.showNotification(404);
-        } else {
-          context.commonService.showNotification(400);
-        }
         reject(err);
       });
     });

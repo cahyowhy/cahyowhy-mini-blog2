@@ -3,7 +3,6 @@ import Basecontroller from './base-controller';
 import ENV from '../config/environment';
 import EmberUploader from 'ember-uploader';
 import User from '../models/user';
-
 let imgWidth, imgHeight;
 export default Ember.Controller.extend(Basecontroller, {
   subscription: '',
@@ -18,21 +17,7 @@ export default Ember.Controller.extend(Basecontroller, {
     }
     return new Blob([blobArray], {type: mimetypeFile});
   },
-  afterRender(){
-    // const context = this;
-    // let consumer = this.cableService.createConsumer('ws://localhost:3000/cable?token=' + this.commonService.getToken());
-    // let subscription = consumer.subscriptions.create("RoomChannel", {
-    //   received: (data) => {
-    //     alert(data.message)
-    //   }
-    //
-    // });
-    // this.set('subscription', subscription);
-  },
   actions: {
-    sendMessage() {
-      // this.get('subscription').perform('speak', {message: 'bar'});
-    },
     onImageChange(file){
       let reader = new FileReader();
       reader.onload = function () {

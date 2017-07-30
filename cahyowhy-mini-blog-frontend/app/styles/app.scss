@@ -460,7 +460,7 @@ nav {
   height: 50px;
   left: 0px;
   bottom: 30px;
-  z-index: 20;
+  z-index: 22;
 }
 
 .dashboard-index {
@@ -570,4 +570,9 @@ nav {
 
 .z-index {
   z-index: 100000 !important;
+}
+
+.btn-wrapper-post {
+  text-align: center;
+  width: 100%;
 }

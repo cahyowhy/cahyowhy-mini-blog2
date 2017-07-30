@@ -9,7 +9,7 @@ class LikecommentpostsController < BaseController
 
     userhaspost = @entity.commentpost.user
     unless @entity.user==userhaspost
-      userhaspost.notifications.create!(:user_id => userhaspost.id, :link => "posts/#{link}", :message => "#{message}")
+      userhaspost.notifications.create!(:user_id => userhaspost.id, :link => "posts/#{link}", :message => "#{message}", :userhasresponse_id => curent_user.id)
     end
   end
 
@@ -27,7 +27,7 @@ class LikecommentpostsController < BaseController
         item.destroy
       end
 
-      render json: {message: "successfully delete like", status: deletesuccess}
+      render json: {message: "successfully delete like", httpstatus: deletesuccess}
     end
   end
 

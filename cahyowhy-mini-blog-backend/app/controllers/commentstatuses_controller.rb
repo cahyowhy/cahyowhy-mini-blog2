@@ -8,7 +8,7 @@ class CommentstatusesController < BaseController
 
     userhaspost = @entity.status.user
     unless @entity.user==userhaspost
-      userhaspost.notifications.create!(:user_id => userhaspost.id, :link => "status/#{link}", :message => "#{message}")
+      userhaspost.notifications.create!(:user_id => userhaspost.id, :link => "status/#{link}", :message => "#{message}", :userhasresponse_id => curent_user.id)
     end
   end
 

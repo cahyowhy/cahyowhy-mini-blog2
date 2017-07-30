@@ -5,10 +5,9 @@
         <img src="http://imgh.us/instagram-logo_4.jpg"/>
       </div>
       <div class="l-part">
-        {{input type="text" value=username placeholder="Username" class="input-1"}}
+        {{input type="text" value=user.user.username placeholder="Username" class="input-1"}}
         <div class="overlap-text">
-          {{input type="password" value=password placeholder="Pasword" class="input-2"}}
-          {{!--#link-to 'sign-up'}}Forgot?{{/link-to--}}
+          {{input type="password" value=user.user.password placeholder="Pasword" class="input-2"}}
         </div>
         <input disabled={{btnDisabled}} type="button" value="Log in" class="btn btn-login" onclick={{action "doSave"}}/>
       </div>

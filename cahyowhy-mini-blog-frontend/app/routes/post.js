@@ -1,9 +1,10 @@
 import Ember from 'ember';
+import offsetlimit from '../entity/offsetlimit';
 
 export default Ember.Route.extend({
   model(){
     return Ember.RSVP.hash({
-      posts: this.postService.findAllPost()
+      posts: this.postService.find(offsetlimit())
     })
   },
   setupController(controller, model){

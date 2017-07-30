@@ -1,11 +1,14 @@
 import Ember from 'ember';
 import ENV from '../config/environment';
+import Commentpost from '../entity/commentpost';
 
 export default Ember.Route.extend({
   model(param){
+    let commentpost = Commentpost.create();
+    commentpost.set('commentpost.post_id', param.id);
     return Ember.RSVP.hash({
-      post: this.postService.findPostById(param.id),
-      comments: this.commentpostService.findCommentPostByPostid(param.id),
+      post: this.postService.find(param.id),
+      comments: this.commentpostService.find(commentpost.getChildWithSelection(['post_id'])),
       nextPost: this.postService.findPostNextById(param.id),
       prevPost: this.postService.findPostPrevById(param.id),
       fbAPPID: ENV.APP.APP_FB_ID

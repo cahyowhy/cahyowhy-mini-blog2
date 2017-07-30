@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import BaseController from '../controllers/base-controller';
-import Likepost from '../models/likepost';
+import Likepost from '../entity/likepost';
 
 export default Ember.Component.extend(BaseController, {
   posts: "",
@@ -46,9 +46,10 @@ export default Ember.Component.extend(BaseController, {
   },
   actions: {
     onFavouritePost(id){
-      Likepost.user_id = this.commonService.getId();
-      Likepost.post_id = id;
-      this.doSave("likepost", Likepost).then();
+      let likepost = Likepost.create();
+      likepost.set('likepost.user_id', this.commonService.getId());
+      likepost.set('likepost.post_id', id);
+      this.doSave("likepost", likepost.getChildWithSelection(['user_id', 'post_id'])).then();
     }
   }
 });

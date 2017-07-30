@@ -9,7 +9,7 @@ class StatusesController < BaseController
     #   @entity.imagestatuses.create!(:imageurl => item[:imageurl], :user_id => curent_user.id)
     # end
     link = "statuses/#{@entity.id}"
-    message = "#{@entity.user.username} baru saja membuat status#{@entity.title}"
+    message = "#{@entity.user.username} baru saja membuat status#{@entity.statustext}"
     curent_user.followers.each do |item|
       item.notifications.create!(:user_id => item.id, :link => "#{link}", :message => "#{message}")
     end
