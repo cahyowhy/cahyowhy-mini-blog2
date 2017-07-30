@@ -8,12 +8,14 @@ export default Ember.Mixin.create({
   user: "user",
   image: "image",
   post: "post",
+  imageposts_attributes: "imageposts_attributes",
   likepost: "likepost",
   commentpost: "commentpost",
   likecommentpost: "likecommentpost",
   init(type, params){
     currentEntity = type;
-    params[type]['user-id'] = 0;
+    console.log(currentEntity);
+    params[type]['user_id'] = 0;
     params[type]['id'] = 0;
     this.create(params);
   },
@@ -42,6 +44,9 @@ export default Ember.Mixin.create({
     let result = {};
     const context = this;
     result[currentEntity] = {};
+    /*param.forEach(function (item) {
+      result[currentEntity][item] = context.get(`${currentEntity}.${item}`)
+    });*/
     param.forEach(function (item) {
       result[currentEntity][item] = context.get(`${currentEntity}.${item}`)
     });
@@ -53,8 +58,11 @@ export default Ember.Mixin.create({
    * */
   getChild(){
     let result = {};
-    for (let key in this.get(currentEntity)) {
-      result[key] = this.get(`${currentEntity}.${key}`)
+    // for (let key in this.get(currentEntity)) {
+    //   result[key] = this.get(`${currentEntity}.${key}`)
+    // }
+    for (let key in JSON.parse(JSON.stringify(this))) {
+      result[key] = JSON.parse(JSON.stringify(this))[key]
     }
 
     return result;
@@ -63,11 +71,21 @@ export default Ember.Mixin.create({
     /*
      * return only child with property that we need
      * */
+    console.log(this.get(currentEntity));
+    console.log(this[currentEntity]);
+    console.log(currentEntity);
+    console.log(JSON.stringify(this));
+    console.log(this);
     let result = {};
     const context = this;
     param.forEach(function (item) {
-      result[item] = context.get(`${currentEntity}.${item}`)
+      result[item] = JSON.parse(JSON.stringify(this))[item]
     });
+    /*
+     * param.forEach(function (item) {
+     result[item] = context.get(`${currentEntity}.${item}`)
+     });
+     * */
 
     return result;
   }

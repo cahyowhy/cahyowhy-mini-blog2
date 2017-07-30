@@ -576,3 +576,17 @@ nav {
   text-align: center;
   width: 100%;
 }
+
+.input-group-wrapper-createpost {
+  .input-group {
+    &:first-child {
+      padding: 0 7.5px 0 0;
+    }
+
+    &:last-child {
+      padding: 0 0 0 7.5px;
+    }
+    float: left;
+    width: 50%;
+  }
+}

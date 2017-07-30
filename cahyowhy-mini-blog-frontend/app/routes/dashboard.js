@@ -4,7 +4,7 @@ export default Ember.Route.extend({
   model(param){
     return Ember.RSVP.hash({
       id: param.id,
-      user: this.userService.findUserById(param.id)
+      user: this.userService.find(param.id)
     })
   },
   afterModel(model){

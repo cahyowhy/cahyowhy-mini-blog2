@@ -1,38 +1,24 @@
 import Ember from 'ember';
 import ENV from '../../config/environment';
-import Post from '../../models/post';
+import Post from '../../entity/post';
+import Imagepost from '../../entity/imagepost';
 import Basecontroller from '../base-controller';
 
+let imageposts = [];
 export default Ember.Controller.extend(Basecontroller, {
-  description: "",
-  title: "",
+  post: Post.create(),
+  imagepost: Imagepost.create(),
   url: ENV.APP.API_IMAGE,
   files: [],
   images: [],
-  isBtnDisable: Ember.computed.empty("description", "title"),
-  onObjectChange: Ember.observer('description', 'title', function () {
-    Post.title = this.get("title");
-    Post.description = this.get("description");
-  }),
+  isBtnDisable: Ember.computed.empty("post.post.description", "post.post.title", "post.post.category"),
   emptyField(){
-    this.set("description","");
-    this.set("title","");
-    this.set("images","");
-  },
-  setImages(){
-    let images = [];
-    const context = this;
-    context.imageService.findImageByUserid(context.commonService.getId()).then(function (response) { //set images
-      response.forEach(function (item) {
-        images.push({id: item.id, src: ENV.APP.API_URL + item.path.url, url: ENV.APP.API_URL + item.path.url});
-      });
-      context.set('images', images);
-    });
-
-    Ember.$('.grid').masonry({
-      itemSelector: '.grid-item',
-      columnWidth: 920 / 3
-    });
+    this.set("post.post.description", "");
+    this.set("post.post.title", "");
+    this.set("post.post.category", "");
+    this.set("imagepost.imageposts_attributes.imageurl", "");
+    this.set("files", []);
+    imageposts = [];
   },
   options: {
     selector: 'textarea',
@@ -63,38 +49,52 @@ export default Ember.Controller.extend(Basecontroller, {
     onAddImageToPost(index, url){
       this.debug(index + " ", url);
       let img = `<img id="${index}" class="imgPost" src="${url}" style="width: 100%; height: auto"> `;
-      Post.image = `${img}, ${Post.image}`;
-      this.set("description", this.get("description") + img);
+      let imagepost = this.get('imagepost');
+      imagepost.set('imageposts_attributes.imageurl', url);
+      imagepost.set('imageposts_attributes.user_id', this.commonService.getId());
+      imageposts.push(JSON.parse(JSON.stringify(imagepost.getChildWithSelection(['imageurl','user_id']))));
+
+      // this.debug(imageposts);
+      // this.debug(imagepost);
+      // this.debug(imagepost.getChildWithSelection(['imageurl','user_id']));
+      // this.debug(JSON.stringify(this.get('imagepost')));
+      this.set("post.post.description", this.get("post.post.description") + img);
     },
     onDeleteImage(index, id){
       const context = this;
       let descriptionhtml = Ember.$(this.get("description"));
       let editEl = Ember.$("<p>").append(descriptionhtml);
       let image = editEl.find("img#" + index);
-      let imagesearchstring = "";
-      Post.image.split(",").forEach(function (item) {
-        if(item!==image.removeAttr("style").removeAttr("width").removeAttr("height")[0].outerHTML){
-          imagesearchstring += `${item}, ${imagesearchstring}`
+
+      this.debug(image.attr('src'));
+      let imageposts_ = [];
+      imageposts.forEach(function (item) {
+        if (item.imageurl !== image.attr('src')) {
+          imageposts_.push(item);
         }
       });
-      Post.image = imagesearchstring;
+
+      imageposts = imageposts_;
+      this.debug(imageposts);
       image.remove();
       let newDescriptionHtml = editEl.html();
 
-      this.doRemove("image", id).then(function () {
-        let images = [];
-        context.get("images").forEach(function (item) {
-          if (item.id !== id) {
-            images.push(item);
-          }
-        });
-        context.set("images", images);
-        context.set("description", newDescriptionHtml);
-      });
+      this.set("post.post.description", newDescriptionHtml);
+      /*this.doRemove("image", id).then(function () {
+       let images = [];
+       context.get("images").forEach(function (item) {
+       if (item.id !== id) {
+       images.push(item);
+       }
+       });
+       context.set("images", images);
+       context.set("post.post.description", newDescriptionHtml);
+       });*/
     },
     onTypeSomething(value){
       this.debug(value);
-      this.set("description", value);
+      let post = this.get('post');
+      post.set('post.description', value);
     },
     onImageChange(file, idFile, urlFile){ //urlFile, file yg ada di server, sudah di upload
       let reader = new FileReader();
@@ -111,11 +111,15 @@ export default Ember.Controller.extend(Basecontroller, {
     doSave(event){
       const context = this;
       if (this.checkBtnSaveDisabled(event)) {
-        Post.user_id = this.localStorage.getItem('user').user.id;
-        this.doSave("post", Post).then(function (response) {
-          context.emptyField();
-          context.transitionToRoute('post-detail', response.id);
-        });
+        let post = this.get('post');
+        post.set('post.user_id', this.commonService.getId());
+        post.set('post.imageposts_attributes', imageposts);
+
+        this.debug(JSON.stringify(post));
+        // this.doSave("post", Post).then(function (response) {
+        //   context.emptyField();
+        //   context.transitionToRoute('post-detail', response.id);
+        // });
       }
     }
   }

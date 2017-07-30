@@ -14,7 +14,13 @@
                 <span>Upload gambar</span>
               </a>
             </span>
-                {{input class="form-control" placeholder="Masukkan Judul posting" type="text" value = title}}
+                <div class="input-group-wrapper-createpost">
+                  <div class="input-group">{{input class="form-control" placeholder="Masukkan Judul posting" type="text"
+                                                   value = post.post.title}}</div>
+                  <div class="input-group">{{input class="form-control" placeholder="Masukkan category posting"
+                                                   type="text"
+                                                   value = post.post.category}}</div>
+                </div>
               </div>
             </div>
           </div>
@@ -22,7 +28,7 @@
             {{#each images as |image index|}}
               <div class="grid-del animated fadeIn" style="background-image: url(
                 '{{image.src}}')">
-                <i onclick={{action "onAddImageToPost" index image.url}} class="ion-plus-circled"></i>
+                <i {{action "onAddImageToPost" index image.src}} class="ion-plus-circled"></i>
                 <i {{action "onDeleteImage" index image.id image.src}} class="ion ion-close-circled"></i>
 
                 <div class="black-shadow"></div>
@@ -40,7 +46,7 @@
             </div>
           </div>
         </div>
-        {{tinymce-editor options=options value=description onValueChanged=(action "onTypeSomething")}}
+        {{tinymce-editor options=options value=post.post.description onValueChanged=(action "onTypeSomething")}}
       </div>
     </div>
   </div>

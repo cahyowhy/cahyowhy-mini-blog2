@@ -22,7 +22,7 @@ export default Ember.Mixin.create({
     this.debug(this.commonService.getToken());
     switch (type) {
       case "image":
-        del = this.imageService.deleteImage(param, this.commonService.getToken());
+        del = this.imageService.delete(param, this.commonService.getToken());
         break;
       default:
         break;
@@ -97,7 +97,7 @@ export default Ember.Mixin.create({
         post = this.postService.savePost(obj, this.commonService.getToken());
         break;
       case "comment":
-        post = this.commentpostService.saveCommentPost(obj, this.commonService.getToken());
+        post = this.commentpostService.save(obj, this.commonService.getToken());
         break;
       case "likecommentpost":
         post = this.likecommentpostService.save(obj, this.commonService.getToken());
