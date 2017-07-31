@@ -1,9 +1,9 @@
-class CommentstatusSerializer < ActiveModel::Serializer
+class CommentstatusSerializer < BaseSerializer
   attributes :id, :comment, :created_at
   has_one :user
   has_one :status
 
   def status
-    {id: object.post.id, title: object.post.title}
+    {id: object.status.id}
   end
 end
