@@ -24,9 +24,15 @@
               Home{{/link-to}}</li>
             <li class="js_nav-item nav-item">{{#link-to 'post' class="nav-item-child nav-item-hover"}}
               Post{{/link-to}}</li>
-            <li class="js_nav-item nav-item login">{{#link-to 'login' class="nav-item-child nav-item-hover"}}
-              Login{{/link-to}}</li>
-            <li class="js_nav-item nav-item user hide"><a href="" class="nav-item-child nav-item-hover">Profile</a></li>
+            {{#if isLinkProfileVisible}}
+              <li class="js_nav-item nav-item user">
+                {{#link-to 'dashboard' id class="nav-item-child nav-item-hover"}}
+                  Post{{/link-to}}
+              </li>
+            {{else}}
+              <li class="js_nav-item nav-item login">{{#link-to 'login' class="nav-item-child nav-item-hover"}}
+                Login{{/link-to}}</li>
+            {{/if}}
           </ul>
         </div>
       </div>

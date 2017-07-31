@@ -16,4 +16,11 @@ class PostSerializer < BaseSerializer
 
     arr
   end
+
+  def attributes(*args)
+    params = @instance_options[:exclude]
+    return super unless params != nil
+    filtered = super.except(*params)
+    filtered
+  end
 end

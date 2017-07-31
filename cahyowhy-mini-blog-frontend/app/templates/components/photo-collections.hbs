@@ -1,0 +1,12 @@
+<div class="photo-collections">
+  <div class="photo-collection-inner">
+    {{#each images as |image index|}}
+      <div class="photo" style="background-image: url(
+        '{{image.src}}')">
+        <div class="photo-overlay"></div>
+        <i onclick={{action "onAddImage" index image.id image.src}} class="ion ion-close-circled"></i>
+        <i onclick={{action "onDelImage" index image.id image.src}} class="ion ion-plus-circled"></i>
+      </div>
+    {{/each}}
+  </div>
+</div>

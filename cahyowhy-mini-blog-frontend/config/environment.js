@@ -73,6 +73,7 @@ module.exports = function (environment) {
   ENV.APP.API_POST_LIKE = ENV.APP.API_URL + "likeposts/";
   ENV.APP.API_POST = ENV.APP.API_URL + "posts/";
   ENV.APP.API_IMAGE = ENV.APP.API_URL + "images/";
+  ENV.APP.API_STATUS = ENV.APP.API_URL + "statuses/";
   ENV.APP.API_LOGIN = ENV.APP.API_URL + "authenticate/";
   ENV.APP.API_IMAGE_PARAM_NAME = "image[imagepath_data]";
   return ENV;

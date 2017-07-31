@@ -8,6 +8,7 @@ export default Ember.Mixin.create({
   user: "user",
   image: "image",
   post: "post",
+  status: "status",
   imageposts_attributes: "imageposts_attributes",
   likepost: "likepost",
   commentpost: "commentpost",

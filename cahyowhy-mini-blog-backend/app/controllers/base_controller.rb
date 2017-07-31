@@ -78,7 +78,12 @@ class BaseController < ApplicationController
     else
       @entities = @entity.limit(params[:limit]).offset(params[:offset]).where(paramshash)
     end
-    render json: @entities, httpstatus: getsuccess
+
+    if @current_entity == POST
+      render json: @entities, httpstatus: getsuccess, exclude: [:description, :descriptiontext]
+    else
+      render json: @entities, httpstatus: getsuccess
+    end
   end
 
   def show
