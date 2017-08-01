@@ -4,9 +4,9 @@
     <img src="/img/no-image.png">
   </div>
   <div class="media-body">
-			<textarea class="form-control">
-			</textarea>
-    <a class="btn btn-primary">Update status</a>
+    {{tinymce-editor options=options class="form-control" value=status.status.statushtml
+                     onValueChanged=(action "onTypeSomething")}}
+    <a disabled={{isBtnDisable}} {{action "doSave"}} class="btn btn-primary">Update status</a>
     <a class="btn btn-primary"><i class="ion ion-camera"></i>Tambah foto</a>
   </div>
 </div>

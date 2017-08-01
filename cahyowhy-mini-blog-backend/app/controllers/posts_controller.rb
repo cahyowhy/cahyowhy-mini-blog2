@@ -12,7 +12,7 @@ class PostsController < BaseController
     curent_user.followers.each do |item|
       # params << {id: item.id, message: message} its doesnt work :(
       item.notifications.create!(:user_id => item.id, :link => "posts/#{link}", :message => "#{message}", :userhasresponse_id => curent_user.id)
-      chanels << (ActionCable.server.broadcast "notification_channel_#{item.id}", message: message)
+      chanels << (ActionCable.server.broadcast "notification_channel_#{item.id}", {message: message, link: "posts/#{link}"})
     end
 
     # BroadcastNotificationJob.perform_later(params) its doesnt work :(

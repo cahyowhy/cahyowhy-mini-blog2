@@ -93,7 +93,6 @@ export default Ember.Controller.extend(Basecontroller, {
       });
     },
     onTypeSomething(value){
-      this.debug(value);
       let post = this.get('post');
       post.set('post.description', value);
     },

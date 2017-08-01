@@ -61,7 +61,12 @@ export default Ember.Service.extend({
       this.notificationService.error(param);
     }
   },
-  showCustomNotification(param){
-    this.notificationService.info(param);
+  showCustomNotification(param, param2){
+    this.notificationService.info(param, {
+      onClick: function () {
+        window.open(param2);
+      },
+      clearDuration: 3000
+    });
   },
 });

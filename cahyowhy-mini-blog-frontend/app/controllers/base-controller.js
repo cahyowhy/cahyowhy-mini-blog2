@@ -100,6 +100,9 @@ export default Ember.Mixin.create({
       case "post":
         post = this.postService.save(obj, this.commonService.getToken());
         break;
+      case "status":
+        post = this.statusService.save(obj, this.commonService.getToken());
+        break;
       case "comment":
         post = this.commentpostService.save(obj, this.commonService.getToken());
         break;

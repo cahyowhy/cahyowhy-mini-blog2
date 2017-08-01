@@ -11,7 +11,8 @@ export default Ember.Controller.extend(BaseController, {
       user_id: this.commonService.getId()
     }, {
       received: (data) => {
-        alert(data);
+        // alert(data.message.message);
+        context.commonService.showCustomNotification(data.message, data.link);
       }
     });
   }
