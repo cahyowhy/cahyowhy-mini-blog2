@@ -109,6 +109,9 @@ export default Ember.Mixin.create({
       case "likepost":
         post = this.likepostService.save(obj, this.commonService.getToken());
         break;
+      case "commentstatus":
+        post = this.commentstatusService.save(obj, this.commonService.getToken());
+        break;
       default :
         break;
     }

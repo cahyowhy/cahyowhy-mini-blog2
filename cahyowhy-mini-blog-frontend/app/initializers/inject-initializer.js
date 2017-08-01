@@ -16,6 +16,7 @@ export default {
     application.inject('route', 'likepostService', 'service:likepostService');
     application.inject('route', 'cableService', 'service:cable');
     application.inject('route', 'statusService', 'service:statusService');
+    application.inject('route', 'commentstatusService', 'service:commentstatusService');
 
     application.inject('controller', 'userService', 'service:userService');
     application.inject('controller', 'loginService', 'service:loginService');
@@ -30,6 +31,7 @@ export default {
     application.inject('controller', 'applicationRoute', 'route:application');
     application.inject('controller', 'cableService', 'service:cable');
     application.inject('controller', 'statusService', 'service:statusService');
+    application.inject('controller', 'commentstatusService', 'service:commentstatusService');
 
     application.inject('component', 'localStorage', 'service:local-storage');
     application.inject('component', 'commonService', 'service:commonService');
@@ -44,5 +46,6 @@ export default {
     application.inject('component', 'applicationRoute', 'route:application');
     application.inject('component', 'cableService', 'service:cable');
     application.inject('component', 'statusService', 'service:statusService');
+    application.inject('component', 'commentstatusService', 'service:commentstatusService');
   }
 };

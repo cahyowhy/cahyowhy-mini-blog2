@@ -1,0 +1,32 @@
+<div class="status-item">
+  <div class="status-detail">
+    <div class="pull-left"><img src="/img/no-image.png">
+    </div>
+    <div class="media-body">
+      <p>{{username}}</p>
+      <p>{{statustext}}</p>
+    </div>
+  </div>
+  <div class="comment-statuses">
+    <div class="detailwrapper">
+      <h3 class="pull-left">Komentar</h3>
+      {{!-- {{action "onToggleComment" "#comment-"statusId }}  --}}
+      <a href="#comment-{{statusId}}" data-target="#comment-{{statusId}}" data-toggle="collapse"
+         class="pull-right"><p class="pull-right">lihat komentar</p></a>
+    </div>
+    <div id="comment-{{statusId}}" class="collapse comment-wrapper">
+      {{#each commentstatuses as |comment index|}}
+        <div class="comment-status">
+          <div class="pull-left"><img src="/img/no-image.png">
+          </div>
+          <div class="media-body">
+            <p>{{comment.user.username}}</p>
+            <p>{{comment.comment}}</p>
+          </div>
+        </div>
+      {{/each}}
+      {{textarea value=comment.commentstatus.comment class="form-control" placeholder="tulis komentar"}}
+      <a {{action "doSaveComment"}} style="margin-top: 15px;width: 150px;" class="btn btn-primary pull-right">Save</a>
+    </div>
+  </div>
+</div>

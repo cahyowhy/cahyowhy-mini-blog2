@@ -52,21 +52,33 @@ body {
         }
       }
     }
+    &:first-child {
+      margin-top: 30px;
+    }
     overflow: auto;
     padding: 15px;
     background: white;
     border-radius: 6px;
     border: 1px solid $greyDark;
+    margin-bottom: 15px;
   }
 
   .comment-statuses {
     overflow: auto;
     padding: 15px;
     background: $greyDark;
-    h3 {
-      font-size: 15px;
-      font-weight: 500;
-      margin-bottom: 5px;
+    .detailwrapper {
+      overflow: auto;
+      h3 {
+        font-size: 15px;
+        font-weight: 500;
+        margin-bottom: 5px;
+      }
+      p {
+        margin-bottom: 5px;
+        font-size: 13px;
+        font-weight: 300;
+      }
     }
     .comment-status {
       .pull-left {

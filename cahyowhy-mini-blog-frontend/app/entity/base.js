@@ -12,6 +12,7 @@ export default Ember.Mixin.create({
   imageposts_attributes: "imageposts_attributes",
   likepost: "likepost",
   commentpost: "commentpost",
+  commentstatus: "commentstatus",
   likecommentpost: "likecommentpost",
   init(type, params){
     currentEntity = type;

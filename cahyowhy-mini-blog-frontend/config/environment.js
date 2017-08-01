@@ -25,8 +25,8 @@ module.exports = function (environment) {
       LOGGER: false,
       API_URL: 'http://127.0.0.1:3000/',
       APP_FB_ID: '106474983194157',
-      DEFAULT_OFFSET:0,
-      DEFAULT_LIMIT:9
+      DEFAULT_OFFSET: 0,
+      DEFAULT_LIMIT: 9
       // Here you can pass flags/options to your application instance
       // when it is created
     }
@@ -69,10 +69,12 @@ module.exports = function (environment) {
   ENV.APP.API_USER = ENV.APP.API_URL + "users/";
   ENV.APP.API_AUTH = ENV.APP.API_URL + "auth/";
   ENV.APP.API_POST_COMMENT = ENV.APP.API_URL + "commentposts/";
+  ENV.APP.API_STATUS_COMMENT = ENV.APP.API_URL + "commentstatuses/";
   ENV.APP.API_POST_LIKE_COMMENT = ENV.APP.API_URL + "likecommentposts/";
   ENV.APP.API_POST_LIKE = ENV.APP.API_URL + "likeposts/";
   ENV.APP.API_POST = ENV.APP.API_URL + "posts/";
   ENV.APP.API_IMAGE = ENV.APP.API_URL + "images/";
+  ENV.APP.API_STATUS = ENV.APP.API_URL + "statuses/";
   ENV.APP.API_STATUS = ENV.APP.API_URL + "statuses/";
   ENV.APP.API_LOGIN = ENV.APP.API_URL + "authenticate/";
   ENV.APP.API_IMAGE_PARAM_NAME = "image[imagepath_data]";

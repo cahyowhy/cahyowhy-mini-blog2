@@ -12,30 +12,10 @@
 </div>
 <div class="status-wrapper">
   {{#each statuses as |status index|}}
-    <div class="status-item">
-      <div class="status-detail">
-        <div class="pull-left"><img src="/img/no-image.png">
-        </div>
-        <div class="media-body">
-          <p>{{status.user.username}}</p>
-          <p>{{status.statustext}}</p>
-        </div>
-      </div>
-      <div class="comment-statuses">
-        <h3>Komentar</h3>
-        {{#each statuses.commentstatuses as |comment|}}
-          <div class="comment-status">
-            <div class="pull-left"><img src="/img/no-image.png">
-            </div>
-            <div class="media-body">
-              <p>{{comment.user.username}}</p>
-              <p>{{comment.comment}}</p>
-            </div>
-          </div>
-        {{/each}}
-        <textarea class="form-control" placeholder="tulis komentar"></textarea>
-        <a {{action "doSaveComment" status.id}} style="margin-top: 15px;width: 150px;" class="btn btn-primary pull-right">Save</a>
-      </div>
-    </div>
+    {{status-item
+      username=status.user.username
+      statustext=status.statustext
+      statusId=status.id
+      commentstatuses=status.commentstatuses}}
   {{/each}}
 </div>

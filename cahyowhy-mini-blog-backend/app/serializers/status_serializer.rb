@@ -7,21 +7,9 @@ class StatusSerializer < BaseSerializer
   def commentstatuses
     arr=[]
     object.commentstatuses.each do |item|
-      arr<<{id: item.id, user: user_comment_status(item.user), created_at: item.created_at, comment: item.comment}
+      arr<<{id: item.id, user: {id: item.user.id, imageurl: item.user.imageurl, username: item.user.username}, created_at: item.created_at, comment: item.comment}
     end
 
     arr
-  end
-
-  def user_comment_status(param)
-    let filter = {}
-    param.each do |key, val|
-      unless key=="password_digest" && key=="password" & key=="created_at" & key=="updated_at"
-
-      end
-      filter[key] = val
-    end
-
-    filter
   end
 end
