@@ -1,7 +1,9 @@
 import Ember from 'ember';
 import BaseController from '../base-controller';
 import Status from '../../entity/status';
+import ImageStatus from '../../entity/imagestatus';
 
+let imageposts = [];
 export default Ember.Controller.extend(BaseController, {
   status: Status.create(),
   isBtnDisable: Ember.computed.empty('status.status.statushtml'),
@@ -47,7 +49,7 @@ export default Ember.Controller.extend(BaseController, {
     doSave(event){
       let status = this.get('status');
       status.set('status.user_id', this.commonService.getId());
-      
+
 
       if (this.checkBtnSaveDisabled(event)) {
         this.doSave("commentstatus",)
