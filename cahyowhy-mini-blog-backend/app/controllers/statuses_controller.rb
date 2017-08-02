@@ -30,7 +30,7 @@ class StatusesController < BaseController
 
   # Only allow a trusted parameter "white list" through.
   def status_params
-    params.require(:status).permit(:user_id, :statustext, :imagestatuses_attributes => [:imageurl, :status_id, :user_id])
+    params.require(:status).permit(:user_id, :statustext, :statushtml, :imagestatuses_attributes => [:imageurl, :status_id, :user_id])
   end
 
   # check weather if the imagestatuses params is visible, render a json

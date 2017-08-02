@@ -74,9 +74,9 @@ class BaseController < ApplicationController
 
     if params[:offset].blank? && params[:limit].blank?
       # @entities = @entity.where(paramshash) => actually this also work, wether the paramshash is empty
-      @entities = @entity.all
+      @entities = @entity.all.order("created_at DESC")
     else
-      @entities = @entity.limit(params[:limit]).offset(params[:offset]).where(paramshash)
+      @entities = @entity.limit(params[:limit]).offset(params[:offset]).where(paramshash).order("created_at DESC")
     end
 
     if @current_entity == POST

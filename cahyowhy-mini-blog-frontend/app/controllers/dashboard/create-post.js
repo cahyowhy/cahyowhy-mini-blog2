@@ -113,10 +113,10 @@ export default Ember.Controller.extend(Basecontroller, {
       if (this.checkBtnSaveDisabled(event)) {
         let post = this.get('post');
         let postEl = Ember.$("<p>").append(Ember.$(post.get('post.description')));
+        post.set('post.descriptiontext', postEl.text());
         post.set('post.user_id', this.commonService.getId());
         post.set('post.imageposts_attributes', imageposts);
         post.set('post.review', postEl.text().replace(/\s+/g, ' ').trim().substring(0, 150));
-        post.set('post.descriptiontext', postEl.text());
 
         this.doSave("post", post).then(function (response) {
           context.emptyField();

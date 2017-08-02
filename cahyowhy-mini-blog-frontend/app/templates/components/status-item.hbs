@@ -4,7 +4,7 @@
     </div>
     <div class="media-body">
       <p>{{username}}</p>
-      <p>{{statustext}}</p>
+      {{{status}}}
     </div>
   </div>
   <div class="comment-statuses">
@@ -25,8 +25,9 @@
           </div>
         </div>
       {{/each}}
-      {{textarea value=comment.commentstatus.comment class="form-control" placeholder="tulis komentar"}}
-      <a {{action "doSaveComment"}} style="margin-top: 15px;width: 150px;" class="btn btn-primary pull-right">Save</a>
+      {{textarea value=comment class="form-control" placeholder="tulis komentar"}}
+      <a disabled={{isBtnDisable}} onclick={{action "doSaveComment"}} style="margin-top: 15px;width: 150px;" class="btn btn-primary
+      pull-right">Save</a>
     </div>
   </div>
 </div>

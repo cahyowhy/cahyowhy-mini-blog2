@@ -11,32 +11,39 @@ export default Ember.Component.extend(BaseController, {
    * all your textarea status-item will also has a value!
    * */
   comment: "",
+  isBtnDisable: Ember.computed.empty('comment'),
   // comment: Commentstatus.create(),
+  doEmptyField(){
+    this.set("comment", "");
+  },
   actions: {
-    doSaveComment(){
+    doSaveComment(event){
       const context = this;
       /*let comment = this.get("comment");
        comment.set('commentstatus.user_id', this.commonService.getId());
        comment.set('commentstatus.status_id', this.get('statusId'));
        this.debug(comment);*/
-      let comment = {
-        commentstatus: {
-          user_id: context.commonService.getId(),
-          status_id: context.get("status_id"),
-          comment: context.get('comment')
-        }
-      };
-      this.doSave("commentstatus", comment).then(function (results) {
-        context.debug(results);
-        context.get('commentstatuses').pushObject({
-          id: results.id,
-          comment: results.comment,
-          imageurl: results.imageurl,
-          user: {
-            username: results.user.username
+      if (this.checkBtnSaveDisabled(event)) {
+        let comment = {
+          commentstatus: {
+            user_id: context.commonService.getId(),
+            status_id: context.get("statusId"),
+            comment: context.get('comment')
           }
+        };
+        this.doSave("commentstatus", comment).then(function (results) {
+          context.debug(results);
+          context.get('commentstatuses').pushObject({
+            id: results.id,
+            comment: results.comment,
+            imageurl: results.imageurl,
+            user: {
+              username: results.user.username
+            }
+          });
+          context.doEmptyField();
         });
-      });
+      }
     }
   }
 });

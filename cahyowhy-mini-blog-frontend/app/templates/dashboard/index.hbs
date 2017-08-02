@@ -4,9 +4,16 @@
     <img src="/img/no-image.png">
   </div>
   <div class="media-body">
-    {{tinymce-editor options=options class="form-control" value=status.status.statushtml
+    {{tinymce-editor options=options class="form-control no-border" value=status.status.statushtml
                      onValueChanged=(action "onTypeSomething")}}
-    <a disabled={{isBtnDisable}} {{action "doSave"}} class="btn btn-primary">Update status</a>
+    <div class="add-photo-to-status">
+      {{#each images as |image|}}
+        <div style="background-image: url('{{image.src}}')" class="photo-item">
+          <i {{action 'onDeleteStatusPhoto' image.id}} class="ion ion-close-circled"></i>
+        </div>
+      {{/each}}
+    </div>
+    <a onclick={{action "doSave"}} disabled={{isBtnDisable}} class="btn btn-primary">Update status</a>
     <a class="btn btn-primary"><i class="ion ion-camera"></i>Tambah foto</a>
   </div>
 </div>
@@ -14,7 +21,7 @@
   {{#each statuses as |status index|}}
     {{status-item
       username=status.user.username
-      statustext=status.statustext
+      status=status.statushtml
       statusId=status.id
       commentstatuses=status.commentstatuses}}
   {{/each}}

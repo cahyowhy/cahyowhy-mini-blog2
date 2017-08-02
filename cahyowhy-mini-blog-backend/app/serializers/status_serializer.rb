@@ -1,5 +1,5 @@
 class StatusSerializer < BaseSerializer
-  attributes :id, :statustext, :imagestatuses
+  attributes :id, :statustext, :statushtml, :imagestatuses
   has_one :user
   has_many :imagestatuses
   has_many :commentstatuses

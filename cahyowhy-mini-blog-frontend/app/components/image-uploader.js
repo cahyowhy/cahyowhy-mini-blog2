@@ -37,16 +37,23 @@ export default EmberUploader.FileField.extend({
     });
     this.get('files').pushObject(files[0]);
 
+    /*
+     * langsung upload
+     * */
     if (!this.get("isEditFirst")) {
-      uploader.upload(this.get('files')).then(response => {
-        context.sendAction("action", files[0], response[0].id, response[0].path.url);
+      uploader.upload(this.get('files')).then(response => { //response return an array
+        let lastdata = response.length - 1;
+        context.sendAction("action", files[0], response[lastdata].id, response[lastdata].path.url);
+        context.commonService.showNotification(response[lastdata].httpstatus);
         files = null;
         context.debug(response);
-        context.commonService.showNotification(response.httpstatus);
       }, error => {
         context.debug(error);
       });
     } else {
+      /*
+       * edit dulu lalu kirim file nya
+       * */
       this.sendAction("action", files[0]);
     }
 
