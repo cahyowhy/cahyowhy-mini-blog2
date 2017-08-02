@@ -6,6 +6,6 @@ class BaseSerializer < ActiveModel::Serializer
   end
 
   def created_at
-    object.created_at.to_s.split(" ")[0]
+    object.created_at
   end
 end

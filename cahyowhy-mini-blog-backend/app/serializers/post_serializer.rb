@@ -4,10 +4,6 @@ class PostSerializer < BaseSerializer
   has_many :likeposts
   has_many :imageposts
 
-  def created_at
-    object.created_at.to_s.split(" ")[0]
-  end
-
   def likeposts
     arr = []
     object.likeposts.each do |item|
