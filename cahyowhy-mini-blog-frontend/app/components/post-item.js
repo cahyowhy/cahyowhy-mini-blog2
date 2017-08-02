@@ -13,6 +13,7 @@ export default Ember.Component.extend(BaseController, {
           columnWidth: '.post-item',
         });
       });
+      $grid.masonry('reloadItems');
     });
   },
   init(){
