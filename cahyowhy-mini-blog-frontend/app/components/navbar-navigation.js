@@ -13,5 +13,11 @@ export default Ember.Component.extend({
     let id = this.commonService.getId();
     this.set('id', id);
     this.set('isLinkProfileVisible', true);
+  },
+  actions: {
+    onLogOut(){
+      this.localStorage.setItem('user', []);
+      window.location.replace("/");
+    }
   }
 });

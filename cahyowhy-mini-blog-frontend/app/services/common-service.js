@@ -8,13 +8,37 @@ export default Ember.Service.extend({
     this.notificationService.setDefaultClearDuration(1200);
   },
   getToken(){
-    return this.get('localStorage').getItem('user').auth_token
+    let token;
+    try {
+      token = this.get('localStorage').getItem('user').auth_token;
+    } catch (err) {
+      token = null;
+      this.debug(err);
+    }
+
+    return token;
   },
   getId(){
-    return this.get('localStorage').getItem('user').user.id;
+    let id;
+    try {
+      id = this.get('localStorage').getItem('user').user.id;
+    } catch (err) {
+      id = null;
+      this.debug(err);
+    }
+
+    return id;
   },
   getUsername(){
-    return this.get('localStorage').getItem('user').user.username;
+    let username;
+    try {
+      username = this.get('localStorage').getItem('user').user.username;
+    } catch (err) {
+      username = null;
+      this.debug(err);
+    }
+
+    return username;
   },
   showNotification(param){
     let message;

@@ -5,7 +5,7 @@ export default Ember.Mixin.create({
     this._super(...arguments);
     let afterRenderExist = this.afterRender !== undefined && typeof this.afterRender === "function";
     if (this.applicationRoute.documentReady && afterRenderExist) {
-      Ember.run.schedule('afterRender', this, function () {
+      Ember.run.scheduleOnce('afterRender', this, function () {
         this.afterRender();
       });
     } else if (afterRenderExist) {

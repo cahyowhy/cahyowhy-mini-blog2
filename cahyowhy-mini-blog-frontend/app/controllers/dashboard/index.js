@@ -9,18 +9,6 @@ export default Ember.Controller.extend(BaseController, {
   status: Status.create(),
   imagestatus: ImageStatus.create(),
   isBtnDisable: Ember.computed.empty('status.status.statushtml'),
-  commentstatus: Ember.computed('statuses', function () {
-    let commentstatuses = [];
-    this.get('statuses').forEach(function (item, index) {
-      commentstatuses.pushObject({
-        comment: '',
-        user_id: '',
-        status_id: item.id
-      });
-    });
-
-    return commentstatuses;
-  }),
   doEmptyField(){
     this.set('status.status.statushtml', '');
     this.set('status.status.statustext', '');
@@ -35,11 +23,6 @@ export default Ember.Controller.extend(BaseController, {
     menubar: false,
     statusbar: false,
     toolbar: false
-  },
-  afterRender(){
-    this._super(...arguments);
-    this.debug(this.get('commentstatus'));
-    this.debug(this.get('statuses'));
   },
   deleteImage(id){
     let images = [];

@@ -26,12 +26,11 @@
               Post{{/link-to}}</li>
             {{#if isLinkProfileVisible}}
               <li class="js_nav-item nav-item user">
-                {{#link-to 'dashboard' id class="nav-item-child nav-item-hover"}}
-                  Profile{{/link-to}}
+                {{#link-to 'dashboard' id class="nav-item-child nav-item-hover"}}Profile{{/link-to}}
               </li>
+              <li class="js_nav-item nav-item"><a {{action "onLogOut"}} class="nav-item-child nav-item-hover">Log Out</a></li>
             {{else}}
-              <li class="js_nav-item nav-item login">{{#link-to 'login' class="nav-item-child nav-item-hover"}}
-                Login{{/link-to}}</li>
+              <li class="js_nav-item nav-item login">{{#link-to 'login' class="nav-item-child nav-item-hover"}}Login{{/link-to}}</li>
             {{/if}}
           </ul>
         </div>

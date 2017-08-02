@@ -1,19 +1,41 @@
 import Ember from 'ember';
-import BaseController from './base-controller';
 
-export default Ember.Controller.extend(BaseController, {
-  subscription: '',
-  afterRender(){
+export default Ember.Controller.extend({
+  authentication: Ember.observer('applicationRoute.authentication', function () { //executed after dom loaded
+    if (this.get("applicationRoute.authentication")) {
+      this.createSubscription();
+    } else {
+      this.removeSubscription();
+    }
+  }),
+  createConsumer(){},
+  createSubscription(){},
+  removeSubscription(){},
+  handleActionCable(){
     const context = this;
-    let consumer = this.cableService.createConsumer('ws://localhost:3000/cable?token=' + this.commonService.getToken());
-    let subscription = consumer.subscriptions.create({
-      channel: 'NotificationChannel',
-      user_id: this.commonService.getId()
-    }, {
-      received: (data) => {
-        // alert(data.message.message);
-        context.commonService.showCustomNotification(data.message, data.link);
-      }
+    this.createConsumer = function () {
+      return context.cableService.createConsumer('ws://localhost:3000/cable?token=' + context.commonService.getToken());
+    };
+    this.createSubscription = function () {
+      context.createConsumer().subscriptions.create({
+        channel: 'NotificationChannel',
+        user_id: context.commonService.getId()
+      }, {
+        received: (data) => {
+          context.commonService.showCustomNotification(data.message, data.link);
+        }
+      });
+    };
+    this.removeSubscription = function () {
+      context.createConsumer().subscriptions.remove({
+        channel: 'NotificationChannel',
+        user_id: context.commonService.getId()
+      });
+    };
+  },
+  init(){ //executed first & only at once
+    Ember.run.scheduleOnce('afterRender', this, function () {
+      this.handleActionCable();
     });
   }
 });
