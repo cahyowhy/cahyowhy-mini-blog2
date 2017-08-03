@@ -20,7 +20,8 @@ class BaseController < ApplicationController
   RELATIONSHIP = "relationship"
   attr_accessor :entity
   before_action :init_value
-  before_action :set_entity_params, only: [:update, :create], :unless => @current_entity == RELATIONSHIP
+  # before_action :set_entity_params, only: [:update, :create], :unless => @current_entity == RELATIONSHIP
+  before_action :set_entity_params, only: [:update, :create]
 
   def init_value(param)
     case (param)
@@ -152,18 +153,33 @@ class BaseController < ApplicationController
 
       # set notifikasi ke user yang di follow
       @entity.notifications.create!(:user_id => @entity.id, :link => link, :message => message, :userhasresponse_id => curent_user.id)
-      ActionCable.server.broadcast "notification_channel_#{@entity.id}", {message: message, link: link} unless is_user_online
-    else
+      ActionCable.server.broadcast "notification_channel_#{@entity.id}", {message: message, link: link} if is_user_online
+
+    elsif @current_entity == POST
+      chanels=[]
       curent_user.followers.each do |item|
         is_user_online = ConnectionList.all.any? { |user| user[:id] == item.id }
+        puts is_user_online
         item.notifications.create!(:user_id => item.id, :link => link, :message => message, :userhasresponse_id => curent_user.id)
-        unless is_user_online #only user online will be subscribed
+        if is_user_online #only user online will be subscribed
           chanels << (ActionCable.server.broadcast "notification_channel_#{item.id}", {message: message, link: link})
         end
-      end
-    end
 
-    BroadcastNotificationJob.perform_now(chanels)
+        BroadcastNotificationJob.perform_now(chanels)
+      end
+
+    elsif @current_entity == LIKEPOST || @current_entity == COMMENTPOST
+      is_user_online = ConnectionList.all.any? { |user| user[:id] == @entity.post.user_id } #check apakah user yang punya postingan online
+      ActionCable.server.broadcast "notification_channel_#{@entity.post.user_id}", {message: message, link: link} if is_user_online
+
+    elsif @current_entity == COMMENTSTATUS
+      is_user_online = ConnectionList.all.any? { |user| user[:id] == @entity.status.user_id } #check apakah user yang punya postingan online
+      ActionCable.server.broadcast "notification_channel_#{@entity.status.user_id}", {message: message, link: link} if is_user_online
+
+    elsif @current_entity == LIKECOMMENTPOST
+      is_user_online = ConnectionList.all.any? { |user| user[:id] == @entity.commentpost.user_id } #check apakah user yang punya comment online
+      ActionCable.server.broadcast "notification_channel_#{@entity.commentpost.user_id}", {message: message, link: link} if is_user_online
+    end
   end
 
   def set_entity
