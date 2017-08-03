@@ -7,8 +7,8 @@ class ConnectionList
   end
 
   def self.add(param)
-    condition = @users.any? { |item| item[:id] == param[:id] }
-    @users << param unless condition
+    is_user_online = @users.any? { |item| item[:id] == param[:id] }
+    @users << param unless is_user_online
   end
 
   def self.remove(param)

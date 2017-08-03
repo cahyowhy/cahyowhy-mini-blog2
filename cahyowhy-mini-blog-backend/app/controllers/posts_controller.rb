@@ -4,21 +4,6 @@ class PostsController < BaseController
   before_action :delete_imageposts, only: [:destroy]
   before_action :check_imageposts_params, only: [:update]
 
-  def after_create
-    link = "#{@entity.id}"
-    chanels=[]
-    message = "#{@entity.user.username} baru saja membuat post baru dengan judul #{@entity.title}"
-
-    NotificationChannel.instance_variable_get(:@nama)
-
-    curent_user.followers.each do |item|
-      item.notifications.create!(:user_id => item.id, :link => "posts/#{link}", :message => "#{message}", :userhasresponse_id => curent_user.id)
-      chanels << (ActionCable.server.broadcast "notification_channel_#{item.id}", {message: message, link: "posts/#{link}"})
-    end
-
-    BroadcastNotificationJob.perform_now(chanels)
-  end
-
   # GET /posts/next/2
   def show_post_next
     begin

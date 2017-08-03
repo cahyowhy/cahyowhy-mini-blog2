@@ -14,7 +14,7 @@
       <a href="#comment-{{statusId}}" data-target="#comment-{{statusId}}" data-toggle="collapse"
          class="pull-right"><p class="pull-right">lihat komentar</p></a>
     </div>
-    <div id="comment-{{statusId}}" class="collapse comment-wrapper">
+    <div id="user-status-{{comment.id}}" class="collapse comment-wrapper">
       {{#each commentstatuses as |comment index|}}
         <div class="comment-status">
           <div class="pull-left"><img src="/img/no-image.png">

@@ -1,0 +1,35 @@
+$('html,body').animate({
+        scrollTop: $("#footer").offset().top},
+        'slow');
+
+        GO TO ELEMENT SCROLL
+
+
+
+        class Jangkrik
+        	attr_accessor :entity
+
+        	def initialize
+        	@entity = "bajilak"
+        	end
+        	def asem
+        		puts "fakuylah fukk"
+        	end
+        end
+
+        class Uhuy < Jangkrik
+        	def asem
+        		puts "onolahadwhdawhjdghgawhjdg"
+        	end
+
+        	def usum
+        		puts "dawkdjawhdkjhawd"
+        	end
+        end
+
+        a = Uhuy.new
+        a.asem
+        a.usum
+        puts a.entity
+        a.entity = 21
+        puts a.entity

@@ -2,16 +2,6 @@ class CommentstatusesController < BaseController
   before_action :set_entity, only: [:show, :update, :destroy]
   before_action :authenticate_request, only: [:destroy, :create, :update]
 
-  def after_create
-    link = "#{@entity.status.id}"
-    message = "#{@entity.user.username} mengkomen status mu yang #{@entity.status.statustext}"
-
-    userhaspost = @entity.status.user
-    unless @entity.user==userhaspost
-      userhaspost.notifications.create!(:user_id => userhaspost.id, :link => "status/#{link}", :message => "#{message}", :userhasresponse_id => curent_user.id)
-    end
-  end
-
   private
   def init_value
     super(COMMENTSTATUS)

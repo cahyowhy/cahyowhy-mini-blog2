@@ -24,6 +24,11 @@ class User < ApplicationRecord
     following.delete(other_user)
   end
 
+
+  def print_jangkrik
+    puts "jangkrik"
+  end
+
   # Returns true if the current user is following the other user.
   def following?(other_user)
     following.include?(other_user)

@@ -46,7 +46,7 @@
             'doSave'}}>comment</a></div>
         </li>
         {{#each comments as |comment|}}
-          <li class="list-group-item">
+          <li id="user-commentpost-{{comment.id}}" class="list-group-item">
             {{fav-icon _id = comment.id likes=comment.likecommentposts action="onFavouriteComment"}}
             <div class="comment-inner">
               <div class="pull-left">

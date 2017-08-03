@@ -4,19 +4,6 @@ class StatusesController < BaseController
   before_action :check_imagestatuses_params, only: [:update]
   before_action :authenticate_request, only: [:destroy, :create, :update]
 
-  def after_create
-    # params[:status][:imagestatuses].each do |item| #sakjane iki yo iso walopun ra nggo strong parameter
-    #   @entity.imagestatuses.create!(:imageurl => item[:imageurl], :user_id => curent_user.id)
-    # end
-    link = "statuses/#{@entity.id}"
-    message = "#{@entity.user.username} baru saja membuat status#{@entity.statustext}"
-    curent_user.followers.each do |item|
-      item.notifications.create!(:user_id => item.id, :link => "#{link}", :message => "#{message}")
-    end
-
-    # ActionCable.server.broadcast 'notification_channel', message: message
-  end
-
   private
   def init_value
     super(STATUS)

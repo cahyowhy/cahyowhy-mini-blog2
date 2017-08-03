@@ -10,8 +10,4 @@ class UserappearanceChannel < ApplicationCable::Channel
   def unsubscribed
     ConnectionList.remove({id: current_user.id})
   end
-
-  def print_id_users
-    puts ConnectionList.all
-  end
 end

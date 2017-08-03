@@ -17,15 +17,19 @@ class BaseController < ApplicationController
   COMMENTSTATUS = "commentstatus"
   TIMELINE = "timeline"
   NOTIFICATION = "notification"
+  RELATIONSHIP = "relationship"
   attr_accessor :entity
   before_action :init_value
-  before_action :set_entity_params, only: [:update, :create]
+  before_action :set_entity_params, only: [:update, :create], :unless => @current_entity == RELATIONSHIP
 
   def init_value(param)
     case (param)
       when USER;
         @entity = User
         @current_entity = USER
+      when RELATIONSHIP;
+        @current_entity = RELATIONSHIP
+      # @entity = User
       when STATUS
         @entity = Status
         @current_entity = STATUS
@@ -108,7 +112,7 @@ class BaseController < ApplicationController
 
     if @entity.save
       puts @current_entity == POST
-      after_create if @current_entity == STATUS || @current_entity == POST || @current_entity == COMMENTPOST || @current_entity == COMMENTSTATUS || @current_entity == LIKEPOST || @current_entity == LIKECOMMENTPOST # invoke method in child after entity has been saved
+      broadcast_notification if @current_entity == STATUS || @current_entity == POST || @current_entity == COMMENTPOST || @current_entity == COMMENTSTATUS || @current_entity == LIKEPOST || @current_entity == LIKECOMMENTPOST || @current_entity == RELATIONSHIP # invoke method in child after entity has been saved
 
       render json: @entity, httpstatus: postsuccess, status: :created, location: @entity
     else
@@ -118,13 +122,57 @@ class BaseController < ApplicationController
 
   private
 
+  def broadcast_notification
+    link=''
+    message=''
+
+    case (@current_entity)
+      when POST
+        link = "post-detail/#{@entity.id}"
+        message = "#{@entity.user.username} membuat post baru dengan judul '#{@entity.title}'"
+      when LIKEPOST
+        link = "post-detail/#{@entity.post_id}"
+        message = "#{@entity.user.username} menyukai postingan anda yang berjudul '#{@entity.post.title}'"
+      when LIKECOMMENTPOST
+        link = "post-detail/#{@entity.post_id}/#user-commentpost-#{@entity.id}"
+        message = "#{@entity.user.username} menyukai commen anda pada komen '#{@entity.commentpost.comment}''"
+      when COMMENTPOST
+        link = "post-detail/#{@entity.post_id}/#user-commentpost-#{@entity.id}"
+        message = "#{@entity.user.username} mengomentari postingan anda yang berjudul '#{@entity.post.title}'"
+      when COMMENTSTATUS
+        link = "dashboard/#{@entity.user_id}/#user-status-#{@entity.id}"
+        message = "#{@entity.user.username} mengomentari status anda yang pada status '#{@entity.status.statustext}'"
+      when RELATIONSHIP
+        link = "dashboard/#{curent_user.id}"
+        message = "#{curent_user.username} sekarang mengikuti anda"
+    end
+
+    if @current_entity == RELATIONSHIP
+      is_user_online = ConnectionList.all.any? { |user| user[:id] == @entity.id } #check apakah user yang difollow online
+
+      # set notifikasi ke user yang di follow
+      @entity.notifications.create!(:user_id => @entity.id, :link => link, :message => message, :userhasresponse_id => curent_user.id)
+      ActionCable.server.broadcast "notification_channel_#{@entity.id}", {message: message, link: link} unless is_user_online
+    else
+      curent_user.followers.each do |item|
+        is_user_online = ConnectionList.all.any? { |user| user[:id] == item.id }
+        item.notifications.create!(:user_id => item.id, :link => link, :message => message, :userhasresponse_id => curent_user.id)
+        unless is_user_online #only user online will be subscribed
+          chanels << (ActionCable.server.broadcast "notification_channel_#{item.id}", {message: message, link: link})
+        end
+      end
+    end
+
+    BroadcastNotificationJob.perform_now(chanels)
+  end
+
   def set_entity
     @entity = @entity.find(params[:id])
   end
 
   def set_entity_params
     case (@current_entity)
-      when USER;
+      when USER
         @entity_params = user_params
       when STATUS
         @entity_params = status_params
