@@ -66,7 +66,7 @@ class BaseController < ApplicationController
 
   def index
     paramshash={}
-    params.each do |key, value|
+    params.each do |key, value| #params dapat dari url hash di extract disini
       # the content of params is url hash, request body hash, and current method
       # you can search through the url params with this method. example GET http://localhost:3000/statuses?limit=21&offset=0&user_id=2
       # will add user_id=2 hash object through the paramshash and search the status where limit=VALUE, offset=VALUE and where id user = 2
@@ -170,15 +170,27 @@ class BaseController < ApplicationController
 
     elsif @current_entity == LIKEPOST || @current_entity == COMMENTPOST
       is_user_online = ConnectionList.all.any? { |user| user[:id] == @entity.post.user_id } #check apakah user yang punya postingan online
-      ActionCable.server.broadcast "notification_channel_#{@entity.post.user_id}", {message: message, link: link} if is_user_online
+      is_current_user_response = @entity.post.user_id == curent_user.id #check apakah yang like & comment itu yang bikin postingan ini
+
+      user = @entity.post.user
+      user.notifications.create!(:user_id => user.id, :link => link, :message => message, :userhasresponse_id => curent_user.id) unless is_current_user_response
+      ActionCable.server.broadcast "notification_channel_#{@entity.post.user_id}", {message: message, link: link} if is_user_online && !is_current_user_response
 
     elsif @current_entity == COMMENTSTATUS
       is_user_online = ConnectionList.all.any? { |user| user[:id] == @entity.status.user_id } #check apakah user yang punya postingan online
-      ActionCable.server.broadcast "notification_channel_#{@entity.status.user_id}", {message: message, link: link} if is_user_online
+      is_current_user_response = @entity.status.user_id == curent_user.id #check apakah yang comment status itu yang bikin postingan ini
+
+      user = @entity.status.user
+      user.notifications.create!(:user_id => user.id, :link => link, :message => message, :userhasresponse_id => curent_user.id) unless is_current_user_response
+      ActionCable.server.broadcast "notification_channel_#{@entity.status.user_id}", {message: message, link: link} if is_user_online && !is_current_user_response
 
     elsif @current_entity == LIKECOMMENTPOST
       is_user_online = ConnectionList.all.any? { |user| user[:id] == @entity.commentpost.user_id } #check apakah user yang punya comment online
-      ActionCable.server.broadcast "notification_channel_#{@entity.commentpost.user_id}", {message: message, link: link} if is_user_online
+      is_current_user_response = @entity.commentpost.user_id == curent_user.id #check apakah yang like comment di post itu yang bikin postingan ini
+
+      user = @entity.commentpost.user
+      user.notifications.create!(:user_id => user.id, :link => link, :message => message, :userhasresponse_id => curent_user.id) unless is_current_user_response
+      ActionCable.server.broadcast "notification_channel_#{@entity.commentpost.user_id}", {message: message, link: link} if is_user_online && !is_current_user_response
     end
   end
 
