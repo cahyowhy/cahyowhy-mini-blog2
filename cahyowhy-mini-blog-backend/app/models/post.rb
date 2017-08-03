@@ -11,5 +11,4 @@ class Post < ApplicationRecord
   def prev
     self.class.where("id < ?", id).last
   end
-
 end

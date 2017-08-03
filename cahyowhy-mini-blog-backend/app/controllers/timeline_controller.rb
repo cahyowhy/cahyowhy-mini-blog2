@@ -21,7 +21,8 @@ class TimelineController < BaseController
     @statuses.each do |item|
       @timelines << item
     end
-    @timelines = @timelines.sort_by &:created_at
+
+    @timelines = @timelines.sort { |x, y| y[:created_at]<=>x[:created_at] }
     render json: @timelines, exclude: [:description, :descriptiontext], httpstatus: getsuccess
   end
 

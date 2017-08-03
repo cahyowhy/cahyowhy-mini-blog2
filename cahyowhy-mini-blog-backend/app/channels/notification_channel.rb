@@ -8,6 +8,16 @@ class NotificationChannel < ApplicationCable::Channel
     # Any cleanup needed when channel is unsubscribed
   end
 
-  def speak
+
+=begin
+  def speak(data)
+    puts data
+    #  perform this from client
   end
+
+  def receive(data)
+    puts data
+    #  perform this from client
+  end
+=end
 end

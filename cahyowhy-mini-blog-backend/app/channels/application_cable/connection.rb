@@ -12,6 +12,7 @@ module ApplicationCable
       headers['Authorization']=request.params[:token]
       current_user = AuthorizeApiRequest.call(headers).result
       if verified_user = current_user
+        puts current_user.username
         verified_user
       else
         reject_unauthorized_connection

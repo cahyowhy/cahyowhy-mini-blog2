@@ -3,39 +3,32 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
   authentication: Ember.observer('applicationRoute.authentication', function () { //executed after dom loaded
     if (this.get("applicationRoute.authentication")) {
-      this.createSubscription();
+      this.handleActionCable();
     } else {
       this.removeSubscription();
     }
   }),
-  createConsumer(){},
-  createSubscription(){},
-  removeSubscription(){},
+  removeSubscription(){
+  },
   handleActionCable(){
     const context = this;
-    this.createConsumer = function () {
-      return context.cableService.createConsumer('ws://localhost:3000/cable?token=' + context.commonService.getToken());
-    };
-    this.createSubscription = function () {
-      context.createConsumer().subscriptions.create({
-        channel: 'NotificationChannel',
-        user_id: context.commonService.getId()
-      }, {
-        received: (data) => {
-          context.commonService.showCustomNotification(data.message, data.link);
-        }
-      });
-    };
-    this.removeSubscription = function () {
-      context.createConsumer().subscriptions.remove({
-        channel: 'NotificationChannel',
-        user_id: context.commonService.getId()
-      });
-    };
-  },
-  init(){ //executed first & only at once
-    Ember.run.scheduleOnce('afterRender', this, function () {
-      this.handleActionCable();
+    let consumer = context.cableService.createConsumer('ws://localhost:3000/cable?token=' + context.commonService.getToken());
+    let subscribeNotification = consumer.subscriptions.create({
+      channel: 'NotificationChannel',
+      user_id: context.commonService.getId()
+    }, {
+      received: (data) => {
+        context.commonService.showCustomNotification(data.message, data.link);
+      }
+    });
+
+    let subscribeUserAppearance = consumer.subscriptions.create({channel: 'UserappearanceChannel'}, {
+      disconnected: () => {
+        //if disconnected do whatever like showing some fancy on browser. NOT to perform action from actioncable
+      },
+      connected: () => {
+        subscribeUserAppearance.perform("appear", {user_id: context.commonService.getId()});
+      }
     });
   }
 });

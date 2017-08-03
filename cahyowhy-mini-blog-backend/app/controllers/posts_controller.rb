@@ -7,16 +7,16 @@ class PostsController < BaseController
   def after_create
     link = "#{@entity.id}"
     chanels=[]
-    params=[]
     message = "#{@entity.user.username} baru saja membuat post baru dengan judul #{@entity.title}"
+
+    NotificationChannel.instance_variable_get(:@nama)
+
     curent_user.followers.each do |item|
-      # params << {id: item.id, message: message} its doesnt work :(
       item.notifications.create!(:user_id => item.id, :link => "posts/#{link}", :message => "#{message}", :userhasresponse_id => curent_user.id)
       chanels << (ActionCable.server.broadcast "notification_channel_#{item.id}", {message: message, link: "posts/#{link}"})
     end
 
-    # BroadcastNotificationJob.perform_later(params) its doesnt work :(
-    ActionCable.server.broadcaster_for chanels
+    BroadcastNotificationJob.perform_now(chanels)
   end
 
   # GET /posts/next/2
