@@ -28,7 +28,6 @@ module Searchable
         end
       end
     end
-
     # you are'nt get an error but you can't pass the argumen in this shit
     # implementing elasticsearch start here
     # settings index: {number_of_shards: 1} do
