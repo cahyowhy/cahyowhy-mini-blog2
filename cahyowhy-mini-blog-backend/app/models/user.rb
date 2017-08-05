@@ -1,21 +1,21 @@
 class User < ApplicationRecord
+  include Searchable
+  setting_index([{attr: :username, type: :string}, {attr: :name, type: :string}])
 
-  #implementing elasticsearch start here
-  include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
+  has_secure_password
+  validates :password, :presence => true, :length => {:minimum => 8}, on: :create
+  validates_presence_of :username, :name, on: :create
 
-  url = 'http://localhost:9200/'
-  Elasticsearch::Model.client = Elasticsearch::Client.new url: url
-
-  index_name Rails.application.class.parent_name.underscore
-  document_type self.name.downcase
-
-  settings index: {number_of_shards: 1} do
-    mapping dynamic: false do
-      indexes :username, type: :string
-      indexes :name, type: :string
-    end
-  end
+  has_many :active_relationships, class_name: "Relationship",
+           foreign_key: "follower_id",
+           dependent: :destroy
+  has_many :passive_relationships, class_name: "Relationship",
+           foreign_key: "followed_id",
+           dependent: :destroy
+  has_many :following, through: :active_relationships, source: :followed
+  has_many :followers, through: :passive_relationships, source: :follower
+  has_many :notifications
+  has_many :posts
 
   def self.search(query)
     __elasticsearch__.search(
@@ -24,14 +24,6 @@ class User < ApplicationRecord
                 multi_match: {
                     query: query,
                     fields: ['username^5', 'name'] #the ^5 is indicating that username fields is importance5x thane name
-                }
-            },
-            highlight: {
-                pre_tags: ['<mark>'],
-                post_tags: ['</mark>'],
-                fields: {
-                    username: {},
-                    name: {},
                 }
             },
             suggest: {
@@ -57,22 +49,54 @@ class User < ApplicationRecord
     self.as_json(only: [:username, :name])
   end
 
+
+  # include Elasticsearch::Model
+  # include Elasticsearch::Model::Callbacks
+  # index_name Rails.application.class.parent_name.underscore
+  # puts Rails.application.class.parent_name.underscore
+  # document_type self.name.downcase
+  #
+  # #implementing elasticsearch start here
+  # settings index: {number_of_shards: 1} do
+  #   mapping dynamic: false do
+  #     indexes :username, type: :string
+  #     indexes :name, type: :string
+  #   end
+  # end
+
+  # def self.search(query)
+  #   __elasticsearch__.search(
+  #       {
+  #           query: {
+  #               multi_match: {
+  #                   query: query,
+  #                   fields: ['username^5', 'name'] #the ^5 is indicating that username fields is importance5x thane name
+  #               }
+  #           },
+  #           suggest: {
+  #               text: query,
+  #               username: {
+  #                   term: {
+  #                       size: 1,
+  #                       field: :username
+  #                   }
+  #               },
+  #               name: {
+  #                   term: {
+  #                       size: 1,
+  #                       field: :name
+  #                   }
+  #               }
+  #           }
+  #       }
+  #   )
+  # end
+  #
+  # def as_indexed_json(options = nil)
+  #   self.as_json(only: [:username, :name])
+  # end
+
   #implementing elasticsearch end here
-
-  has_secure_password
-  validates :password, :presence => true, :length => {:minimum => 8}, on: :create
-  validates_presence_of :username, :name, on: :create
-
-  has_many :active_relationships, class_name: "Relationship",
-           foreign_key: "follower_id",
-           dependent: :destroy
-  has_many :passive_relationships, class_name: "Relationship",
-           foreign_key: "followed_id",
-           dependent: :destroy
-  has_many :following, through: :active_relationships, source: :followed
-  has_many :followers, through: :passive_relationships, source: :follower
-  has_many :notifications
-  has_many :posts
 
   # Follows a user.
   def follow(other_user)
@@ -85,12 +109,10 @@ class User < ApplicationRecord
   end
 
 
-  def print_jangkrik
-    puts "jangkrik"
-  end
-
   # Returns true if the current user is following the other user.
   def following?(other_user)
     following.include?(other_user)
   end
 end
+
+User.import force: true

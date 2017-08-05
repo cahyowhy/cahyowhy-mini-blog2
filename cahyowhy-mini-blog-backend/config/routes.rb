@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   end
   resources :relationships, only: [:create]
   post 'authenticate', to: 'authentication#authenticate'
-  get '/search' => 'search#search', as: :search
+  get 'search', to: 'search#search'
   get 'posts/next/:id', to: 'posts#show_post_next'
   get 'posts/prev/:id', to: 'posts#show_post_prev'
   get 'auth', to: 'authtoken#auth_token'

@@ -1,6 +1,6 @@
 class ConnectionList
   attr_accessor :users
-  @users=[]
+  @users=[] #not recomend!
 
   def self.all
     @users
