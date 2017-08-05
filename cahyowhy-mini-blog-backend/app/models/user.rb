@@ -1,4 +1,64 @@
 class User < ApplicationRecord
+
+  #implementing elasticsearch start here
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
+
+  url = 'http://localhost:9200/'
+  Elasticsearch::Model.client = Elasticsearch::Client.new url: url
+
+  index_name Rails.application.class.parent_name.underscore
+  document_type self.name.downcase
+
+  settings index: {number_of_shards: 1} do
+    mapping dynamic: false do
+      indexes :username, type: :string
+      indexes :name, type: :string
+    end
+  end
+
+  def self.search(query)
+    __elasticsearch__.search(
+        {
+            query: {
+                multi_match: {
+                    query: query,
+                    fields: ['username^5', 'name'] #the ^5 is indicating that username fields is importance5x thane name
+                }
+            },
+            highlight: {
+                pre_tags: ['<mark>'],
+                post_tags: ['</mark>'],
+                fields: {
+                    username: {},
+                    name: {},
+                }
+            },
+            suggest: {
+                text: query,
+                username: {
+                    term: {
+                        size: 1,
+                        field: :username
+                    }
+                },
+                name: {
+                    term: {
+                        size: 1,
+                        field: :name
+                    }
+                }
+            }
+        }
+    )
+  end
+
+  def as_indexed_json(options = nil)
+    self.as_json(only: [:username, :name])
+  end
+
+  #implementing elasticsearch end here
+
   has_secure_password
   validates :password, :presence => true, :length => {:minimum => 8}, on: :create
   validates_presence_of :username, :name, on: :create

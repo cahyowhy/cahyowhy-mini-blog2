@@ -3,6 +3,7 @@ class TimelineController < BaseController
 
   # GET /timelines with queryparams
   def index
+    # .each.with_index do
     users_id = curent_user.following.pluck(:id) + [curent_user].pluck(:id)
     if params[:offset].blank? && params[:limit].blank?
       @posts = Post.where(user_id: users_id).order("created_at DESC").all

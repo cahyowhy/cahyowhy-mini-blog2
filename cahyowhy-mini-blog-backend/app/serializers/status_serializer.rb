@@ -1,8 +1,12 @@
 class StatusSerializer < BaseSerializer
-  attributes :id, :statustext, :statushtml, :imagestatuses, :created_at
+  attributes :id, :statustext, :statushtml, :imagestatuses, :created_at, :mark
   has_one :user
   has_many :imagestatuses
   has_many :commentstatuses
+
+  def mark
+    "STATUS"
+  end
 
   def commentstatuses
     arr=[]

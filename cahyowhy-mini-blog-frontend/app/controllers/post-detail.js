@@ -52,7 +52,7 @@ export default Ember.Controller.extend(BaseController, {
         commentpost.set('commentpost.post_id', this.get("post").id);
         commentpost.set('commentpost.user_id', this.commonService.getId());
         this.doSave("comment", commentpost).then(function (response) {
-          context.get("comments").pushObject(response);
+          context.get("comments").unshiftObject(response);
           context.emptyField();
         });
       }

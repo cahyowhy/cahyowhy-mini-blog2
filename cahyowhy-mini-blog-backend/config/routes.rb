@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
+  mount ActionCable.server => '/cable'
   resources :commentstatuses
   resources :notifications
-  mount ActionCable.server => '/cable'
   resources :imageposts
   resources :imagestatuses
   resources :statuses
@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   end
   resources :relationships, only: [:create]
   post 'authenticate', to: 'authentication#authenticate'
+  get '/search' => 'search#search', as: :search
   get 'posts/next/:id', to: 'posts#show_post_next'
   get 'posts/prev/:id', to: 'posts#show_post_prev'
   get 'auth', to: 'authtoken#auth_token'

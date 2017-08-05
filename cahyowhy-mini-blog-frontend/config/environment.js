@@ -67,6 +67,7 @@ module.exports = function (environment) {
   }
 
   ENV.APP.API_USER = ENV.APP.API_URL + "users/";
+  ENV.APP.API_TIMELINES = ENV.APP.API_URL + "timelines/";
   ENV.APP.API_AUTH = ENV.APP.API_URL + "auth/";
   ENV.APP.API_POST_COMMENT = ENV.APP.API_URL + "commentposts/";
   ENV.APP.API_STATUS_COMMENT = ENV.APP.API_URL + "commentstatuses/";

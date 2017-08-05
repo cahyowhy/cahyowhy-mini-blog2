@@ -206,7 +206,7 @@ class BaseController < ApplicationController
         @entity_params = status_params
       when POST
         @entity_params = post_params
-      when LIKEPOST
+      when LIKEPOSTgem
         @entity_params = likepost_params
       when LIKECOMMENTPOST
         @entity_params = likecommentpost_params

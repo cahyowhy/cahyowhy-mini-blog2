@@ -1,5 +1,5 @@
 class PostSerializer < BaseSerializer
-  attributes :id, :title, :description, :created_at, :category, :review, :descriptiontext
+  attributes :id, :title, :description, :created_at, :category, :review, :descriptiontext, :mark
   has_one :user
   has_many :likeposts
   has_many :imageposts
@@ -13,10 +13,7 @@ class PostSerializer < BaseSerializer
     arr
   end
 
-  def attributes(*args)
-    params = @instance_options[:exclude]
-    return super unless params != nil
-    filtered = super.except(*params)
-    filtered
+  def mark
+    "POST"
   end
 end
