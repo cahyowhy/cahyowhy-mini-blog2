@@ -25,10 +25,10 @@ class Post < ApplicationRecord
                         field: :title
                     }
                 },
-                catgory: {
+                category: {
                     term: {
                         size: 1,
-                        field: :catgory
+                        field: :category
                     }
                 },
                 review: {

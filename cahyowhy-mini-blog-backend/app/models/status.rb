@@ -34,4 +34,4 @@ class Status < ApplicationRecord
   end
 end
 
-Post.import force: true
+Status.import force: true
