@@ -77,10 +77,13 @@ class BaseController < ApplicationController
     end
     puts paramshash
 
-    if params[:offset].blank? && params[:limit].blank?
+    if params[:query].present? && params[:offset].present? && params[:limit].present?
+      @entities = @entity.search(params[:query]).records.offset(params[:offset]).limit(params[:limit])
+    elsif params[:offset].blank? && params[:limit].blank?
       # @entities = @entity.where(paramshash) => actually this also work, wether the paramshash is empty
       @entities = @entity.all.order("created_at DESC")
     else
+      # you can search by nested attributes here
       @entities = @entity.limit(params[:limit]).offset(params[:offset]).where(paramshash).order("created_at DESC")
     end
 

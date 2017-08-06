@@ -49,56 +49,6 @@ class User < ApplicationRecord
     self.as_json(only: [:username, :name])
   end
 
-
-  # include Elasticsearch::Model
-  # include Elasticsearch::Model::Callbacks
-  # index_name Rails.application.class.parent_name.underscore
-  # puts Rails.application.class.parent_name.underscore
-  # document_type self.name.downcase
-  #
-  # #implementing elasticsearch start here
-  # settings index: {number_of_shards: 1} do
-  #   mapping dynamic: false do
-  #     indexes :username, type: :string
-  #     indexes :name, type: :string
-  #   end
-  # end
-
-  # def self.search(query)
-  #   __elasticsearch__.search(
-  #       {
-  #           query: {
-  #               multi_match: {
-  #                   query: query,
-  #                   fields: ['username^5', 'name'] #the ^5 is indicating that username fields is importance5x thane name
-  #               }
-  #           },
-  #           suggest: {
-  #               text: query,
-  #               username: {
-  #                   term: {
-  #                       size: 1,
-  #                       field: :username
-  #                   }
-  #               },
-  #               name: {
-  #                   term: {
-  #                       size: 1,
-  #                       field: :name
-  #                   }
-  #               }
-  #           }
-  #       }
-  #   )
-  # end
-  #
-  # def as_indexed_json(options = nil)
-  #   self.as_json(only: [:username, :name])
-  # end
-
-  #implementing elasticsearch end here
-
-  # Follows a user.
   def follow(other_user)
     following << other_user
   end
