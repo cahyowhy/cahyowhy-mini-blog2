@@ -24,43 +24,10 @@
               </div>
             </div>
           </div>
-          <div id="z-index-1" class="addpict collapse">'
-            {{#each images as |image index|}}
-              <div class="grid-del animated fadeIn" style="background-image: url(
-                '{{image.src}}')">
-                <i {{action "onAddImageToPost" index image.src}} class="ion-plus-circled"></i>
-                <i {{action "onDeleteImage" index image.id image.src}} class="ion ion-close-circled"></i>
-
-                <div class="black-shadow"></div>
-              </div>
-            {{/each}}
-            <div class="grid-add animated fadeIn">
-              {{image-uploader
-                isEditFirst=false
-                class="upload cust-input"
-                name="file" type="file"
-                accept="image/*"
-                url=url files=files
-                action="onImageChange"}}
-              <i class="ion ion-ios-plus"></i>
-            </div>
-          </div>
+          {{photo-collections routeUserId=userId onAddImage=(action "onAddImageToPost")
+                              onDelImage=(action "onDeleteImage")}}
         </div>
         {{tinymce-editor options=options value=post.post.description onValueChanged=(action "onTypeSomething")}}
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" id="modal-delete-photo" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-body">
-        <h3>If you delete this. all your post that depend on this photo will also deleted</h3>
-      </div>
-      <div class="modal-footer">
-        <a class="btn btn-danger delete-photo" style="margin-bottom: 5px">delete</a>
-        <button type="button" class="btn btn-default" style="margin: 0" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>

@@ -13,12 +13,12 @@ export default Ember.Route.extend({
     }
 
     return Ember.RSVP.hash({
-      userId: id,
-      statuses: this.statusService.find(status)
+      statuses: this.statusService.find(status),
+      routeUserId: id
     });
   },
   setupController(controller, model){
-    this.controllerFor('dashboard.index').set('userId', model.userId);
     this.controllerFor('dashboard.index').set('statuses', model.statuses);
+    this.controllerFor('dashboard.index').set('routeUserId', model.routeUserId);
   }
 });

@@ -7,8 +7,13 @@ export default Ember.Component.extend(BaseController, {
   images: [],
   url: ENV.APP.API_IMAGE,
   files: [],
+  userId: 0,
+  isUserIdEqRouteId: Ember.computed('userId', 'routeUserId', function () {
+    return this.get("userId") === this.get("routeUserId")
+  }),
   didInsertElement(){
     this._super(...arguments);
+    this.set('userId', this.commonService.getId());
     this.debug(this.get('userId'));
     let image = Image.create();
     const context = this;
@@ -26,32 +31,38 @@ export default Ember.Component.extend(BaseController, {
   },
   actions: {
     onAddImage(index, id, src){
-      this.sendAction("onAddImage", index, id, src);
+      if (this.get("isUserIdEqRouteId")) {
+        this.sendAction("onAddImage", index, id, src);
+      }
     },
     onDelImage(index, id, src){
-      const context = this;
-      Ember.$('#modal-delete-photo').modal('show');
-      Ember.$('#modal-delete-photo').on('shown.bs.modal', function () {
-        Ember.$(this).find('a.delete-photo').on('click', function () {
-          context.doRemove("image", id).then(function () {
-            let images = [];
-            context.get("images").forEach(function (item) {
-              if (item.id !== id) {
-                images.push(item);
-              }
+      if (this.get("isUserIdEqRouteId")) {
+        const context = this;
+        Ember.$('#modal-delete-photo').modal('show');
+        Ember.$('#modal-delete-photo').on('shown.bs.modal', function () {
+          Ember.$(this).find('a.delete-photo').on('click', function () {
+            context.doRemove("image", id).then(function () {
+              let images = [];
+              context.get("images").forEach(function (item) {
+                if (item.id !== id) {
+                  images.push(item);
+                }
+              });
+              context.set("images", images);
+              Ember.$('#modal-delete-photo').modal('hide');
+              context.sendAction("onDelImage", index, id, src);
             });
-            context.set("images", images);
-            Ember.$('#modal-delete-photo').modal('hide');
-            context.sendAction("onDelImage", index, id, src);
-          });
-        })
-      });
+          })
+        });
+      }
     },
     onImageChange(file, idFile, urlFile){ //urlFile, file yg ada di server, sudah di upload
-      this.get('images').pushObject({
-        id: idFile,
-        src: ENV.APP.API_URL + urlFile
-      });
+      if (this.get("isUserIdEqRouteId")) {
+        this.get('images').pushObject({
+          id: idFile,
+          src: ENV.APP.API_URL + urlFile
+        });
+      }
     },
   }
 });

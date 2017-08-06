@@ -1,22 +1,26 @@
 <div class="photo-collections">
   <div class="photo-collection-inner">
-    <div class="photo" style="background: white">
-      {{image-uploader
-        isEditFirst=false
-        class="upload cust-input"
-        name="file" type="file"
-        accept="image/*"
-        url=url files=files
-        action="onImageChange"}}
-      <div class="photo-overlay"></div>
-      <i class="ion ion-plus-circled"></i>
-    </div>
+    {{#if isUserIdEqRouteId}}
+      <div class="photo" style="background: white">
+        {{image-uploader
+          isEditFirst=false
+          class="upload cust-input"
+          name="file" type="file"
+          accept="image/*"
+          url=url files=files
+          action="onImageChange"}}
+        <div class="photo-overlay"></div>
+        <i class="ion ion-plus-circled"></i>
+      </div>
+    {{/if}}
     {{#each images as |image index|}}
       <div class="photo" style="background-image: url(
         '{{image.src}}')">
         <div class="photo-overlay"></div>
-        <i onclick={{action "onDelImage" index image.id image.src}} class="ion ion-close-circled"></i>
-        <i onclick={{action "onAddImage" index image.id image.src}} class="ion ion-plus-circled"></i>
+        {{#if isUserIdEqRouteId}}
+          <i onclick={{action "onDelImage" index image.id image.src}} class="ion ion-close-circled"></i>
+          <i onclick={{action "onAddImage" index image.id image.src}} class="ion ion-plus-circled"></i>
+        {{/if}}
       </div>
     {{/each}}
   </div>

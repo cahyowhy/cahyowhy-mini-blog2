@@ -18,7 +18,7 @@ Router.map(function () {
   this.route('post');
   this.route('post-detail', {path: '/post-detail/:id'});
   this.route('dashboard', {path: '/dashboard/:id'}, function () {
-    this.route('create-post');
+    this.route('create-post', {queryParams: ['token', 'userId']});
     this.route('images');
     this.route('setting');
     this.route('post');
