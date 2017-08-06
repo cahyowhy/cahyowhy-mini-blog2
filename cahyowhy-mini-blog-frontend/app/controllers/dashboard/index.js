@@ -8,6 +8,7 @@ export default Ember.Controller.extend(BaseController, {
   images: [],
   status: Status.create(),
   imagestatus: ImageStatus.create(),
+  routeUserId: 0,
   isBtnDisable: Ember.computed.empty('status.status.statushtml'),
   doEmptyField(){
     this.set('status.status.statushtml', '');
@@ -15,6 +16,9 @@ export default Ember.Controller.extend(BaseController, {
     this.set('status.status.imagestatuses_attributes', []);
     this.set('images', []);
     imagestatuses = [];
+  },
+  afterRender(){
+    this.set("routeUserId", this.commonService.getId());
   },
   options: {
     selector: 'textarea',

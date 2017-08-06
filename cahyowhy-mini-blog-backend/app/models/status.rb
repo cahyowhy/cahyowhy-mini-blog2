@@ -6,7 +6,7 @@ class Status < ApplicationRecord
   has_many :imagestatuses, inverse_of: :status
   has_many :commentstatuses
   accepts_nested_attributes_for :imagestatuses
-  validates_presence_of :status, :statustext, on: :create
+  validates_presence_of :statushtml, :statustext, on: :create
 
   def self.search(query)
     __elasticsearch__.search(

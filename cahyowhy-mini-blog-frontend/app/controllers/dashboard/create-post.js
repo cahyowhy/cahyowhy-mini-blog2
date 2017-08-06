@@ -5,6 +5,21 @@ import Basecontroller from '../base-controller';
 
 let imageposts = [];
 export default Ember.Controller.extend(Basecontroller, {
+  queryParams: ['token', 'userId'],
+  token: null,
+  userId: null,
+  /*afterRender(){
+    const context = this;
+    if (this.get("token") !== null && this.get("userId") !== null) {
+      this.authService.auth(this.get("token")).then(function (response) {
+        if (response.status !== 204 || response.id !== context.get("id")) {
+          context.transitionToRoute('not-found');
+        }
+      });
+    } else {
+      this.transitionToRoute('not-found');
+    }
+  },*/
   post: Post.create(),
   imagepost: Imagepost.create(),
   isBtnDisable: Ember.computed.empty("post.post.description", "post.post.title", "post.post.category"),

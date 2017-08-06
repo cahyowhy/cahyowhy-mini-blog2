@@ -8,9 +8,9 @@ let offset = 0;
 export default Ember.Controller.extend(BaseController, {
   token: '0',
   userId: 0,
-  affterRender(){
-    this.set('token', this.commonService.getToken())
-    this.set('userId', this.commonService.getId())
+  afterRender(){
+    this.set('token', this.commonService.getToken());
+    this.set('userId', this.commonService.getId());
   },
   actions: {
     onLoadPost(){
