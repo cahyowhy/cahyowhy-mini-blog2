@@ -1,5 +1,24 @@
 module Searchable
   extend ActiveSupport::Concern
+  module ClassMethods
+    def setting_index(arguments)
+      settings index: {number_of_shards: 1} do
+
+        mapping dynamic: false do
+          arguments.each do |argument|
+            indexes argument[:attr], type: argument[:type]
+          end
+          # indexes :username, type: :string
+          # indexes :name, type: :string
+        end
+
+        # mapping dynamic: false do
+        #   indexes :username, type: :string
+        #   indexes :name, type: :string
+        # end
+      end
+    end
+  end
 
   included do
     include Elasticsearch::Model
@@ -9,25 +28,6 @@ module Searchable
     document_type self.name.downcase
 
     # you get an error if this shit run first
-    module ClassMethods
-      def setting_index(arguments)
-        settings index: {number_of_shards: 1} do
-
-          mapping dynamic: false do
-            arguments.each do |argument|
-              indexes argument[:attr], type: argument[:type]
-            end
-            # indexes :username, type: :string
-            # indexes :name, type: :string
-          end
-
-          # mapping dynamic: false do
-          #   indexes :username, type: :string
-          #   indexes :name, type: :string
-          # end
-        end
-      end
-    end
     # you are'nt get an error but you can't pass the argumen in this shit
     # implementing elasticsearch start here
     # settings index: {number_of_shards: 1} do

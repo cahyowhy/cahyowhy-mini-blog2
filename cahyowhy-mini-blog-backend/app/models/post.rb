@@ -2,6 +2,7 @@ class Post < ApplicationRecord
   include Searchable
   setting_index([{attr: :title, type: :string}, {attr: :category, type: :string}, {attr: :review, type: :string}])
 
+  enum category: [:sains, :komedi, :sejarah, :gosip, :kisah, :puisi, :pribadi, :mistis, :berita]
   belongs_to :user
   has_many :likeposts
   has_many :imageposts, inverse_of: :post
@@ -40,6 +41,10 @@ class Post < ApplicationRecord
             }
         }
     )
+  end
+
+  def self.get_categories
+    self.categories
   end
 
   def as_indexed_json(options = nil)

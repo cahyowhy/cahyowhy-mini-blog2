@@ -17,7 +17,7 @@ $greyDark: #eaeaea;
 $greyYoung: #fafafa;
 $almostWhite: #f0f0f0;
 $textTittle: #515769;
-$textDefault: #a6a7aa;
+$textDefault: #777;
 body {
   top: 0px;
 }
@@ -40,6 +40,7 @@ body {
       }
       .media-body {
         p {
+          color: $textDefault;
           &:first-child {
             margin-bottom: 5px;
             font-weight: bold;
@@ -757,7 +758,7 @@ nav {
 }
 
 .btn-wrapper-post {
-  background: $greyYoung;
+  background: transparent;
   text-align: center;
   width: 100%;
 }
@@ -813,4 +814,70 @@ nav {
 
 .js_nav-item.nav-item {
   cursor: pointer;
+}
+
+.cust2 {
+  margin-top: 10px;
+  text-align: right;
+  a {
+    width: 150px;
+  }
+}
+
+.btn-wrapper-post {
+  text-align: center;
+  a {
+    width: 150px;
+  }
+}
+
+.photo-collection-title {
+  width: 100%;
+  margin-bottom: 0px;
+  font-weight: 300;
+}
+
+.post-vertical {
+  border: 1px solid $greyDark;
+  border-radius: 6px;
+  padding: 15px;
+  margin-bottom: 15px;
+  overflow: auto;
+  .pull-left {
+    margin-right: 15px;
+    .img-content {
+      position: relative;
+      height: 125px;
+      width: 150px;
+      background-position: center !important;
+      background-size: cover !important;
+      background-repeat: no-repeat !important;
+    }
+  }
+  .media-body {
+    h3 {
+      margin-bottom: 0px;
+    }
+    p.names {
+      margin-bottom: 10px;
+      margin-top: -5px;
+      font-weight: 500;
+    }
+    a.btn-default {
+      &:last-child {
+        margin-left: 15px;
+      }
+      border: 0px;
+      border-color: transparent;
+      width: auto;
+      margin-top: 10px;
+      float: left;
+      color: $textDefault;
+      background: $greyDark;
+    }
+    p {
+      font-size: 13px;
+      margin-bottom: 0px
+    }
+  }
 }

@@ -75,7 +75,6 @@ class BaseController < ApplicationController
         paramshash[key] = value.to_i
       end
     end
-    puts paramshash
 
     if params[:query].present? && params[:offset].present? && params[:limit].present?
       @entities = @entity.search(params[:query]).records.offset(params[:offset]).limit(params[:limit])
@@ -156,8 +155,7 @@ class BaseController < ApplicationController
 
       # set notifikasi ke user yang di follow
       @entity.notifications.create!(:user_id => @entity.id, :link => link, :message => message, :userhasresponse_id => curent_user.id)
-      # ActionCable.server.broadcast "notification_channel_#{@entity.id}", {message: message, link: link} if is_user_online
-      BroadcastSingleWorker.perform_async(@entity.id, message, link)
+      BroadcastSingleWorker.perform_async(@entity.id, message, link) if is_user_online && !is_current_user_response
 
     elsif @current_entity == POST
       chanels=[]
@@ -178,8 +176,7 @@ class BaseController < ApplicationController
 
       user = @entity.post.user
       user.notifications.create!(:user_id => user.id, :link => link, :message => message, :userhasresponse_id => curent_user.id) unless is_current_user_response
-      # ActionCable.server.broadcast "notification_channel_#{@entity.post.user_id}", {message: message, link: link} if is_user_online && !is_current_user_response
-      BroadcastSingleWorker.perform_async(@entity.post.user_id, message, link)
+      BroadcastSingleWorker.perform_async(@entity.post.user_id, message, link) if is_user_online && !is_current_user_response
 
     elsif @current_entity == COMMENTSTATUS
       is_user_online = ConnectionList.all.any? { |user| user[:id] == @entity.status.user_id } #check apakah user yang punya postingan online
@@ -187,8 +184,7 @@ class BaseController < ApplicationController
 
       user = @entity.status.user
       user.notifications.create!(:user_id => user.id, :link => link, :message => message, :userhasresponse_id => curent_user.id) unless is_current_user_response
-      # ActionCable.server.broadcast "notification_channel_#{@entity.status.user_id}", {message: message, link: link} if is_user_online && !is_current_user_response
-      BroadcastSingleWorker.perform_async(@entity.status.user_id, message, link)
+      BroadcastSingleWorker.perform_async(@entity.status.user_id, message, link) if is_user_online && !is_current_user_response
 
     elsif @current_entity == LIKECOMMENTPOST
       is_user_online = ConnectionList.all.any? { |user| user[:id] == @entity.commentpost.user_id } #check apakah user yang punya comment online
@@ -196,8 +192,7 @@ class BaseController < ApplicationController
 
       user = @entity.commentpost.user
       user.notifications.create!(:user_id => user.id, :link => link, :message => message, :userhasresponse_id => curent_user.id) unless is_current_user_response
-      # ActionCable.server.broadcast "notification_channel_#{@entity.commentpost.user_id}", {message: message, link: link} if is_user_online && !is_current_user_response
-      BroadcastSingleWorker.perform_async(@entity.commentpost.user_id, message, link)
+      BroadcastSingleWorker.perform_async(@entity.commentpost.user_id, message, link) if is_user_online && !is_current_user_response
 
     end
   end

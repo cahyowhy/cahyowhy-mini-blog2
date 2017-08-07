@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   resources :relationships, only: [:create]
   post 'authenticate', to: 'authentication#authenticate'
   get 'posts/next/:id', to: 'posts#show_post_next'
+  get 'posts/categories/all', to: 'posts#print_category'
   get 'posts/prev/:id', to: 'posts#show_post_prev'
   get 'auth', to: 'authtoken#auth_token'
   get 'timelines', to: 'timeline#index' #iseh ngebug jancuk

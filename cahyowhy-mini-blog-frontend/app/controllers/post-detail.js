@@ -14,6 +14,9 @@ export default Ember.Controller.extend(BaseController, {
       this.set("commentDisabled", false);
     }
   }),
+  isLoadCommentBtnDisplayed: Ember.computed("comments", function () {
+    return this.get("comments") > 0
+  }),
   username: Ember.computed('commonService', function () {
     return this.commonService.getUsername();
   }),

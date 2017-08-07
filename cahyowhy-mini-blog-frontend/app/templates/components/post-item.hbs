@@ -1,17 +1,43 @@
-<div class="col-sm-4 sm-margin-b-50 post-item">
-  <div class="post-detail-inner">
-    {{fav-icon action="onFavouritePost" _id=idPost likes=likes}}
-    <div class="margin-b-20">
-      <div class="wow zoomIn pos-relative">
-        <div class="category-post">
-          <h5>{{category}}</h5></div>
+{{#if isVertical}}
+  <div class="col-sm-12">
+    <div class="row post-vertical">
+      <div class="pull-left">
         {{#link-to 'post-detail' idPost}}
-          <img class="img-responsive" src="{{img}}" alt="{{title}}">
+          <div class="img-content" style="background: url('{{img}}')">
+          </div>
         {{/link-to}}
       </div>
+      <div class="media-body">
+        {{#link-to 'post-detail' idPost}}
+          <h3>{{title}}</h3>
+        {{/link-to}}
+        <p class="names">{{username}}, {{createdAt}}</p>
+        <p class="text-muted">{{review}}</p>
+        <a class="btn btn-default">
+          {{category}}
+        </a>
+        <a class="btn btn-default">
+          {{fav-icon action="onFavouritePost" _id=idPost likes=likes}}
+        </a>
+      </div>
     </div>
-    <h4>{{#link-to 'post-detail' idPost}}{{title}}{{/link-to}}</h4>
-    <p>{{description}}</p>
-    {{#link-to 'post-detail' idPost class="link"}}Read More{{/link-to}}
   </div>
-</div>
+{{else}}
+  <div class="col-sm-4 sm-margin-b-50 post-item">
+    <div class="post-detail-inner">
+      {{fav-icon action="onFavouritePost" _id=idPost likes=likes}}
+      <div class="margin-b-20">
+        <div class="wow zoomIn pos-relative">
+          <div class="category-post">
+            <h5>{{category}}</h5></div>
+          {{#link-to 'post-detail' idPost}}
+            <img class="img-responsive" src="{{img}}" alt="{{title}}">
+          {{/link-to}}
+        </div>
+      </div>
+      <h4>{{#link-to 'post-detail' idPost}}{{title}}{{/link-to}}</h4>
+      <p>{{review}}</p>
+      {{#link-to 'post-detail' idPost class="link"}}Read More{{/link-to}}
+    </div>
+  </div>
+{{/if}}

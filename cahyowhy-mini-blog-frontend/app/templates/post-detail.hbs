@@ -42,7 +42,7 @@
               {{textarea class="form-control" value=commentpost.commentpost.comment}}
             </div>
           </div>
-          <div class="btn-wrapper"><a class="btn btn-sm btn-primary" disabled={{isBtnDisabled}} onclick={{action
+          <div class="btn-wrapper cust2"><a class="btn btn-sm btn-primary" disabled={{isBtnDisabled}} onclick={{action
             'doSave'}}>comment</a></div>
         </li>
         {{#each comments as |comment|}}
@@ -69,8 +69,10 @@
     </div>
   </div>
   <div class="btn-wrapper-post">
-    <a {{action "onloadcomment"}} class="btn-primary btn-medium btn width800" style="margin-bottom: 30px;">Load
-      more commment</a>
+    {{#if isLoadCommentBtnDisplayed}}
+      <a {{action "onloadcomment"}} class="btn-primary btn-medium btn width800" style="margin-bottom: 30px;">Load more
+        commment</a>
+    {{/if}}
   </div>
   <div class="width920">
     {{facebook-comment fbAPPID=fbAPPID url=url}}

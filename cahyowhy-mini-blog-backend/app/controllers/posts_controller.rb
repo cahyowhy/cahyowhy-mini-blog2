@@ -13,6 +13,10 @@ class PostsController < BaseController
     end
   end
 
+  def print_category
+    render json: @entity.get_categories
+  end
+
   # GET /posts/prev/2
   def show_post_prev
     begin

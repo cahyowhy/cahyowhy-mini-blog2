@@ -18,12 +18,13 @@ Router.map(function () {
   this.route('post');
   this.route('post-detail', {path: '/post-detail/:id'});
   this.route('dashboard', {path: '/dashboard/:id'}, function () {
-    this.route('create-post', {queryParams: ['token', 'userId']});
+    this.route('create-post', {queryParams: ['token']});
     this.route('images');
     this.route('setting');
     this.route('post');
   });
   this.route('not-found', {path: '/*path'});
+  this.route('timeline');
 });
 
 export default Router;

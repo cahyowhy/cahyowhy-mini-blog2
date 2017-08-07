@@ -10,7 +10,7 @@ export default Ember.Service.extend({
   getToken(){
     let token;
     try {
-      token = this.get('localStorage').getItem('user').auth_token;
+      token = this.get('localStorage').getItem('user').auth_token.toString();
     } catch (err) {
       token = null;
       this.debug(err);
@@ -21,7 +21,7 @@ export default Ember.Service.extend({
   getId(){
     let id;
     try {
-      id = this.get('localStorage').getItem('user').user.id;
+      id = this.get('localStorage').getItem('user').user.id.toString();
     } catch (err) {
       id = null;
       this.debug(err);
@@ -32,7 +32,7 @@ export default Ember.Service.extend({
   getUsername(){
     let username;
     try {
-      username = this.get('localStorage').getItem('user').user.username;
+      username = this.get('localStorage').getItem('user').user.username.toString();
     } catch (err) {
       username = null;
       this.debug(err);

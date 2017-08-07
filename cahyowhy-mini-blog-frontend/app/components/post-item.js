@@ -21,7 +21,9 @@ export default Ember.Component.extend(BaseController, {
   },
   didReceiveAttrs(){
     this._super(...arguments);
-    this.applyLayout();
+    if (!this.get("isVertical")) {
+      this.applyLayout();
+    }
   },
   didInsertElement(){
     this._super(...arguments);
@@ -47,7 +49,9 @@ export default Ember.Component.extend(BaseController, {
       this.set("img", src);
     }
 
-    this.applyLayout();
+    if (!this.get("isVertical")) {
+      this.applyLayout();
+    }
   },
   actions: {
     onFavouritePost(id){

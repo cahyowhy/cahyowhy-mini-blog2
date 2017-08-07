@@ -17,7 +17,6 @@ export default Ember.Component.extend({
   },
   afterAuthFinished(){
     this._super(...arguments);
-    this.debug("invoke me when ready");
   },
   showIcon(){
     this.set("isIconHide", false);
@@ -30,7 +29,7 @@ export default Ember.Component.extend({
     }
 
     this.get("likes").forEach(function (item) {
-      if (item.user.id === context.commonService.getId()) {
+      if (item.user.id.toString() === context.commonService.getId()) {
         context.set("currentUsserLikes", true);
       }
     });
