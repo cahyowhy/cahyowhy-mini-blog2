@@ -50,6 +50,9 @@ export default Ember.Mixin.create({
       case "image":
         find = this.imageService.find(param);
         break;
+      case "timeline":
+        find = this.timelineService.find(param, this.commonService.getToken());
+        break;
       case "comment":
         find = this.commentpostService.find(param);
         break;
