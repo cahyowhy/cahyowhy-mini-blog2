@@ -16,6 +16,7 @@ class User < ApplicationRecord
   has_many :followers, through: :passive_relationships, source: :follower
   has_many :notifications
   has_many :posts
+  has_many :statuses
 
   def self.search(query)
     __elasticsearch__.search(
