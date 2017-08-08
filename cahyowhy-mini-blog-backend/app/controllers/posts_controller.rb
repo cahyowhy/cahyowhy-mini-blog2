@@ -7,22 +7,22 @@ class PostsController < BaseController
   # GET /posts/next/2
   def show_post_next
     begin
-      render json: {id: @entity.next.id, title: @entity.next.title, created_at: normalize_date(@entity.next.created_at)}
+      render json: {id: @entity.next.id, title: @entity.next.title, created_at: normalize_date(@entity.next.created_at)}, status: :success
     rescue
-      render json: @entity.next, httpstatus: getsuccess
+      render json: @entity.next, httpstatus: getsuccess, status: :method_not_allowed
     end
   end
 
   def print_category
-    render json: @entity.get_categories
+    render json: @entity.get_categories, status: :success
   end
 
   # GET /posts/prev/2
   def show_post_prev
     begin
-      render json: {id: @entity.prev.id, title: @entity.prev.title, created_at: normalize_date(@entity.prev.created_at)}
+      render json: {id: @entity.prev.id, title: @entity.prev.title, created_at: normalize_date(@entity.prev.created_at)}, status: :success
     rescue
-      render json: @entity.prev, httpstatus: getsuccess
+      render json: @entity.prev, httpstatus: getsuccess, status: :method_not_allowed
     end
   end
 
@@ -34,7 +34,7 @@ class PostsController < BaseController
   # check weather if the imagestatuses params is visible, render a json
   def check_imageposts_params
     unless params[:post][:imageposts].blank?
-      render json: {message: "sory, we can't update image at this time", httpstatus: updatefailed}
+      render json: {message: "sory, we can't update image at this time", httpstatus: updatefailed}, status: :method_not_allowed
     end
   end
 

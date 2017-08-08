@@ -15,7 +15,7 @@ class ImagesController < BaseController
           break
         end
       else
-        render json: {message: "SOME FILE CAN'T BE SAVED!", status: postfailed}
+        render json: {message: "SOME FILE CAN'T BE SAVED!", status: postfailed}, status: :bad_request
         break
       end
     end

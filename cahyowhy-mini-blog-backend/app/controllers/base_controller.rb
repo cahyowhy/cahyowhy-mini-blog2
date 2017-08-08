@@ -107,14 +107,13 @@ class BaseController < ApplicationController
 
   def destroy
     @entity.destroy
-    render json: {httpstatus: deletesuccess}
+    render json: {httpstatus: deletesuccess}, status: :success
   end
 
   def create
     @entity = @entity.new(@entity_params)
 
     if @entity.save
-      puts @current_entity == POST
       broadcast_notification if @current_entity == STATUS || @current_entity == POST || @current_entity == COMMENTPOST || @current_entity == COMMENTSTATUS || @current_entity == LIKEPOST || @current_entity == LIKECOMMENTPOST || @current_entity == RELATIONSHIP # invoke method in child after entity has been saved
 
       render json: @entity, httpstatus: postsuccess, status: :created, location: @entity

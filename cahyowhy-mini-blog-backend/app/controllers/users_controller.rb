@@ -4,12 +4,12 @@ class UsersController < BaseController
   before_action :authenticate_request, only: [:update, :destroy]
 
   def following
-    render json: @entity.following, httpstatus: getsuccess
+    render json: @entity.following, httpstatus: getsuccess, status: :success
   end
 
   # GET users/:id/followers
   def followers
-    render json: @entity.followers, httpstatus: getsuccess
+    render json: @entity.followers, httpstatus: getsuccess, status: :success
   end
 
   private

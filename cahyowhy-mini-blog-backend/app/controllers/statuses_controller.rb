@@ -20,10 +20,10 @@ class StatusesController < BaseController
     params.require(:status).permit(:user_id, :statustext, :statushtml, :imagestatuses_attributes => [:imageurl, :status_id, :user_id])
   end
 
-  # check weather if the imagestatuses params is visible, render a json
+  # check weather if the imagestatuses params is visible, render a json. we can't update image
   def check_imagestatuses_params
     unless params[:status][:imagestatuses].blank?
-      render json: {message: "sory, we can't update image at this time", httpstatus: updatefailed}
+      render json: {message: "sory, we can't update image at this time", httpstatus: updatefailed}, status: :method_not_allowed
     end
   end
 
