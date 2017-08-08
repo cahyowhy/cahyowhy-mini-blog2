@@ -7,20 +7,20 @@ class PostsController < BaseController
   # GET /posts/next/2
   def show_post_next
     begin
-      render json: {id: @entity.next.id, title: @entity.next.title, created_at: normalize_date(@entity.next.created_at)}, status: :success
+      render json: {id: @entity.next.id, title: @entity.next.title, created_at: normalize_date(@entity.next.created_at)}
     rescue
       render json: @entity.next, httpstatus: getsuccess, status: :method_not_allowed
     end
   end
 
   def print_category
-    render json: @entity.get_categories, status: :success
+    render json: @entity.get_categories
   end
 
   # GET /posts/prev/2
   def show_post_prev
     begin
-      render json: {id: @entity.prev.id, title: @entity.prev.title, created_at: normalize_date(@entity.prev.created_at)}, status: :success
+      render json: {id: @entity.prev.id, title: @entity.prev.title, created_at: normalize_date(@entity.prev.created_at)}
     rescue
       render json: @entity.prev, httpstatus: getsuccess, status: :method_not_allowed
     end

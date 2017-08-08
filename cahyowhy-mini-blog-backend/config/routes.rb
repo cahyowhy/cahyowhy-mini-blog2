@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   mount ActionCable.server => '/cable'
   resources :commentstatuses
-  resources :notifications
+  resources :notifications, only: [:create, :destroy, :show, :index]
   resources :imageposts
   resources :imagestatuses
   resources :statuses

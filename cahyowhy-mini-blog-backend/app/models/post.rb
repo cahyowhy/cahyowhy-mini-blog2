@@ -5,6 +5,7 @@ class Post < ApplicationRecord
   enum category: [:sains, :komedi, :sejarah, :gosip, :kisah, :puisi, :pribadi, :mistis, :berita]
   belongs_to :user
   has_many :likeposts
+  has_many :commentposts
   has_many :imageposts, inverse_of: :post
   validates_presence_of :title, :description, :category, :review, :descriptiontext, on: :create
   accepts_nested_attributes_for :imageposts

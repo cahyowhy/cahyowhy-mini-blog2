@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Post, type: :model do
-  [:imageposts, :likeposts].each do |attribute|
-    it { should have_many(attribute) }
+  [:imageposts, :likeposts, :commentposts].each do |attribute|
+    it { should have_many(attribute).dependent(:destroy) }
   end
 
   [:title, :description, :category, :review, :descriptiontext].each do |attribute|

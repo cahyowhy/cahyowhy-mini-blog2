@@ -107,7 +107,7 @@ class BaseController < ApplicationController
 
   def destroy
     @entity.destroy
-    render json: {httpstatus: deletesuccess}, status: :success
+    render json: {httpstatus: deletesuccess}
   end
 
   def create
