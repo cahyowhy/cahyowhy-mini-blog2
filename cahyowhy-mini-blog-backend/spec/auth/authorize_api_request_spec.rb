@@ -4,7 +4,7 @@ RSpec.describe AuthorizeApiRequest do
   # Create test user
   let(:user) { create(:user) }
   # Mock `Authorization` header
-  let(:header) { { 'Authorization' => token_generator(user.id) } }
+  let(:header) { {'Authorization' => token_generator(user.id)} }
   # Invalid request subject
   subject(:invalid_request_obj) { described_class.new({}) }
   # Valid request subject
@@ -41,7 +41,7 @@ RSpec.describe AuthorizeApiRequest do
       end
 
       context 'when token is expired' do
-        let(:header) { { 'Authorization' => expired_token_generator(user.id) } }
+        let(:header) { {'Authorization' => expired_token_generator(user.id)} }
         subject(:request_obj) { described_class.new(header) }
 
         it 'raises ExceptionHandler::ExpiredSignature error' do
