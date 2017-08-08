@@ -33,3 +33,5 @@ $('html,body').animate({
         puts a.entity
         a.entity = 21
         puts a.entity
+
+psql -d mydb -U myuser
