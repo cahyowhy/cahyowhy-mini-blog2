@@ -52,7 +52,6 @@ export default Ember.Controller.extend(Basecontroller, {
       imagepost.set('imageposts_attributes.user_id', this.commonService.getId());
       imageposts.push(JSON.parse(JSON.stringify(imagepost.getChildWithSelection(['imageurl', 'user_id']))));
 
-      this.debug(imageposts);
       this.set("post.post.description", this.get("post.post.description") + img);
     },
     onDeleteImage(index, id, src){

@@ -18,7 +18,7 @@ class RelationshipsController < BaseController
   def destroy
     user = Relationship.find(params[:id]).followed
     curent_user.unfollow(user)
-    render json: {message: "unfollow success", httpstatus: unfollowsucces}, status: :success
+    render json: {message: "unfollow success", httpstatus: unfollowsucces}
   end
 
   private

@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
+  require 'sidekiq/web'
   mount ActionCable.server => '/cable'
+  mount Sidekiq::Web => '/sidekiq'
   resources :commentstatuses
   resources :notifications, only: [:create, :destroy, :show, :index]
   resources :imageposts

@@ -11,11 +11,11 @@ class ImagesController < BaseController
       if @single_image.save
         @multi_images.push(@single_image)
         if image_params[:imagepath_data].length == index+1
-          render json: @multi_images, httpstatus: postsuccess, status: :created
+          render json: @multi_images, httpstatus: postsuccess
           break
         end
       else
-        render json: {message: "SOME FILE CAN'T BE SAVED!", status: postfailed}, status: :bad_request
+        render json: {message: "SOME FILE CAN'T BE SAVED!", status: postfailed}
         break
       end
     end

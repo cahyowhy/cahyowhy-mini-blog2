@@ -4,12 +4,12 @@ class UsersController < BaseController
   before_action :authenticate_request, only: [:update, :destroy]
 
   def following
-    render json: @entity.following, httpstatus: getsuccess, status: :success
+    render json: @entity.following, httpstatus: getsuccess
   end
 
   # GET users/:id/followers
   def followers
-    render json: @entity.followers, httpstatus: getsuccess, status: :success
+    render json: @entity.followers, httpstatus: getsuccess
   end
 
   private
@@ -19,7 +19,7 @@ class UsersController < BaseController
 
   def check_username_exist
     if User.exists?(:username => params[:user][:username])
-      render json: {message: "user is exist, using another username", httpstatus: postfailed}, status: :unprocessable_entity
+      render json: {message: "user is exist, using another username", httpstatus: postfailed}
     end
   end
 

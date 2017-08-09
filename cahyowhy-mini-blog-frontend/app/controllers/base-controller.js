@@ -56,6 +56,9 @@ export default Ember.Mixin.create({
       case "comment":
         find = this.commentpostService.find(param);
         break;
+      case "status":
+        find = this.statusService.find(param);
+        break;
       default:
         break;
     }

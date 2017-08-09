@@ -9,7 +9,7 @@ class PostsController < BaseController
     begin
       render json: {id: @entity.next.id, title: @entity.next.title, created_at: normalize_date(@entity.next.created_at)}
     rescue
-      render json: @entity.next, httpstatus: getsuccess, status: :method_not_allowed
+      render json: @entity.next, httpstatus: getsuccess
     end
   end
 
@@ -22,7 +22,7 @@ class PostsController < BaseController
     begin
       render json: {id: @entity.prev.id, title: @entity.prev.title, created_at: normalize_date(@entity.prev.created_at)}
     rescue
-      render json: @entity.prev, httpstatus: getsuccess, status: :method_not_allowed
+      render json: @entity.prev, httpstatus: getsuccess
     end
   end
 
@@ -34,7 +34,7 @@ class PostsController < BaseController
   # check weather if the imagestatuses params is visible, render a json
   def check_imageposts_params
     unless params[:post][:imageposts].blank?
-      render json: {message: "sory, we can't update image at this time", httpstatus: updatefailed}, status: :method_not_allowed
+      render json: {message: "sory, we can't update image at this time", httpstatus: updatefailed}
     end
   end
 

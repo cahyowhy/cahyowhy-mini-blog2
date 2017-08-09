@@ -2,6 +2,7 @@ import Ember from 'ember';
 import BaseController from '../controllers/base-controller';
 import Status from '../entity/status';
 import ImageStatus from '../entity/imagestatus';
+import Statuses from '../entity/statuses';
 
 let imagestatuses = [];
 export default Ember.Component.extend(BaseController, {
@@ -10,6 +11,9 @@ export default Ember.Component.extend(BaseController, {
   imagestatus: ImageStatus.create(),
   isBtnDisable: Ember.computed.empty('status.status.statushtml'),
   didInsertElement(){
+    if (this.get("isTimeline")) {
+      this.set("statuses", Statuses.statuses);
+    }
     this._super(...arguments);
   },
   doEmptyField(){

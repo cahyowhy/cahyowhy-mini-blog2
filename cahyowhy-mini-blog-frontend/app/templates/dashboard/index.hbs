@@ -1,2 +1,5 @@
 <!-- routeUserId => is the current route dashboard id -->
-{{create-status statuses=statuses routeUserId=routeUserId}}
+{{#create-status statuses=statuses routeUserId=routeUserId}}
+  <div class="btn-wrapper-post"><a onclick={{action "onLoadStatuses"}} class="btn-primary btn-medium btn">Load more</a>
+  </div>
+{{/create-status}}

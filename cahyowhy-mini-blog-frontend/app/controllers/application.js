@@ -1,6 +1,8 @@
 import Ember from 'ember';
+import Statuses from '../entity/statuses';
+import BaseController from '../controllers/base-controller';
 
-export default Ember.Controller.extend({
+export default Ember.Controller.extend(BaseController, {
   authentication: Ember.observer('applicationRoute.authentication', function () { //executed after dom loaded
     if (this.get("applicationRoute.authentication")) {
       this.handleActionCable();
@@ -8,6 +10,9 @@ export default Ember.Controller.extend({
       this.removeSubscription();
     }
   }),
+  afterRender(){
+    this._super(...arguments);
+  },
   removeSubscription(){
   },
   handleActionCable(){
@@ -19,6 +24,12 @@ export default Ember.Controller.extend({
     }, {
       received: (data) => {
         context.commonService.showCustomNotification(data.message, data.link);
+        context.debug(data);
+
+        if (data.data !== undefined && data.data !== null && context.get('target').currentPath === "timeline") {
+          Statuses.statuses.unshiftObject(data.data);
+          context.debug(Statuses.statuses);
+        }
       }
     });
 

@@ -2,9 +2,10 @@ import Ember from 'ember';
 import Basecontroller from './base-controller';
 import ENV from '../config/environment';
 import EmberUploader from 'ember-uploader';
-import User from '../models/user';
+import User from '../entity/user';
 let imgWidth, imgHeight;
 export default Ember.Controller.extend(Basecontroller, {
+  userEntity: User.create(),
   subscription: '',
   url: ENV.APP.API_IMAGE,
   dataURLtoBlob(dataurl) {
@@ -54,11 +55,10 @@ export default Ember.Controller.extend(Basecontroller, {
         method: 'POST'
       });
 
+      let user = this.get('userEntity');
       uploader.upload([fileUploadNewBlob]).then(response => {
-        context.debug(response);
-        User.imageurl = ENV.APP.API_URL + response[0].path.url;
-        delete User.id, delete User.name, delete User.username, delete User.password;
-        context.doUpdate('user', User).then(function () {
+        user.set("user.imageurl", ENV.APP.API_URL + response[0].path.url);
+        context.doUpdate('user', user.select(['imageurl'])).then(function () {
           context.set("user.imageurl", ENV.APP.API_URL + response[0].path.url);
           context.commonService.showCustomNotification("Berhasil Menmperbarui foto profile");
         });

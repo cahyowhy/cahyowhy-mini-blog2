@@ -114,7 +114,7 @@ class BaseController < ApplicationController
     @entity = @entity.new(@entity_params)
 
     if @entity.save
-      broadcast_notification if @current_entity == STATUS || @current_entity == POST || @current_entity == COMMENTPOST || @current_entity == COMMENTSTATUS || @current_entity == LIKEPOST || @current_entity == LIKECOMMENTPOST || @current_entity == RELATIONSHIP # invoke method in child after entity has been saved
+      broadcast_notification if @current_entity == STATUS || @current_entity == POST || @current_entity == COMMENTPOST || @current_entity == COMMENTSTATUS || @current_entity == LIKEPOST || @current_entity == LIKECOMMENTPOST || @current_entity == RELATIONSHIP || @current_entity == STATUS # invoke method in child after entity has been saved
 
       render json: @entity, httpstatus: postsuccess, status: :created, location: @entity
     else
@@ -127,13 +127,17 @@ class BaseController < ApplicationController
   def broadcast_notification
     link=''
     message=''
+    data=''
 
     case (@current_entity)
       when POST
         link = "post-detail/#{@entity.id}"
         message = "#{@entity.user.username} membuat post baru dengan judul '#{@entity.title}'"
+      when STATUS
+        data = @entity.to_json
       when LIKEPOST
         link = "post-detail/#{@entity.post_id}"
+        data = @entity.to_json
         message = "#{@entity.user.username} menyukai postingan anda yang berjudul '#{@entity.post.title}'"
       when LIKECOMMENTPOST
         link = "post-detail/#{@entity.post_id}/#user-commentpost-#{@entity.id}"
@@ -163,7 +167,17 @@ class BaseController < ApplicationController
         puts is_user_online
         item.notifications.create!(:user_id => item.id, :link => link, :message => message, :userhasresponse_id => curent_user.id)
         if is_user_online #only user online will be subscribed
-          chanels << (ActionCable.server.broadcast "notification_channel_#{item.id}", {message: message, link: link})
+          chanels << (ActionCable.server.broadcast "notification_channel_#{item.id}", {message: message, link: link, mark: "post", data: data})
+        end
+
+        BroadcastNotificationJob.perform_now(chanels)
+      end
+
+    elsif @current_entity == STATUS
+      chanels=[]
+      curent_user.followers.each do |item|
+        if is_user_online #only user online will be subscribed
+          chanels << (ActionCable.server.broadcast "notification_channel_#{item.id}", {data: data, mark: "status"})
         end
 
         BroadcastNotificationJob.perform_now(chanels)

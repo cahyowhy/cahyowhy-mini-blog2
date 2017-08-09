@@ -1,6 +1,7 @@
 <div class="width920">
-  {{#create-status statuses=statuses routeUserId=routeUserId}}
-    <div class="btn-wrapper-post"><a onclick={{action "onLoadStatuses"}} class="btn-primary btn-medium btn">Load more</a>
+  {{#create-status isTimeline=true routeUserId=routeUserId}}
+    <div class="btn-wrapper-post"><a onclick={{action "onLoadStatuses"}} class="btn-primary btn-medium btn">Load
+      more</a>
     </div>
   {{/create-status}}
 </div>

@@ -14,7 +14,7 @@ export default Ember.Controller.extend(BaseController, {
 
       this.doFind("timeline", offsetlimit(offset)).then(function (response) {
         response.forEach(function (item) {
-          context.get('statuses').unshiftObject(item);
+          context.get('statuses').pushObject(item);
         });
       });
     }
