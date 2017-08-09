@@ -7,7 +7,7 @@ class RelationshipsController < BaseController
     if curent_user.following?(user)
       @entity=user #entity disini berarti user yang di follow si current user! BUKAN CURENT_USER!
       broadcast_notification
-      render json: {message: "you allready following her / him", httpstatus: followfailed}, status: :accepted
+      render json: {message: "you allready following her / him", httpstatus: followfailed}
     else
       curent_user.follow(user)
       render json: curent_user.following, httpstatus: followsucces, status: :created

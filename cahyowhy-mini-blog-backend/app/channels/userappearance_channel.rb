@@ -4,10 +4,12 @@ class UserappearanceChannel < ApplicationCable::Channel
   end
 
   def appear(params)
-    ConnectionList.add({id: params['user_id']})
+    ConnectionList.add({id: params['user_id'].to_s})
+    puts ConnectionList.all
   end
 
   def unsubscribed
     ConnectionList.remove({id: current_user.id})
+    puts ConnectionList.all
   end
 end

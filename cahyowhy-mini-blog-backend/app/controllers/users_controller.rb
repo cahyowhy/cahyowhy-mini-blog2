@@ -1,5 +1,5 @@
 class UsersController < BaseController
-  before_action :check_username_exist, only: [:create]
+  before_action :check_username_exist, only: [:create, :update]
   before_action :set_entity, only: [:show, :update, :destroy, :following, :followers]
   before_action :authenticate_request, only: [:update, :destroy]
 

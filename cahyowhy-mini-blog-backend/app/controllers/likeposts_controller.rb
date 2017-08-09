@@ -22,7 +22,7 @@ class LikepostsController < BaseController
         item.destroy
       end
 
-      render json: {message: "successfully delete like", httpstatus: deletesuccess}, status: :success
+      render json: {message: "successfully delete like", httpstatus: deletesuccess}
     end
   end
 end

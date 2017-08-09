@@ -23,12 +23,14 @@ export default Ember.Controller.extend(BaseController, {
       user_id: context.commonService.getId()
     }, {
       received: (data) => {
-        context.commonService.showCustomNotification(data.message, data.link);
-        context.debug(data);
+        if (data.link !== undefined && data.link !== null) {
+          context.commonService.showCustomNotification(data.message, data.link);
+        }
 
         if (data.data !== undefined && data.data !== null && context.get('target').currentPath === "timeline") {
+          context.debug("new notification has come in!");
+          context.debug(data.data);
           Statuses.statuses.unshiftObject(data.data);
-          context.debug(Statuses.statuses);
         }
       }
     });
