@@ -132,12 +132,13 @@ class BaseController < ApplicationController
     case (@current_entity)
       when POST
         link = "post-detail/#{@entity.id}"
+        data = PostSerializer.new(@entity).to_json
         message = "#{@entity.user.username} membuat post baru dengan judul '#{@entity.title}'"
       when STATUS
-        data = @entity.as_json
+        data = StatusSerializer.new(@entity).to_json
+      # data = @entity.as_json
       when LIKEPOST
         link = "post-detail/#{@entity.post_id}"
-        data = @entity.to_json
         message = "#{@entity.user.username} menyukai postingan anda yang berjudul '#{@entity.post.title}'"
       when LIKECOMMENTPOST
         link = "post-detail/#{@entity.post_id}/#user-commentpost-#{@entity.id}"
@@ -160,25 +161,20 @@ class BaseController < ApplicationController
       @entity.notifications.create!(:user_id => @entity.id, :link => link, :message => message, :userhasresponse_id => curent_user.id)
       BroadcastSingleWorker.perform_async(@entity.id, message, link) if is_user_online && !is_current_user_response
 
-    elsif @current_entity == POST
+    elsif @current_entity == POST || @current_entity == STATUS
       chanels=[]
       curent_user.followers.each do |item|
         is_user_online = ConnectionList.all.any? { |user| user[:id] == item.id.to_s }
         puts is_user_online
-        item.notifications.create!(:user_id => item.id, :link => link, :message => message, :userhasresponse_id => curent_user.id)
-        if is_user_online #only user online will be subscribed
-          chanels << (ActionCable.server.broadcast "notification_channel_#{item.id}", {message: message, link: link, mark: "post", data: data})
+        if @current_entity == POST
+          item.notifications.create!(:user_id => item.id, :link => link, :message => message, :userhasresponse_id => curent_user.id)
         end
-
-        BroadcastNotificationJob.perform_now(chanels)
-      end
-
-    elsif @current_entity == STATUS
-      chanels=[]
-      curent_user.followers.each do |item|
-        is_user_online = ConnectionList.all.any? { |user| user[:id] == item.id.to_s }
         if is_user_online #only user online will be subscribed
-          chanels << (ActionCable.server.broadcast "notification_channel_#{item.id}", {data: data, mark: "status"})
+          if @current_entity == POST
+            chanels << (ActionCable.server.broadcast "notification_channel_#{item.id}", {message: message, link: link, mark: "post", data: data})
+          else
+            chanels << (ActionCable.server.broadcast "notification_channel_#{item.id}", {data: data, mark: "status"})
+          end
         end
 
         BroadcastNotificationJob.perform_now(chanels)

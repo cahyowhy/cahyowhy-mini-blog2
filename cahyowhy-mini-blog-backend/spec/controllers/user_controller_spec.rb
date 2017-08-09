@@ -33,7 +33,8 @@ RSpec.describe UsersController, type: :controller do
 
     it "returns http success" do
       # in ruby everything start with : its mean symbol
-      user_update.delete(:password) #delete the hash val
+      #delete the hash val
+      user_update.delete(:password)
       request.headers['Authorization'] = token_generator(user.id)
       request.headers['Content-Type'] = "application/json"
 
