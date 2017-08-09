@@ -19,25 +19,25 @@ RSpec.describe UsersController, type: :controller do
 
   describe "DELETE #destroy" do
     let!(:user) { create(:user) }
-    let(:header) { {'Authorization' => token_generator(user.id)} }
-    before { allow(request).to receive(:header).and_return(header) }
 
     it "returns http success" do
-      expect { delete :destroy, :id => user.id }.to change { User.count }.by(0)
-      expect(response).to have_http_status(:success)
+      request.headers['Authorization'] = token_generator(user.id)
+      request.headers['Content-Type'] = "application/json"
+      expect { delete :destroy, :id => user.id }.to change { User.count }.by(-1)
     end
   end
 
   describe "UPDATE #put" do
     let!(:user) { create(:user) }
-
-    before(:each) do
-      user[:password]=nil
-      put :update, :id => user.id, :user => :user
-      user.reload
-    end
+    let(:user_update) { attributes_for(:user) }
 
     it "returns http success" do
+      # in ruby everything start with : its mean symbol
+      user_update.delete(:password) #delete the hash val
+      request.headers['Authorization'] = token_generator(user.id)
+      request.headers['Content-Type'] = "application/json"
+
+      put :update, :id => user.id, :user => user_update
       expect(response).to have_http_status(:success)
     end
   end

@@ -3,8 +3,8 @@ class Status < ApplicationRecord
   setting_index([{attr: :statustext, type: :text}])
 
   belongs_to :user
-  has_many :imagestatuses, inverse_of: :status
-  has_many :commentstatuses
+  has_many :imagestatuses, inverse_of: :status, dependent: :destroy
+  has_many :commentstatuses, dependent: :destroy
   accepts_nested_attributes_for :imagestatuses
   validates_presence_of :statushtml, :statustext, on: :create
 
