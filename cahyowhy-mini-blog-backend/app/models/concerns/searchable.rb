@@ -8,14 +8,7 @@ module Searchable
           arguments.each do |argument|
             indexes argument[:attr], type: argument[:type]
           end
-          # indexes :username, type: :string
-          # indexes :name, type: :string
         end
-
-        # mapping dynamic: false do
-        #   indexes :username, type: :string
-        #   indexes :name, type: :string
-        # end
       end
     end
   end
