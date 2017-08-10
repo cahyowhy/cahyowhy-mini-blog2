@@ -18,8 +18,15 @@ export default Ember.Route.extend({
     this.controllerFor('timeline').set('statuses', model.statuses);
   },
   actions: {
-    didTransition(){
-      // Statuses.statuses = [];
-    }
+    /*
+     * on the first refresh this method won't be called. after the page is transition
+     * to another page, now its will be called
+     * */
+    willTransition(transition){
+      /*
+       * when move to another page be sure to empty this status
+       * */
+      Statuses.statuses = [];
+    },
   }
 });
