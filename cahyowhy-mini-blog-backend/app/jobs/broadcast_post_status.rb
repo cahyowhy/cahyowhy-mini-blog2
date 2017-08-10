@@ -1,4 +1,4 @@
-class BroadcastSingleWorker
+class BroadcastPostStatus
   include Sidekiq::Worker
 
   def perform(id, message, link)

@@ -14,7 +14,6 @@ export default Ember.Controller.extend(BaseController, {
       if (this.checkBtnSaveDisabled(event)) {
         this.doSave("login", user.getChild()).then(function (response) {
           context.commonService.setCookies(response);
-          context.debug(context.commonService.getToken());
           context.transitionToRoute('dashboard', response.user.id);
         }).catch(function (err) {
           context.debug(err);

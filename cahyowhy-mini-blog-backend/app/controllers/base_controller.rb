@@ -76,15 +76,17 @@ class BaseController < ApplicationController
       end
     end
 
-    if params[:query].present? && params[:offset].present? && params[:limit].present?
-      @entities = @entity.search(params[:query]).records.offset(params[:offset]).limit(params[:limit])
-    elsif params[:offset].blank? && params[:limit].blank?
-      # @entities = @entity.where(paramshash) => actually this also work, wether the paramshash is empty
-      @entities = @entity.all.order("created_at DESC")
-    else
-      # you can search by nested attributes here
-      @entities = @entity.limit(params[:limit]).offset(params[:offset]).where(paramshash).order("created_at DESC")
-    end
+    condition = params[:query].present? && params[:offset].present? && params[:limit].present?
+    condition_2 = params[:offset].blank? && params[:limit].blank?
+    @entities = if condition then
+                  @entity.search(params[:query]).records.offset(params[:offset]).limit(params[:limit])
+                elsif condition_2
+                  # @entities = @entity.where(paramshash) => actually this also work, wether the paramshash is empty
+                  @entity.all.order("created_at DESC")
+                else
+                  # you can search by nested attributes here
+                  @entity.limit(params[:limit]).offset(params[:offset]).where(paramshash).order("created_at DESC")
+                end
 
     if @current_entity == POST
       render json: @entities, httpstatus: getsuccess, exclude: [:description, :descriptiontext]
@@ -165,19 +167,18 @@ class BaseController < ApplicationController
       chanels=[]
       curent_user.followers.each do |item|
         is_user_online = ConnectionList.all.any? { |user| user[:id] == item.id.to_s }
-        puts is_user_online
         if @current_entity == POST
           item.notifications.create!(:user_id => item.id, :link => link, :message => message, :userhasresponse_id => curent_user.id)
         end
         if is_user_online #only user online will be subscribed
           if @current_entity == POST
-            chanels << (ActionCable.server.broadcast "notification_channel_#{item.id}", {message: message, link: link, mark: "post", data: data})
+            # chanels << (ActionCable.server.broadcast "notification_channel_#{item.id}", {message: message, link: link, mark: "post", data: data})
           else
-            chanels << (ActionCable.server.broadcast "notification_channel_#{item.id}", {data: data, mark: "status"})
+            # chanels << (ActionCable.server.broadcast "notification_channel_#{item.id}", {data: data, mark: "status"})
           end
         end
 
-        BroadcastNotificationJob.perform_now(chanels)
+        # BroadcastNotificationJob.perform_now(chanels)
       end
 
     elsif @current_entity == LIKEPOST || @current_entity == COMMENTPOST

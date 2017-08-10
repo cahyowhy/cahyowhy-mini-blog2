@@ -3,7 +3,9 @@ require 'rails_helper'
 RSpec.describe UsersController, type: :controller do
 
   describe "GET #index" do
-    it_behaves_like "running index method"
+    context "when query param visible" do
+      it_behaves_like "running index method"
+    end
   end
 
   describe "GET #show" do
