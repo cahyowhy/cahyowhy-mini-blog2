@@ -1,16 +1,22 @@
 import Ember from 'ember';
 
 export default Ember.Service.extend({
-  localStorage: Ember.inject.service(),
+  cookies: Ember.inject.service(),
   init(){
     this._super(...arguments);
     this.notificationService.setDefaultAutoClear(true);
     this.notificationService.setDefaultClearDuration(1200);
   },
+  setCookies(params){
+    this.get("cookies").write('user', JSON.stringify(params));
+  },
+  clearCookies(){
+    this.get('cookies').clear('user');
+  },
   getToken(){
     let token;
     try {
-      token = this.get('localStorage').getItem('user').auth_token.toString();
+      token = JSON.parse(this.get('cookies').read('user')).auth_token.toString();
     } catch (err) {
       token = null;
       this.debug(err);
@@ -21,7 +27,7 @@ export default Ember.Service.extend({
   getId(){
     let id;
     try {
-      id = this.get('localStorage').getItem('user').user.id.toString();
+      id = JSON.parse(this.get('cookies').read('user')).user.id.toString();
     } catch (err) {
       id = null;
       this.debug(err);
@@ -32,7 +38,7 @@ export default Ember.Service.extend({
   getUsername(){
     let username;
     try {
-      username = this.get('localStorage').getItem('user').user.username.toString();
+      username = JSON.parse(this.get('cookies').read('user')).user.username.toString();
     } catch (err) {
       username = null;
       this.debug(err);

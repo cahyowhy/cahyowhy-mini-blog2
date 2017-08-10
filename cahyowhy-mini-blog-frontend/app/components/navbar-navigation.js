@@ -21,7 +21,7 @@ export default Ember.Component.extend({
   },
   actions: {
     onLogOut(){
-      this.localStorage.setItem('user', []);
+      this.commonService.clearCookies();
       window.location.replace("/");
     }
   }

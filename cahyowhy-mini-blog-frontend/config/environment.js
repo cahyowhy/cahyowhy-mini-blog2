@@ -10,6 +10,9 @@ module.exports = function (environment) {
     'ember-cli-notifications': {
       includeFontAwesome: true
     },
+    fastboot: {
+      hostWhitelist: ['example.com', 'subdomain.example.com', /^localhost:\d+$/]
+    },
     EmberENV: {
       FEATURES: {
         'query-params': true

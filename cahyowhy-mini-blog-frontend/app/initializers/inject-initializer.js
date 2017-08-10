@@ -6,7 +6,6 @@ export default {
     application.inject('route', 'headData', 'service:headData');
     application.inject('route', 'userService', 'service:userService');
     application.inject('route', 'loginService', 'service:loginService');
-    application.inject('route', 'localStorage', 'service:local-storage');
     application.inject('route', 'imageService', 'service:imageService');
     application.inject('route', 'postService', 'service:postService');
     application.inject('route', 'commonService', 'service:commonService');
@@ -23,7 +22,6 @@ export default {
     application.inject('controller', 'loginService', 'service:loginService');
     application.inject('controller', 'imageService', 'service:imageService');
     application.inject('controller', 'commonService', 'service:commonService');
-    application.inject('controller', 'localStorage', 'service:local-storage');
     application.inject('controller', 'postService', 'service:postService');
     application.inject('controller', 'authService', 'service:authService');
     application.inject('controller', 'commentpostService', 'service:commentpostService');
@@ -35,7 +33,6 @@ export default {
     application.inject('controller', 'commentstatusService', 'service:commentstatusService');
     application.inject('controller', 'timelineService', 'service:timelineService');
 
-    application.inject('component', 'localStorage', 'service:local-storage');
     application.inject('component', 'commonService', 'service:commonService');
     application.inject('component', 'userService', 'service:userService');
     application.inject('component', 'postService', 'service:postService');
