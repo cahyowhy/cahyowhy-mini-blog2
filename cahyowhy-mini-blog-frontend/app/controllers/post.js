@@ -5,6 +5,7 @@ import offsetlimit from '../entity/offsetlimit';
 
 let offset = 0;
 export default Ember.Controller.extend(BaseController, {
+  ifPostIsEmpty: false,
   actions: {
     onLoadPost(){
       const context = this;
@@ -14,6 +15,9 @@ export default Ember.Controller.extend(BaseController, {
         response.forEach(function (item) {
           context.get('posts').pushObject(item);
         });
+        if (response.length === 0) {
+          context.set("ifPostIsEmpty", true);
+        }
       });
     }
   }

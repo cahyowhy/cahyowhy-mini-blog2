@@ -1,7 +1,11 @@
-<div class="width920">
-  {{#create-status isTimeline=true routeUserId=routeUserId}}
-    <div class="btn-wrapper-post"><a onclick={{action "onLoadStatuses"}} class="btn-primary btn-medium btn">Load
-      more</a>
-    </div>
+<div class="width920 margin-top-130px">
+  {{#create-status isTimeline=true action="checkStatusEmpty"}}
+    {{#if ifPostIsEmpty}}
+      {{content-is-empty}}
+    {{else}}
+      <div class="btn-wrapper-post"><a onclick={{action "onLoadStatuses"}} class="btn-primary btn-medium btn">Load
+        more</a>
+      </div>
+    {{/if}}
   {{/create-status}}
 </div>

@@ -8,8 +8,8 @@ export default Ember.Component.extend(BaseController, {
   url: ENV.APP.API_IMAGE,
   files: [],
   userId: 0,
-  isUserIdEqRouteId: Ember.computed('userId', 'routeUserId', function () {
-    return this.get("userId") === this.get("routeUserId")
+  isUserIdEqRouteId: Ember.computed('userId', 'routeUserId', 'isTimeline', function () {
+    return this.get('isTimeline') ? true : this.get("userId") === this.get("routeUserId");
   }),
   didInsertElement(){
     this._super(...arguments);
@@ -25,7 +25,7 @@ export default Ember.Component.extend(BaseController, {
       results.forEach(function (item) {
         context.get('images').pushObject({
           id: item.id,
-          src: ENV.APP.API_URL + item.path.url
+          src: item.path.url
         });
       });
     })
@@ -57,11 +57,11 @@ export default Ember.Component.extend(BaseController, {
         });
       }
     },
-    onImageChange(file, idFile, urlFile){ //urlFile, file yg ada di server, sudah di upload
+    onImageChange(idFile, urlFile){ //urlFile, file yg ada di server, sudah di upload
       if (this.get("isUserIdEqRouteId")) {
         this.get('images').pushObject({
           id: idFile,
-          src: ENV.APP.API_URL + urlFile
+          src: urlFile
         });
       }
     },

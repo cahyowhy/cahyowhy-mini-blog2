@@ -43,7 +43,7 @@ export default EmberUploader.FileField.extend({
     if (!this.get("isEditFirst")) {
       uploader.upload(this.get('files')).then(response => { //response return an array
         let lastdata = response.length - 1;
-        context.sendAction("action", files[0], response[lastdata].id, response[lastdata].path.url);
+        context.sendAction("action",response[lastdata].id, response[lastdata].path.url);
         context.commonService.showNotification(response[lastdata].httpstatus);
         files = null;
         context.debug(response);

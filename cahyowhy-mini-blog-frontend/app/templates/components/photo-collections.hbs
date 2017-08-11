@@ -1,7 +1,7 @@
-<div class="photo-collections">
-  <h5 class="photo-collection-title">{{title}}</h5>
-  <div class="photo-collection-inner">
-    {{#if isUserIdEqRouteId}}
+{{#if isUserIdEqRouteId}}
+  <div class="photo-collections">
+    <h5 class="photo-collection-title">{{title}}</h5>
+    <div class="photo-collection-inner">
       <div class="photo" style="background: white">
         {{image-uploader
           isEditFirst=false
@@ -13,30 +13,29 @@
         <div class="photo-overlay"></div>
         <i class="ion ion-plus-circled"></i>
       </div>
-    {{/if}}
-    {{#each images as |image index|}}
-      <div class="photo" style="background-image: url(
-        '{{image.src}}')">
-        <div class="photo-overlay"></div>
-        {{#if isUserIdEqRouteId}}
-          <i onclick={{action "onDelImage" index image.id image.src}} class="ion ion-close-circled"></i>
-          <i onclick={{action "onAddImage" index image.id image.src}} class="ion ion-plus-circled"></i>
-        {{/if}}
-      </div>
-    {{/each}}
+      {{#each images as |image index|}}
+        <div class="photo" style="background-image: url(
+          '{{image-url-helper image.src}}')">
+          <div class="photo-overlay"></div>
+          {{#if isUserIdEqRouteId}}
+            <i onclick={{action "onDelImage" index image.id image.src}} class="ion ion-close-circled"></i>
+            <i onclick={{action "onAddImage" index image.id image.src}} class="ion ion-plus-circled"></i>
+          {{/if}}
+        </div>
+      {{/each}}
+    </div>
   </div>
-</div>
-
-<div class="modal fade" id="modal-delete-photo" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-body">
-        <h3>If you delete this. all your post that depend on this photo will also deleted</h3>
-      </div>
-      <div class="modal-footer">
-        <a class="btn btn-danger delete-photo" style="margin-bottom: 5px">delete</a>
-        <button type="button" class="btn btn-default" style="margin: 0" data-dismiss="modal">Close</button>
+  <div class="modal fade" id="modal-delete-photo" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <h3>If you delete this. all your post that depend on this photo will also deleted</h3>
+        </div>
+        <div class="modal-footer">
+          <a class="btn btn-danger delete-photo" style="margin-bottom: 5px">delete</a>
+          <button type="button" class="btn btn-default" style="margin: 0" data-dismiss="modal">Close</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
+{{/if}}

@@ -27,6 +27,19 @@ export default Ember.Route.extend({
        * when move to another page be sure to empty this status
        * */
       Statuses.statuses = [];
+      /**
+       * be sure to check this property when user
+       * accidentally click link to
+       * and display the confirmation tab
+       */
+      if (!this.controllerFor('timeline').get('ifCreateStatusEmpty')) {
+        let confirmation = confirm("Your changes haven't saved yet. Would you like to leave this form?");
+        /**
+         * need to be set ifCreateStatusEmpty = true, every user accept leave the route
+         * when the status doesnt empty
+         */
+        !confirmation ? transition.abort() : this.controllerFor('timeline').set('ifCreateStatusEmpty', true);
+      }
     },
   }
 });

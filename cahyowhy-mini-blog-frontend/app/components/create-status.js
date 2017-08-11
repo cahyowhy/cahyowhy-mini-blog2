@@ -3,25 +3,35 @@ import BaseController from '../controllers/base-controller';
 import Status from '../entity/status';
 import ImageStatus from '../entity/imagestatus';
 import Statuses from '../entity/statuses';
-
-let imagestatuses = [];
 export default Ember.Component.extend(BaseController, {
   images: [],
+  imagestatuses: [],
   status: Status.create(),
   imagestatus: ImageStatus.create(),
   isBtnDisable: Ember.computed.empty('status.status.statushtml'),
+  isPropertyEmpty: Ember.computed('isBtnDisable', 'imagestatuses', function () {
+    /**
+     * return true if booth empty
+     */
+    return this.get('isBtnDisable') && this.get('imagestatuses').length === 0;
+  }),
   didInsertElement(){
+    this._super(...arguments);
     if (this.get("isTimeline")) {
       this.set("statuses", Statuses.statuses);
     }
+  },
+  willDestroyElement(){
     this._super(...arguments);
+    this.doEmptyField();
   },
   doEmptyField(){
     this.set('status.status.statushtml', '');
     this.set('status.status.statustext', '');
     this.set('status.status.imagestatuses_attributes', []);
+    this.set('imagestatus.imagestatuses_attributes.imageurl', []);
     this.set('images', []);
-    imagestatuses = [];
+    this.set('imagestatuses', []);
   },
   options: {
     selector: 'textarea',
@@ -44,31 +54,46 @@ export default Ember.Component.extend(BaseController, {
   actions: {
     onTypeSomething(value){
       let status = this.get('status');
-      status.set('status.statushtml', value);
+      const valueText = Ember.$(`${value}`).text().replace(/\s+/g, '').trim().match("^[a-zA-Z]+$");
+      const isStatusContainLeter = valueText !== null && Array.isArray(valueText) && valueText[0].lenght !== 0;
+      isStatusContainLeter ? status.set('status.statushtml', value) : status.set('status.statushtml', '');
+      this.debug(valueText);
+      this.sendAction("action", this.get('isPropertyEmpty'));
     },
-    onDeleteStatusPhoto(id){ //delete the images[] property
+    onDeleteStatusPhoto(id){
       this.set('images', this.deleteImage(id));
+      this.sendAction("action", this.get('isPropertyEmpty'));
     },
-    onAddImage(index, id, src){ //action from photocollection
+    /**
+     * action invoke after user add image
+     * to photocollections image
+     * @param{int} index
+     * @param{int} id
+     * @param{string} src
+     */
+    onAddImage(index, id, src){
       let imagestatus = this.get('imagestatus');
       let images = this.get('images');
       if (images.length === 0) {
         imagestatus.set('imagestatuses_attributes.imageurl', src);
         imagestatus.set('imagestatuses_attributes.user_id', this.commonService.getId());
         this.get('images').pushObject({id: id, src: src, index: index});
-        imagestatuses.push(JSON.parse(JSON.stringify(imagestatus.getChildWithSelection(['imageurl', 'user_id']))));
+        this.get('imagestatuses').pushObject(JSON.parse(JSON.stringify(imagestatus.getChildWithSelection(['imageurl', 'user_id']))));
+        this.sendAction("action", this.get('isPropertyEmpty'));
       } else {
-        let isHasImage = images.any((item) => {
+        const isHasImage = images.any((item) => {
           return item.id === id
         });
+
         if (isHasImage) {
           this.commonService.showCustomNotification("foto ini sudah ditambahkan ke status anda");
         } else {
           imagestatus.set('imagestatuses_attributes.imageurl', src);
           imagestatus.set('imagestatuses_attributes.user_id', this.commonService.getId());
           this.get('images').pushObject({id: id, src: src, index: index});
-          imagestatuses.push(JSON.parse(JSON.stringify(imagestatus.getChildWithSelection(['imageurl', 'user_id']))));
+          this.get('imagestatuses').pushObject(JSON.parse(JSON.stringify(imagestatus.getChildWithSelection(['imageurl', 'user_id']))));
         }
+        this.sendAction("action", this.get('isPropertyEmpty'));
       }
     },
     onDelImage(index, id, src){ //action from photocollection
@@ -80,7 +105,7 @@ export default Ember.Component.extend(BaseController, {
         let status = this.get('status');
         let statustEl = Ember.$("<p>").append(Ember.$(status.get('status.statushtml')));
         status.set('status.statustext', statustEl.text());
-        status.set('status.imagestatuses_attributes', imagestatuses);
+        status.set('status.imagestatuses_attributes', this.get('imagestatuses'));
         status.set('status.user_id', this.commonService.getId());
 
         context.debug(JSON.stringify(status));

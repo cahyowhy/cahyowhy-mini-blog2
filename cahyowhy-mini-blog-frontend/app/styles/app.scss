@@ -14,10 +14,12 @@
 
 $blueInstagram: #3897F0;
 $greyDark: #eaeaea;
+$gretDarkest: #c4c4c4;
 $greyYoung: #fafafa;
 $almostWhite: #f0f0f0;
 $textTittle: #515769;
 $textDefault: #777;
+
 body {
   top: 0px;
 }
@@ -879,5 +881,26 @@ nav {
       font-size: 13px;
       margin-bottom: 0px
     }
+  }
+}
+
+.margin-top-130px {
+  margin-top: 130px;
+}
+
+.content-empty {
+  background: $almostWhite;
+  width: 100%;
+  height: auto;
+  margin-bottom: 15px;
+  display: table;
+  padding: 15px;
+  text-align: center;
+  h5 {
+    font-weight: 500;
+    display: table-cell;
+    vertical-align: middle;
+    margin-bottom: 0px;
+    color: $gretDarkest;
   }
 }

@@ -1,4 +1,6 @@
+
 {{photo-collections
+  isTimeline=isTimeline
   title="pilih foto untuk di upload di statusmu"
   routeUserId=routeUserId
   onAddImage=(action "onAddImage")
@@ -8,11 +10,11 @@
     <img src="/img/no-image.png">
   </div>
   <div class="media-body">
-    {{tinymce-editor options=options class="form-control no-border" value=status.status.statushtml
+    {{tinymce-editor options=options class="form-control no-border"
                      onValueChanged=(action "onTypeSomething")}}
     <div class="add-photo-to-status">
       {{#each images as |image|}}
-        <div style="background-image: url('{{image.src}}')" class="photo-item">
+        <div style="background-image: url('{{image-url-helper image.src}}')" class="photo-item">
           <i {{action 'onDeleteStatusPhoto' image.id}} class="ion ion-close-circled"></i>
         </div>
       {{/each}}
