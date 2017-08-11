@@ -904,3 +904,100 @@ nav {
     color: $gretDarkest;
   }
 }
+
+div[id^="uploadphoto"], div[id*="uploadphoto"] {
+  .modal-dialog {
+    min-width: 630px;
+  }
+  text-align: right;
+  .icon-wrapper {
+    position: relative;
+    top: 15px;
+    width: 100%;
+    padding: 0 15px 15px 15px;
+    background: white;
+    left: 0px;
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style-type: none;
+      li {
+        a i {
+          color: white !important;
+        }
+        &:last-child {
+          margin: 0px;
+        }
+        margin-right: 5px;
+        overflow: auto;
+        display: inline;
+      }
+    }
+  }
+  .modal-body {
+    position: relative;
+    .edit-action-wrapper {
+      a {
+        margin-right: 10px;
+        span {
+          color: white !important;
+        }
+        &:first-child {
+          span {
+            color: $textTittle !important;
+          }
+        }
+        span i {
+          margin-right: 5px
+        }
+        &:last-child {
+          margin-right: 0px
+        }
+      }
+      position: absolute;
+      top: 30px;
+      z-index: 2;
+      right: 30px;
+    }
+  }
+  canvas {
+    width: 100% !important;
+  }
+  input {
+    margin-top: 15px;
+    border-radius: 0px;
+  }
+  img {
+    min-width: 600px;
+    width: 100%;
+  }
+  a.btn.btn-success {
+    margin-top: 15px;
+  }
+  .img-preset-wrapper {
+    margin-top: 15px;
+    height: 100px;
+    width: 100%;
+    //overflow-x: scroll;
+    display: flex;
+    //padding: 10px 10px 20px 10px;
+    .img-preset-item {
+      cursor: pointer;
+      width: 100px;
+      height: 100px;
+      margin-right: 10px;
+      display: table;
+      background-position: center;
+      background-size: cover;
+      text-align: center;
+      background-repeat: no-repeat;
+      background: black;
+      span {
+        display: table-cell;
+        vertical-align: middle;
+        font-weight: bold;
+        color: white !important;
+      }
+    }
+  }
+}

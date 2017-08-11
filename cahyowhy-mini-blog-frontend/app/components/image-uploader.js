@@ -1,22 +1,19 @@
-import Ember from 'ember';
 import EmberUploader from 'ember-uploader';
 import ENV from '../config/environment';
 
 export default EmberUploader.FileField.extend({
   url: "",
-  authorization: Ember.computed('localStorage', function () {
-    return {
-      headers: {
-        'Authorization': this.localStorage.getItem('user').auth_token
-      }
-    };
-  }),
   files: [],
   filesDidChange: function (files) {
     const context = this;
     this.debug(this.get('url'));
+    const authorization = {
+      headers: {
+        'Authorization': this.commonService.getToken()
+      }
+    };
     const uploader = EmberUploader.Uploader.create({
-      ajaxSettings: context.get("authorization"),
+      ajaxSettings: authorization,
       paramName: ENV.APP.API_IMAGE_PARAM_NAME,
       url: context.get('url'),
       method: 'POST'
@@ -43,7 +40,7 @@ export default EmberUploader.FileField.extend({
     if (!this.get("isEditFirst")) {
       uploader.upload(this.get('files')).then(response => { //response return an array
         let lastdata = response.length - 1;
-        context.sendAction("action",response[lastdata].id, response[lastdata].path.url);
+        context.sendAction("action", response[lastdata].id, response[lastdata].path.url);
         context.commonService.showNotification(response[lastdata].httpstatus);
         files = null;
         context.debug(response);

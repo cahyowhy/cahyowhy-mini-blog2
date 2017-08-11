@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import ENV from '../config/environment';
 
 export default Ember.Route.extend({
   model(param){
@@ -8,10 +9,8 @@ export default Ember.Route.extend({
     })
   },
   afterModel(model){
-    const context = this;
-    if (model.user.imageurl === null || model.user.imageurl === undefined) {
-      model.user.imageurl = "/img/no-image.png";
-    }
+    const condition = model.user.imageurl === null || model.user.imageurl === undefined;
+    condition ? model.user.imageurl = "/img/no-image.png" : model.user.imageurl = ENV.APP.API_URL + model.user.imageurl;
   },
   setupController(controller, model){
     this.controllerFor('dashboard').set('user', model.user);
