@@ -4,12 +4,16 @@
       {{#each images as |image|}}
         <div class="col-sm-4">
           <a href="{{image.src}}" data-lightbox="user-image">
-          <div class="inner" style="background-image:url('{{image.src}}')"></div>
+            <div class="inner" style="background-image:url('{{image.src}}')"></div>
           </a>
         </div>
       {{/each}}
     </div>
-    <div class="btn-wrapper-post"><a onclick={{action "onLoadImage"}} class="btn-primary btn-medium btn">Load more</a>
-    </div>
+    {{#if isContentEmpty}}
+      {{content-is-empty}}
+    {{else}}
+      <div class="btn-wrapper-post"><a onclick={{action "onLoadImage"}} class="btn-primary btn-medium btn">Load more</a>
+      </div>
+    {{/if}}
   </div>
 </div>

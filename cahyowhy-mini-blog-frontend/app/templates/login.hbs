@@ -9,7 +9,8 @@
         <div class="overlap-text">
           {{input type="password" value=user.user.password placeholder="Pasword" class="input-2"}}
         </div>
-        <input disabled={{btnDisabled}} type="button" value="Log in" class="btn btn-login" onclick={{action "doSave"}}/>
+        <input disabled={{btnDisabled}} type="button" enter={{action "doSave"}} value="login" class="btn btn-login" onclick={{action
+        "doSave"}}/>
       </div>
     </div>
     <div class="sub-content">

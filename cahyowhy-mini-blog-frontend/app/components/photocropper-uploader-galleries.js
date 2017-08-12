@@ -169,9 +169,9 @@ export default Ember.Component.extend({
                 file = new File([blob], "image.jpg");
               } else {
                 let canvas = Ember.$('canvas#img-gallery-' + context.get("id"));
+                src = canvas[0].toDataURL("image/png");
                 let blob = context.dataURLtoBlob(src);
                 file = new File([blob], "image.jpg");
-                src = canvas[0].toDataURL("image/png");
                 canvas.remove();
               }
               context.emptyFields();

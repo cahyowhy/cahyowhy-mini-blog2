@@ -25,6 +25,7 @@ Router.map(function () {
   });
   this.route('not-found', {path: '/*path'});
   this.route('timeline');
+  this.route('search');
 });
 
 export default Router;

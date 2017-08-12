@@ -12,6 +12,8 @@
       {{#each posts as |post|}}
         {{post-item
           idPost=post.id
+          username=status.user.username
+          createdAt=status.created_at
           likes=post.likeposts
           category=post.category
           img =  post.img

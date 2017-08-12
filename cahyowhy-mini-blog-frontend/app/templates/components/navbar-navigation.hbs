@@ -21,21 +21,27 @@
         <div class="menu-container">
           <ul class="nav navbar-nav navbar-nav-right">
             <li class="js_nav-item nav-item">{{#link-to 'index' class="nav-item-child nav-item-hover"}}
-              Home{{/link-to}}</li>
+              Index{{/link-to}}</li>
             <li class="js_nav-item nav-item">{{#link-to 'post' class="nav-item-child nav-item-hover"}}
               Post{{/link-to}}</li>
+            <li class="js_nav-item nav-item">
+              {{#link-to 'post' class="nav-item-child nav-item-hover"}}
+                Pencarian{{/link-to}}
+            </li>
             {{#if isLinkProfileVisible}}
               <li class="js_nav-item nav-item login">{{#link-to 'timeline' (query-params token=token)
                                                                 class="nav-item-child nav-item-hover"}}
-                Timeline{{/link-to}}</li>
+                Linimasa{{/link-to}}</li>
               <li class="js_nav-item nav-item user">
                 {{#link-to 'dashboard' id class="nav-item-child nav-item-hover"}}Profile{{/link-to}}
               </li>
-              <li class="js_nav-item nav-item"><a {{action "onLogOut"}} class="nav-item-child nav-item-hover">Log
-                Out</a></li>
+              <li class="js_nav-item nav-item"><a {{action "onLogOut"}} class="nav-item-child nav-item-hover">Keluar</a>
+              </li>
             {{else}}
               <li class="js_nav-item nav-item login">{{#link-to 'login' class="nav-item-child nav-item-hover"}}
-                Login{{/link-to}}</li>
+                Masuk{{/link-to}}</li>
+              <li class="js_nav-item nav-item login">{{#link-to 'sign-up' class="nav-item-child nav-item-hover"}}
+                Registrasi{{/link-to}}</li>
             {{/if}}
           </ul>
         </div>

@@ -7,6 +7,7 @@ import BaseController from '../base-controller';
 let offset = 0;
 export default Ember.Controller.extend(BaseController, {
     images: '',
+    isContentEmpty: false,
     actions: {
       onLoadImage(){
         const context = this;
@@ -20,8 +21,10 @@ export default Ember.Controller.extend(BaseController, {
         }
 
         this.doFind("image", image).then(function (response) {
+          if (response.length === 0) {
+            context.set('isContentEmpty', true);
+          }
           response.forEach(function (item) {
-            context.debug(item);
             context.get('images').pushObject({
               id: item.id,
               src: ENV.APP.API_URL + item.path.url
