@@ -1,6 +1,6 @@
 class Post < ApplicationRecord
   include Searchable
-  setting_index([{attr: :title, type: :string}, {attr: :category, type: :string},{attr: :total_like, type: :integer}, {attr: :review, type: :string}])
+  setting_index([{attr: :title, type: :string}, {attr: :category, type: :string}, {attr: :total_like, type: :integer}, {attr: :review, type: :string}])
 
   enum category: [:sains, :komedi, :sejarah, :gosip, :kisah, :puisi, :pribadi, :mistis, :berita]
   belongs_to :user
@@ -14,6 +14,13 @@ class Post < ApplicationRecord
     self.likeposts.count
   end
 
+  def self.sort_by_like
+    __elasticsearch__.search(
+        {sort: [{total_like: {order: "desc"}}]}
+    )
+  end
+
+  # Post.all.order("created_at DESC").offset(0).limit(9).sort_by(&:total_like)
   def self.search(query)
     __elasticsearch__.search(
         {
