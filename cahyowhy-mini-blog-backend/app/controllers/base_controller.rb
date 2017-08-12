@@ -76,17 +76,15 @@ class BaseController < ApplicationController
       end
     end
 
-    condition = params[:query].present? && params[:offset].present? && params[:limit].present?
-    condition_2 = params[:offset].blank? && params[:limit].blank?
-    @entities = if condition then
-                  @entity.search(params[:query]).records.offset(params[:offset]).limit(params[:limit])
-                elsif condition_2
-                  # @entities = @entity.where(paramshash) => actually this also work, wether the paramshash is empty
-                  @entity.all.order("created_at DESC")
-                else
-                  # you can search by nested attributes here
-                  @entity.limit(params[:limit]).offset(params[:offset]).where(paramshash).order("created_at DESC")
-                end
+    if params[:query].present? && params[:offset].present? && params[:limit].present?
+      @entities = @entity.search(params[:query]).records.offset(params[:offset]).limit(params[:limit])
+    elsif params[:offset].blank? && params[:limit].blank?
+      # @entities = @entity.where(paramshash) => actually this also work, wether the paramshash is empty
+      @entities = @entity.all.order("created_at DESC")
+    else
+      # you can search by nested attributes here
+      @entities = @entity.limit(params[:limit]).offset(params[:offset]).where(paramshash).order("created_at DESC")
+    end
 
     if @current_entity == POST
       render json: @entities, httpstatus: getsuccess, exclude: [:description, :descriptiontext]
