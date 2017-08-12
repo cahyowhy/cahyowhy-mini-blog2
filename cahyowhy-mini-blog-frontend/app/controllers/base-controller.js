@@ -47,6 +47,9 @@ export default Ember.Mixin.create({
       case "post":
         find = this.postService.find(param);
         break;
+      case "user":
+        find = this.userService.find(param);
+        break;
       case "image":
         find = this.imageService.find(param);
         break;
