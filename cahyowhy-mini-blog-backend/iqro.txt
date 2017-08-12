@@ -2,3 +2,8 @@ curl -i -H  "Authorization":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIj
 -F "image[imagepath_data][]=@ryzQM9.jpeg" \
 -F "image[imagepath_data][]=@outerseaarticle.jpg" \
 localhost:3000/images
+
+JUST REMEMBER TO MAKE ONE INDEX PER ONE MODELS!!
+bundle exec rake environment elasticsearch:import:model CLASS='Status'
+bundle exec rake environment elasticsearch:import:model CLASS='Post'
+bundle exec rake environment elasticsearch:import:model CLASS='User'

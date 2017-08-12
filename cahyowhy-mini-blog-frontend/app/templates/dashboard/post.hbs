@@ -16,13 +16,17 @@
           createdAt=post.created_at
           likes=post.likeposts
           category=post.category
-          img =  post.img
+          img =  post.image
           title = post.title
           review = post.review
         }}
       {{/each}}
     </div>
-    <div class="btn-wrapper-post"><a onclick={{action "onLoadPost"}} class="btn-primary btn-medium btn">Load more</a>
-    </div>
+    {{#if ifPostIsEmpty}}
+      {{content-is-empty}}
+    {{else}}
+      <div class="btn-wrapper-post"><a onclick={{action "onLoadPost"}} class="btn-primary btn-medium btn">Load more</a>
+      </div>
+    {{/if}}
   </div>
 </div>

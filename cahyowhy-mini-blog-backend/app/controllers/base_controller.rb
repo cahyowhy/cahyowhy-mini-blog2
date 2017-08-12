@@ -87,7 +87,7 @@ class BaseController < ApplicationController
     end
 
     if @current_entity == POST
-      render json: @entities, httpstatus: getsuccess, exclude: [:description, :descriptiontext]
+      render json: @entities, httpstatus: getsuccess, exclude: [:description, :descriptiontext, :imageposts]
     else
       render json: @entities, httpstatus: getsuccess
     end

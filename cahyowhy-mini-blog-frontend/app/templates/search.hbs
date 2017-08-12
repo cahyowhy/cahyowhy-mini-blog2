@@ -2,13 +2,54 @@
   <div class="container content-lg">
     <div class="mainsearch">
       <ul>
-        <li><a>Orang</a></li>
-        <li><a>Post</a></li>
-        <li><a>Status</a></li>
+        <li class="{{if (or (eq type "")(eq type "user")) "activequeryparams"}}">{{#link-to 'search'
+                                                                                            (query-params search=search type="user")}}
+          Orang{{/link-to}}</li>
+        <li class="{{if (eq type "post") "activequeryparams"}}">{{#link-to 'search'
+                                                                           (query-params search=search type="post")}}
+          Post{{/link-to}}</li>
+        <li class="{{if (eq type "status") "activequeryparams"}}">{{#link-to 'search'
+                                                                             (query-params search=search type="status")}}
+          Status{{/link-to}}</li>
       </ul>
     </div>
     <div class="mainsearch-detail">
-
+      <ul class="list-group">
+        {{#each results as |result|}}
+          {{#if (eq type "post")}}
+            {{post-item
+              idPost=result.id
+              likes=result.likeposts
+              category=result.category
+              username=result.user.username
+              createdAt=result.created_at
+              img =  result.image
+              title = result.title
+              review = result.review
+              isVertical=true
+            }}
+          {{else if (eq type "status")}}
+            {{status-item
+              username=result.user.username
+              status=result.statushtml
+              statusId=result.id
+              commentstatuses=result.commentstatuses}}
+          {{else}}
+            {{user-item
+              imageurl=result.imageurl
+              username=result.username
+              name=result.name
+              createdAt=result.created_at
+            }}
+          {{/if}}
+        {{/each}}
+      </ul>
     </div>
+    {{#if ifPostIsEmpty}}
+      {{content-is-empty}}
+    {{else}}
+      <div class="btn-wrapper-post"><a onclick={{action "onLoadResult"}} class="btn-primary btn-medium btn">Load
+        more</a></div>
+    {{/if}}
   </div>
 </div>

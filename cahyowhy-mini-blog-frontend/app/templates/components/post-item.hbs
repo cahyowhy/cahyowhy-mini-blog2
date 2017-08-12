@@ -3,8 +3,7 @@
     <div class="row post-vertical">
       <div class="pull-left">
         {{#link-to 'post-detail' idPost}}
-          <div class="img-content" style="background: url('{{img}}')">
-          </div>
+          {{background-image-container src=img class="img-content"}}
         {{/link-to}}
       </div>
       <div class="media-body">
@@ -31,7 +30,7 @@
           <div class="category-post">
             <h5>{{category}}</h5></div>
           {{#link-to 'post-detail' idPost}}
-            <img class="img-responsive" src="{{img}}" alt="{{title}}">
+            {{background-image-container src=img class="bgpost"}}
           {{/link-to}}
         </div>
       </div>

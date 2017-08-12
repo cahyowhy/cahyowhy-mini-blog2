@@ -27,27 +27,9 @@ export default Ember.Component.extend(BaseController, {
   },
   didInsertElement(){
     this._super(...arguments);
-    const context = this;
-    let postHtml = Ember.$(this.get("description"));
-    let editEl = Ember.$("<p>").append(postHtml);
-    let imgHtml = editEl.find('img')['0'];
-    let src = Ember.$(imgHtml).attr('src');
-    editEl.find('img').remove();
-    let category = function () {
-      if (context.get("category") === undefined || context.get("category") === null) {
-        return "uncategorized"
-      } else {
-        return context.get("category")
-      }
-    };
-
-    this.set('category', category());
-    this.set("description", editEl.find('p').text().substring(0, 125) + ".....");
-    if (src === undefined) {
-      this.set("img", '/img/no-image.png');
-    } else {
-      this.set("img", src);
-    }
+    const condition = this.get("category") === undefined || this.get("category") === null
+    const category = condition ? "uncategorized" : this.get("category");
+    this.set('category', category);
 
     if (!this.get("isVertical")) {
       this.applyLayout();

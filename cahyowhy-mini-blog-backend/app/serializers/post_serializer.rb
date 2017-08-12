@@ -1,5 +1,5 @@
 class PostSerializer < BaseSerializer
-  attributes :id, :title, :description, :created_at, :category, :review, :descriptiontext, :mark
+  attributes :id, :title, :description, :created_at, :category, :review, :descriptiontext, :mark, :image
   has_one :user
   has_many :likeposts
   has_many :imageposts
@@ -11,6 +11,10 @@ class PostSerializer < BaseSerializer
     end
 
     arr
+  end
+
+  def image
+    object.imageposts[0]==nil ? "" : object.imageposts[0].imageurl
   end
 
   def mark

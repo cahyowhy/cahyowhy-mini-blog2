@@ -11,7 +11,7 @@ export default Ember.Component.extend({
   attributeBindings: ['src'],
   ifImageIsBroken(){
     this.$().css({
-      'background-image': "url('/img/not-found.png')"
+      'background-image': "url('/img/no-image.png')"
     });
   },
   doChecking(){

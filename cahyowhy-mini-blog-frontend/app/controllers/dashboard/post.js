@@ -8,6 +8,7 @@ let offset = 0;
 export default Ember.Controller.extend(BaseController, {
   token: '0',
   userId: 0,
+  ifPostIsEmpty: false,
   afterRender(){
     this.set('token', this.commonService.getToken());
     this.set('userId', this.commonService.getId());
@@ -28,6 +29,9 @@ export default Ember.Controller.extend(BaseController, {
         response.forEach(function (item) {
           context.get('posts').pushObject(item);
         });
+        if (response.length === 0) {
+          context.set("ifPostIsEmpty", true);
+        }
       });
     }
   }
