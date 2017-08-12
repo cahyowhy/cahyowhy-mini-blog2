@@ -3,6 +3,7 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   id: '',
   token: '',
+  search: '',
   isLinkProfileVisible: false,
   authentication: Ember.observer("applicationRoute.authentication", function () {
     if (this.get("applicationRoute.authentication")) {
@@ -25,7 +26,9 @@ export default Ember.Component.extend({
       window.location.replace("/");
     },
     onsearch(){
-      
+      if (this.get('search').length > 3) {
+        this.sendAction('action', this.get('search'));
+      }
     }
   }
 });

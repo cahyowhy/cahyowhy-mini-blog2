@@ -42,7 +42,7 @@
             <li class="js_nav-item nav-item">
               <div class="search-wrapp-nav">
                 <div class="input-group">
-                  <span class="input-group-addon" id="basic-addon1">
+                  <span onclick={{action "onsearch"}} class="input-group-addon" id="basic-addon1">
                     <i class="ion-ios-search-strong ion"></i>
                   </span>
                   {{input class="form-control" value=search enter="onsearch" placeholder="Cari Postingan" type="text"}}

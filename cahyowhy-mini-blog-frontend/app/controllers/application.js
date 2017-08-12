@@ -43,5 +43,12 @@ export default Ember.Controller.extend(BaseController, {
         subscribeUserAppearance.perform("appear", {user_id: context.commonService.getId()});
       }
     });
+  },
+  actions: {
+    onTransitionToSearch(params){
+      this.transitionToRoute('search', {
+        queryParams: {search: params}
+      });
+    }
   }
 });

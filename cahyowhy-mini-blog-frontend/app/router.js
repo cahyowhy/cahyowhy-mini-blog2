@@ -24,7 +24,7 @@ Router.map(function () {
     this.route('post');
   });
   this.route('not-found', {path: '/*path'});
-  this.route('timeline');
+  this.route('timeline', {queryParams: ['search', 'type']});
   this.route('search');
 });
 

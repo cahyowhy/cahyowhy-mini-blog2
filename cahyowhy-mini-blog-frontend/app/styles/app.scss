@@ -654,11 +654,17 @@ nav {
 }
 
 .mainsearch {
-  margin-top: 30px;
   ul {
     margin: 0px;
-    padding: 15px;
+    padding: 15px 0;
+    border-bottom: 1px solid $greyDark;
+    .activequeryparams {
+      border-bottom: 3px solid $blueInstagram;
+      padding-bottom: 11px !important;
+    }
     li {
+      cursor: po;
+      padding: 0 15px;
       display: inline;
     }
   }
