@@ -23,6 +23,9 @@ export default Ember.Component.extend({
     onLogOut(){
       this.commonService.clearCookies();
       window.location.replace("/");
+    },
+    onsearch(){
+      
     }
   }
 });

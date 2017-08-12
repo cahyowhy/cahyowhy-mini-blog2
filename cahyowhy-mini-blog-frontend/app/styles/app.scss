@@ -1030,3 +1030,20 @@ div[id^="uploadphoto"], div[id*="uploadphoto"] {
     }
   }
 }
+
+.search-wrapp-nav {
+  .input-group {
+    position: absolute;
+    width: 200px;
+    left: 0px;
+    top: 50%;
+    transform: translate(0, -29%);
+    span, input {
+      border-radius: 0px;
+    }
+  }
+  height: 76px;
+  display: table;
+  position: relative;
+  width: 200px;
+}

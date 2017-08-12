@@ -24,10 +24,6 @@
               Index{{/link-to}}</li>
             <li class="js_nav-item nav-item">{{#link-to 'post' class="nav-item-child nav-item-hover"}}
               Post{{/link-to}}</li>
-            <li class="js_nav-item nav-item">
-              {{#link-to 'post' class="nav-item-child nav-item-hover"}}
-                Pencarian{{/link-to}}
-            </li>
             {{#if isLinkProfileVisible}}
               <li class="js_nav-item nav-item login">{{#link-to 'timeline' (query-params token=token)
                                                                 class="nav-item-child nav-item-hover"}}
@@ -43,6 +39,16 @@
               <li class="js_nav-item nav-item login">{{#link-to 'sign-up' class="nav-item-child nav-item-hover"}}
                 Registrasi{{/link-to}}</li>
             {{/if}}
+            <li class="js_nav-item nav-item">
+              <div class="search-wrapp-nav">
+                <div class="input-group">
+                  <span class="input-group-addon" id="basic-addon1">
+                    <i class="ion-ios-search-strong ion"></i>
+                  </span>
+                  {{input class="form-control" value=search enter="onsearch" placeholder="Cari Postingan" type="text"}}
+                </div>
+              </div>
+            </li>
           </ul>
         </div>
       </div>
