@@ -1,5 +1,5 @@
 class PostSerializer < BaseSerializer
-  attributes :id, :title, :description, :created_at, :category, :review, :descriptiontext, :mark, :image
+  attributes :id, :title, :description, :created_at, :category, :review, :descriptiontext, :mark, :image, :total_like
   has_one :user
   has_many :likeposts
   has_many :imageposts

@@ -1,6 +1,6 @@
 class Post < ApplicationRecord
   include Searchable
-  setting_index([{attr: :title, type: :string}, {attr: :category, type: :string}, {attr: :review, type: :string}])
+  setting_index([{attr: :title, type: :string}, {attr: :category, type: :string},{attr: :total_like, type: :integer}, {attr: :review, type: :string}])
 
   enum category: [:sains, :komedi, :sejarah, :gosip, :kisah, :puisi, :pribadi, :mistis, :berita]
   belongs_to :user
@@ -9,6 +9,10 @@ class Post < ApplicationRecord
   has_many :imageposts, inverse_of: :post, dependent: :destroy
   validates_presence_of :title, :description, :category, :review, :descriptiontext, on: :create
   accepts_nested_attributes_for :imageposts
+
+  def total_like
+    self.likeposts.count
+  end
 
   def self.search(query)
     __elasticsearch__.search(
@@ -19,6 +23,9 @@ class Post < ApplicationRecord
                     fields: ['title^10', 'category^9', 'review'] #the ^5 is indicating that username fields is importance5x thane name
                 }
             },
+            sort: [
+                {total_like: {order: "desc"}}
+            ],
             suggest: {
                 text: query,
                 title: {

@@ -59,6 +59,13 @@ class User < ApplicationRecord
     following.delete(other_user)
   end
 
+  def total_follower
+    self.followers.count
+  end
+
+  def total_following
+    self.following.count
+  end
 
   # Returns true if the current user is following the other user.
   def following?(other_user)
@@ -69,5 +76,5 @@ end
 User.__elasticsearch__.client.indices.delete index: User.index_name rescue nil
 User.__elasticsearch__.client.indices.create \
   index: User.index_name,
-  body: { settings: User.settings.to_hash, mappings: User.mappings.to_hash }
+  body: {settings: User.settings.to_hash, mappings: User.mappings.to_hash}
 User.import force: true
