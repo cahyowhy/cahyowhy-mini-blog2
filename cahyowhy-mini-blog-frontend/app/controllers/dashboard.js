@@ -53,7 +53,7 @@ export default Ember.Controller.extend(Basecontroller, {
         context.doUpdate('user', user.select(['imageurl'])).then(function () {
           context.set("user.imageurl", ENV.APP.API_URL + response[0].path.url);
           context.commonService.showCustomNotification("Berhasil Menmperbarui foto profile");
-          location.reload();
+          // location.reload();
         });
       }, error => {
         context.debug(error);
