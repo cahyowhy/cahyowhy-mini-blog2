@@ -8,6 +8,7 @@ export default Ember.Component.extend(BaseController, {
   imagestatuses: [],
   status: Status.create(),
   imagestatus: ImageStatus.create(),
+  currentProfile: false,
   isBtnDisable: Ember.computed.empty('status.status.statushtml'),
   isPropertyEmpty: Ember.computed('isBtnDisable', 'imagestatuses', function () {
     /**
@@ -17,8 +18,13 @@ export default Ember.Component.extend(BaseController, {
   }),
   didInsertElement(){
     this._super(...arguments);
+    this.debug(this.get('routeUserId'));
+    const condition = !this.get("isTimeline") && this.commonService.getId() === this.get('routeUserId').toString();
+    condition ? this.set("currentProfile", true) : this.set("currentProfile", false);
+
     if (this.get("isTimeline")) {
       this.set("statuses", Statuses.statuses);
+      this.set("currentProfile", true);
     }
   },
   willDestroyElement(){

@@ -17,7 +17,7 @@ export default Ember.Route.extend({
       routeUserId: id
     });
   },
-  setupController(controller, model){
+  afterModel(model){
     this.controllerFor('dashboard.index').set('statuses', model.statuses);
     this.controllerFor('dashboard.index').set('routeUserId', model.routeUserId);
   },

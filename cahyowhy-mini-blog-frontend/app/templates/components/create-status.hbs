@@ -1,28 +1,30 @@
-
-{{photo-collections
-  isTimeline=isTimeline
-  title="pilih foto untuk di upload di statusmu"
-  routeUserId=routeUserId
-  onAddImage=(action "onAddImage")
-  onDelImage=(action "onDelImage")}}
-<div class="create-status">
-  <div class="pull-left">
-    <img src="/img/no-image.png">
-  </div>
-  <div class="media-body">
-    {{tinymce-editor options=options class="form-control no-border"
-                     onValueChanged=(action "onTypeSomething")}}
-    <div class="add-photo-to-status">
-      {{#each images as |image|}}
-        <div style="background-image: url('{{image-url-helper image.src}}')" class="photo-item">
-          <i {{action 'onDeleteStatusPhoto' image.id}} class="ion ion-close-circled"></i>
-        </div>
-      {{/each}}
+{{#if currentProfile}}
+  {{photo-collections
+    isTimeline=isTimeline
+    title="pilih foto untuk di upload di statusmu"
+    routeUserId=routeUserId
+    onAddImage=(action "onAddImage")
+    onDelImage=(action "onDelImage")}}
+  <div class="create-status">
+    <div class="pull-left">
+      <img src="/img/no-image.png">
     </div>
-    <a onclick={{action "doSave"}} disabled={{isBtnDisable}} class="btn btn-primary">Update status</a>
-    <a class="btn btn-primary"><i class="ion ion-camera"></i>Tambah foto</a>
+    <div class="media-body">
+      {{tinymce-editor options=options class="form-control no-border"
+                       onValueChanged=(action "onTypeSomething")}}
+      <div class="add-photo-to-status">
+        {{#each images as |image|}}
+          <div style="background-image: url('{{image-url-helper image.src}}')" class="photo-item">
+            <i {{action 'onDeleteStatusPhoto' image.id}} class="ion ion-close-circled"></i>
+          </div>
+        {{/each}}
+      </div>
+      <a onclick={{action "doSave"}} disabled={{isBtnDisable}} class="btn btn-primary">Update status</a>
+      <a class="btn btn-primary"><i class="ion ion-camera"></i>Tambah foto</a>
+    </div>
   </div>
-</div>
+{{/if}}
+
 <div class="status-wrapper">
   {{#each statuses as |status index|}}
     {{#if (eq status.mark "STATUS")}}

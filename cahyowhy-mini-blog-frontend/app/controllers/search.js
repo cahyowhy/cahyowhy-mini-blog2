@@ -10,6 +10,7 @@ export default Ember.Controller.extend(BaseController, {
   type: "",
   results: [],
   onChangeSearchType: Ember.observer('search', 'type', function () {
+    this.set('results',[]);
     const search = this.get('search');
     const type = this.get('type');
     const query = {
@@ -23,6 +24,9 @@ export default Ember.Controller.extend(BaseController, {
   doRequest(promise){
     const context = this;
     promise.then(function (results) {
+      if (results.length === 0) {
+        context.set('ifPostIsEmpty', true);
+      }
       context.set('results', results);
     });
   },
