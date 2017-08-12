@@ -9,15 +9,15 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   tagName: 'div',
   attributeBindings: ['src'],
-  classNameBindings: ['bg-image-container'],
   ifImageIsBroken(){
     this.$().css({
-      'background-image': "url('/image/not-found.png')"
+      'background-image': "url('/img/not-found.png')"
     });
   },
   doChecking(){
     const context = this;
     const src = this.get('src');
+    this.$().addClass('bg-image-container');
     if (src === undefined || src === null || src.length === 0) {
       context.debug(src);
       this.ifImageIsBroken();
@@ -26,10 +26,7 @@ export default Ember.Component.extend({
         Ember.$(this).remove();
         context.$().css({
           'background-image': "url(" + src + ")"
-        }).addClass("blur");
-        Ember.run.later(function () {
-          context.$().removeClass("blur");
-        }, 1000);
+        });
       }).on('error', function () {
         context.ifImageIsBroken();
       });

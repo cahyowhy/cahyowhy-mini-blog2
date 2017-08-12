@@ -1053,3 +1053,17 @@ div[id^="uploadphoto"], div[id*="uploadphoto"] {
   position: relative;
   width: 200px;
 }
+
+.bg-image-container {
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+}
+
+.img-profile-dashboard {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  float: left;
+  border-radius: 50%;
+}

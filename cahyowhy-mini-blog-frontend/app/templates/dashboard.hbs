@@ -7,7 +7,7 @@
             <i class="ion ion-android-camera">
               {{photocropper-uploader-galleries id="photos" action="doUpload"}}
             </i>
-            <img class="img-circle" src="{{user.imageurl}}">
+            {{background-image-container src=(image-url-helper user.imageurl) class="img-profile-dashboard"}}
           </div>
           <div class="media-body">
             <div class="inner">

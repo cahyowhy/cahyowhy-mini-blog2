@@ -50,6 +50,7 @@ export default Ember.Mixin.create({
       objectkey = key;
     }
     let result = {};
+    result[objectkey] = {};
 
     param.forEach(function (item) {
       result[objectkey][item] = data[objectkey][item];
