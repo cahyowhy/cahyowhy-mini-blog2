@@ -1112,3 +1112,31 @@ ul.list-group {
     }
   }
 }
+
+.post-ul-category {
+  margin: 0;
+  padding: 15px 0;
+  text-align: center;
+  overflow-x: scroll;
+  overflow-y: auto;
+  display: flex;
+  li {
+    padding: 0 5px;
+    &:first-child {
+      padding-left: 0px !important;
+    }
+    &:last-child {
+      padding-right: 0px !important;
+    }
+    display: inline;
+    a {
+      border-radius: 12px;
+      padding-left: 10px;
+      padding-right: 10px;
+      width: auto;
+      border: 0px !important;
+      background: $textTittle;
+      color: white !important;
+    }
+  }
+}

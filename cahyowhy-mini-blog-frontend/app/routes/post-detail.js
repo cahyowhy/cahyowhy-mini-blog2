@@ -17,26 +17,17 @@ export default Ember.Route.extend({
       comments: this.commentpostService.find(commentpost.getChildWithSelection(['post_id', 'offset', 'limit'])),
       nextPost: this.postService.findPostNextById(param.id),
       prevPost: this.postService.findPostPrevById(param.id),
-      fbAPPID: ENV.APP.APP_FB_ID
+      fbAPPID: ENV.APP.APP_FB_ID,
+      isCommentEmpty: false,
     })
   },
   afterModel(model) {
-    this.set('headData.title', model.post.title);
-    this.set('headData.description', model.post.description);
-    this.set('headData.image', "http://lorempixel.com/210/210");
-
-    const context = this;
-    if (model.nextPost === null || model.nextPost === undefined) {
-      this.hideArrow("post-right");
-    } else {
-      this.showArrow("post-right");
-    }
-
-    if (model.prevPost === null || model.prevPost === undefined) {
-      this.hideArrow("post-left");
-    } else {
-      this.showArrow("post-left");
-    }
+    // this.set('headData.title', model.post.title);
+    // this.set('headData.description', model.post.description);
+    // this.set('headData.image', "http://lorempixel.com/210/210");
+    model.nextPost === null || model.nextPost === undefined ? this.hideArrow("post-right") : this.showArrow("post-right");
+    model.prevPost === null || model.prevPost === undefined ? this.hideArrow("post-left") : this.showArrow("post-left");
+    model.isCommentEmpty = model.comments.length === 0;
   },
   hideArrow(param){
     Ember.run.schedule("afterRender", function () {
@@ -53,6 +44,7 @@ export default Ember.Route.extend({
     this.controllerFor('post-detail').set('comments', model.comments);
     this.controllerFor('post-detail').set('nextPost', model.nextPost);
     this.controllerFor('post-detail').set('prevPost', model.prevPost);
+    this.controllerFor('post-detail').set('isCommentEmpty', model.isCommentEmpty);
     this.controllerFor('post-detail').set('fbAPPID', model.fbAPPID);
   }
 });

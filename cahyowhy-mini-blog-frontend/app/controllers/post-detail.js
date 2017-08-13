@@ -46,6 +46,7 @@ export default Ember.Controller.extend(BaseController, {
         response.forEach(function (item) {
           context.get('comments').pushObject(item);
         });
+        response.length === 0 ? this.set("isCommentEmpty", true) : this.set("isCommentEmpty", false);
       })
     },
     doSave(event){

@@ -2,7 +2,7 @@ class Post < ApplicationRecord
   include Searchable
   setting_index([{attr: :title, type: :string}, {attr: :category, type: :string},{attr: :review, type: :string}])
 
-  enum category: [:sains, :komedi, :sejarah, :gosip, :kisah, :puisi, :pribadi, :mistis, :berita]
+  enum category: [:sains, :komedi, :sejarah, :gosip, :puisi, :pribadi, :mistis, :berita, :teknologi, :uncategorized]
   belongs_to :user
   has_many :likeposts, dependent: :destroy
   has_many :commentposts, dependent: :destroy
