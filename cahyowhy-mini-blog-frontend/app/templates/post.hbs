@@ -1,7 +1,7 @@
-<div class="work-section" id="work">
+<div class="work-section" id="post-main">
   <div class="container content-lg">
     <ul class="post-ul-category">
-      <li>{{#link-to 'post' class="btn btn-sm btn-primary"}}semua{{/link-to}}</li>
+      <li>{{#link-to 'post' (query-params category=null) class="btn btn-sm btn-primary"}}semua{{/link-to}}</li>
       <li>{{#link-to 'post' (query-params category=0) class="btn btn-sm btn-primary"}}uncategorized{{/link-to}}</li>
       <li>{{#link-to 'post' (query-params category=1) class="btn btn-sm btn-primary"}}sains{{/link-to}}</li>
       <li>{{#link-to 'post' (query-params category=2) class="btn btn-sm btn-primary"}}komedi{{/link-to}}</li>
@@ -15,7 +15,7 @@
     </ul>
     <div class="row margin-b-40">
       <div class="col-sm-12 textCenter">
-        <h2>Postingan terfavorit</h2>
+        <h2>{{title}}</h2>
       </div>
     </div>
     <div id="post-container" class="row post">

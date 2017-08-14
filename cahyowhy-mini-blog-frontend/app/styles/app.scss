@@ -1117,8 +1117,6 @@ ul.list-group {
   margin: 0;
   padding: 15px 0;
   text-align: center;
-  overflow-x: scroll;
-  overflow-y: auto;
   display: flex;
   li {
     padding: 0 5px;
@@ -1139,4 +1137,18 @@ ul.list-group {
       color: white !important;
     }
   }
+}
+
+.promo-block .promo-block-img {
+  top: 50%;
+  transform: translate(0, -50%);
+
+}
+
+.header .logo-img {
+  width: 120px;
+}
+
+.cust-class23{
+  height: auto !important;
 }

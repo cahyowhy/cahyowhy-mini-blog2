@@ -3,6 +3,10 @@ import Statuses from '../entity/statuses';
 import BaseController from '../controllers/base-controller';
 
 export default Ember.Controller.extend(BaseController, {
+  router: Ember.inject.service("-routing"),
+  currentRouteName: Ember.computed('router', function () {
+    return this.get('router.router.currentRouteName');
+  }),
   authentication: Ember.observer('applicationRoute.authentication', function () { //executed after dom loaded
     if (this.get("applicationRoute.authentication")) {
       this.handleActionCable();

@@ -1,5 +1,7 @@
 <div class="loading"></div>
-{{notification-container position="top-right" class="z-index"}}
-{{navbar-navigation id="navbar" action="onTransitionToSearch"}}
-{{outlet}}
-{{footer-foot}}
+{{#window-reset routeName=currentRouteName}}
+  {{notification-container position="top-right" class="z-index"}}
+  {{navbar-navigation id="navbar" action="onTransitionToSearch"}}
+  {{outlet}}
+  {{footer-foot}}
+{{/window-reset}}
