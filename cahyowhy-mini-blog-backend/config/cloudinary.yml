@@ -1,0 +1,8 @@
+development:
+    cloud_name:  dxdelmsib
+    api_key:  223866743854176
+    api_secret:  BA6OcuEwFTQiG14GASeg6KblVW0
+production:
+    cloud_name:  dn8p95u2f
+    api_key:  147114113371815
+    api_secret:  9SfYaWg5cM9O77p5ejhPMlVvopc

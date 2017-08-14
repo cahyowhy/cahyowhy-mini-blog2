@@ -27,7 +27,6 @@ module.exports = function (environment) {
 
     APP: {
       LOGGER: false,
-      API_URL: 'http://127.0.0.1:3000/',
       APP_FB_ID: '106474983194157',
       DEFAULT_OFFSET: 0,
       DEFAULT_LIMIT: 9
@@ -48,6 +47,23 @@ module.exports = function (environment) {
 
   if (environment === 'development') {
     ENV.APP.LOGGER = true;
+    ENV.APP.IMAGE_RESOURCES = "http://res.cloudinary.com/dxdelmsib";
+    ENV.APP.IMAGE_RESOURCES = "http://res.cloudinary.com/dn8p95u2f";
+    ENV.APP.API_URL = 'http://127.0.0.1:3000/';
+    ENV.APP.API_USER = ENV.APP.API_URL + "users/";
+    ENV.APP.API_TIMELINES = ENV.APP.API_URL + "timelines/";
+    ENV.APP.API_AUTH = ENV.APP.API_URL + "auth/";
+    ENV.APP.API_POST_COMMENT = ENV.APP.API_URL + "commentposts/";
+    ENV.APP.API_STATUS_COMMENT = ENV.APP.API_URL + "commentstatuses/";
+    ENV.APP.API_POST_LIKE_COMMENT = ENV.APP.API_URL + "likecommentposts/";
+    ENV.APP.API_POST_LIKE = ENV.APP.API_URL + "likeposts/";
+    ENV.APP.API_POST = ENV.APP.API_URL + "posts/";
+    ENV.APP.API_IMAGE = ENV.APP.API_URL + "images/";
+    ENV.APP.API_STATUS = ENV.APP.API_URL + "statuses/";
+    ENV.APP.API_STATUS = ENV.APP.API_URL + "statuses/";
+    ENV.APP.API_LOGIN = ENV.APP.API_URL + "authenticate/";
+    ENV.APP.API_IMAGE_PARAM_NAME = "image[imagepath_data]";
+
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
     // ENV.APP.LOG_TRANSITIONS = true;
@@ -68,20 +84,22 @@ module.exports = function (environment) {
 
   if (environment === 'production') {
     ENV.APP.LOGGER = false;
+    ENV.APP.IMAGE_RESOURCES = "http://res.cloudinary.com/dn8p95u2f";
+    ENV.APP.API_URL = 'http://127.0.0.1:3000/';
+    ENV.APP.API_USER = ENV.APP.API_URL + "users/";
+    ENV.APP.API_TIMELINES = ENV.APP.API_URL + "timelines/";
+    ENV.APP.API_AUTH = ENV.APP.API_URL + "auth/";
+    ENV.APP.API_POST_COMMENT = ENV.APP.API_URL + "commentposts/";
+    ENV.APP.API_STATUS_COMMENT = ENV.APP.API_URL + "commentstatuses/";
+    ENV.APP.API_POST_LIKE_COMMENT = ENV.APP.API_URL + "likecommentposts/";
+    ENV.APP.API_POST_LIKE = ENV.APP.API_URL + "likeposts/";
+    ENV.APP.API_POST = ENV.APP.API_URL + "posts/";
+    ENV.APP.API_IMAGE = ENV.APP.API_URL + "images/";
+    ENV.APP.API_STATUS = ENV.APP.API_URL + "statuses/";
+    ENV.APP.API_STATUS = ENV.APP.API_URL + "statuses/";
+    ENV.APP.API_LOGIN = ENV.APP.API_URL + "authenticate/";
+    ENV.APP.API_IMAGE_PARAM_NAME = "image[imagepath_data]";
   }
 
-  ENV.APP.API_USER = ENV.APP.API_URL + "users/";
-  ENV.APP.API_TIMELINES = ENV.APP.API_URL + "timelines/";
-  ENV.APP.API_AUTH = ENV.APP.API_URL + "auth/";
-  ENV.APP.API_POST_COMMENT = ENV.APP.API_URL + "commentposts/";
-  ENV.APP.API_STATUS_COMMENT = ENV.APP.API_URL + "commentstatuses/";
-  ENV.APP.API_POST_LIKE_COMMENT = ENV.APP.API_URL + "likecommentposts/";
-  ENV.APP.API_POST_LIKE = ENV.APP.API_URL + "likeposts/";
-  ENV.APP.API_POST = ENV.APP.API_URL + "posts/";
-  ENV.APP.API_IMAGE = ENV.APP.API_URL + "images/";
-  ENV.APP.API_STATUS = ENV.APP.API_URL + "statuses/";
-  ENV.APP.API_STATUS = ENV.APP.API_URL + "statuses/";
-  ENV.APP.API_LOGIN = ENV.APP.API_URL + "authenticate/";
-  ENV.APP.API_IMAGE_PARAM_NAME = "image[imagepath_data]";
   return ENV;
 };

@@ -1,5 +1,4 @@
-curl -i -H  "Authorization":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE1MDA4MTE3NzV9.jYi3LZj_Iw8QqytIqGlCPoQkt87zsGCQLLjiLDOqH9k" \
--F "image[imagepath_data][]=@ryzQM9.jpeg" \
+curl -i -H  "Authorization":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozLCJleHAiOjE1MDI4MDQ1OTZ9.qJM1hTpVDN_4HX67Lag3KPU12cAxUnH16Lid9Ply7CU" \
 -F "image[imagepath_data][]=@outerseaarticle.jpg" \
 localhost:3000/images
 

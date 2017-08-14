@@ -27,8 +27,7 @@ class ImagesController < BaseController
   end
 
   def remove_img
-    param = @entity.path.url
-    File.delete("#{Rails.root}/public#{param}")
+    @entity.path.file.delete
   end
 
   # Only allow a trusted parameter "white list" through.

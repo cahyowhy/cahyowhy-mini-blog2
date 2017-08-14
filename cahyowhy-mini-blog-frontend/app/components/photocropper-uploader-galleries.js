@@ -40,7 +40,7 @@ export default Ember.Component.extend({
    * this function is to handle the scroll bottom
    * to the caman js efect filter
    */
-  initScrollBottomFilter(){
+  initScrollBottomCategory(){
     Ember.$("#uploadphoto-" + this.get("id") + " .img-preset-wrapper").slimscroll({
       height: '120px',
       width: imgWidth + "px",
@@ -97,7 +97,7 @@ export default Ember.Component.extend({
             /**
              * call this function after we load the images from file explorer
              * */
-            context.initScrollBottomFilter();
+            context.initScrollBottomCategory();
             Ember.$(parentElement + " .slimScrollDiv").addClass("hidden");
             Ember.$(parentElement).modal({backdrop: 'static', keyboard: false, show: 'true'});
 

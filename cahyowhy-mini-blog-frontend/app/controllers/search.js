@@ -10,7 +10,7 @@ export default Ember.Controller.extend(BaseController, {
   type: "",
   results: [],
   onChangeSearchType: Ember.observer('search', 'type', function () {
-    this.set('results',[]);
+    this.set('results', []);
     const search = this.get('search');
     const type = this.get('type');
     const query = {
