@@ -15,7 +15,7 @@
       </div>
       {{#each images as |image index|}}
         <div class="photo" style="background-image: url(
-          '{{image-url-helper image.src}}')">
+          '{{image.src}}')">
           <div class="photo-overlay"></div>
           {{#if isUserIdEqRouteId}}
             <i onclick={{action "onDelImage" index image.id image.src}} class="ion ion-close-circled"></i>

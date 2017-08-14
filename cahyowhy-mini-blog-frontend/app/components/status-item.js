@@ -16,6 +16,9 @@ export default Ember.Component.extend(BaseController, {
   doEmptyField(){
     this.set("comment", "");
   },
+  statusImagesSize: Ember.computed('statusImages', function () {
+    return this.get('statusImages').length;
+  }),
   actions: {
     doSaveComment(event){
       const context = this;

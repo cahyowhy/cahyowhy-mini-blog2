@@ -14,7 +14,7 @@
                        onValueChanged=(action "onTypeSomething")}}
       <div class="add-photo-to-status">
         {{#each images as |image|}}
-          <div style="background-image: url('{{image-url-helper image.src}}')" class="photo-item">
+          <div style="background-image: url('{{image.src}}')" class="photo-item">
             <i {{action 'onDeleteStatusPhoto' image.id}} class="ion ion-close-circled"></i>
           </div>
         {{/each}}
@@ -32,6 +32,7 @@
         username=status.user.username
         status=status.statushtml
         statusId=status.id
+        statusImages = status.imagestatuses
         commentstatuses=status.commentstatuses}}
     {{else}}
       {{post-item

@@ -92,6 +92,7 @@ export default Ember.Controller.extend(BaseController, {
     const context = this;
     promise.then(function (results) {
       results.length === 0 ? context.set("ifPostIsEmpty", true) : context.set("ifPostIsEmpty", false);
+      context.debug(context.get("ifPostIsEmpty"));
       context.set("posts", results);
     });
   },

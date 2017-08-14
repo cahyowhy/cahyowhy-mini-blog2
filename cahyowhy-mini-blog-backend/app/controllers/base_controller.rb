@@ -81,12 +81,12 @@ class BaseController < ApplicationController
     elsif params[:offset].blank? && params[:limit].blank?
       # @entities = @entity.where(paramshash) => actually this also work, wether the paramshash is empty
       @current_entity==POST ?
-          @entities = @entities=@entity.joins(:likeposts).group('posts.id').order('COUNT(likeposts.id) DESC') :
+          @entities = @entity.left_outer_joins(:likeposts).group('posts.id').order('COUNT(likeposts.id) DESC') :
           @entities = @entity.all.order("created_at DESC")
     else
       # you can search by nested attributes here
       POST==@current_entity ?
-          @entities=@entity.joins(:likeposts).group('posts.id').where(paramshash).order('COUNT(likeposts.id) DESC').offset(params[:offset]).limit(params[:limit]) :
+          @entities= @entity.left_outer_joins(:likeposts).group('posts.id').where(paramshash).order('COUNT(likeposts.id) DESC').offset(params[:offset]).limit(params[:limit]) :
           @entities = @entity.limit(params[:limit]).offset(params[:offset]).where(paramshash).order("created_at DESC")
     end
 
