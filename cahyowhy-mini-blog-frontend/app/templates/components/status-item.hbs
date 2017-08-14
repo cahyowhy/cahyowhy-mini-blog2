@@ -5,6 +5,29 @@
     <div class="media-body">
       <p>{{username}}</p>
       {{{status}}}
+      <div class="imagestatuses-wrapper">
+        {{#each statusImages as |statusImage index|}}
+          {{#if (or (eq statusImagesSize 2)(gte statusImagesSize 4))}}
+            {{#if (lte index 3)}}
+              <div class="col-sm-6  margin-bot15 item">{{background-image-container src=statusImage.imageurl }}</div>
+            {{else if (eq index 4)}}
+              <div class="item-morethan">
+                <p>
+                  {{statusImagesSizeIfGT3}} +
+                </p>
+              </div>
+            {{/if}}
+          {{else if (eq statusImagesSize 3)}}
+            {{#if (lt index 2)}}
+              <div class="col-sm-6 margin-bot15 item">{{background-image-container src=statusImage.imageurl }}</div>
+            {{else}}
+              <div class="col-sm-12  margin-bot15 item">{{background-image-container src=statusImage.imageurl }}</div>
+            {{/if}}
+          {{else}}
+            <div class="col-sm-12  margin-bot15 item">{{background-image-container src=statusImage.imageurl }}</div>
+          {{/if}}
+        {{/each}}
+      </div>
     </div>
   </div>
   <div class="comment-statuses">
@@ -22,13 +45,6 @@
           <div class="media-body">
             <p>{{comment.user.username}}</p>
             <p>{{comment.comment}}</p>
-            <div class="imagestatuses-wrapper">
-              {{#each statusImages as |statusImage|}}
-                {{#if (or (eq statusImagesSize 2)(gte statusImagesSize 4))}}
-                    
-                {{/if}}
-              {{/each}}
-            </div>
           </div>
         </div>
       {{/each}}

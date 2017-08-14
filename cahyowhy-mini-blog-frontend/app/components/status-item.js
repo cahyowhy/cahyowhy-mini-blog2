@@ -19,6 +19,9 @@ export default Ember.Component.extend(BaseController, {
   statusImagesSize: Ember.computed('statusImages', function () {
     return this.get('statusImages').length;
   }),
+  statusImagesSizeIfGT3: Ember.computed('statusImagesSize', function () {
+    return this.get("statusImagesSize") > 4 ? this.get("statusImagesSize") - 4 : 0;
+  }),
   actions: {
     doSaveComment(event){
       const context = this;
