@@ -9,6 +9,7 @@ export default Ember.Route.extend({
   },
   setupController(controller, model){
     this.controllerFor('dashboard').set('user', model.user);
+    this.controllerFor('dashboard.index').set('imageProfile', model.user.imageurl);
     this.controllerFor('dashboard.index').set('id', model.id);
   }
 });

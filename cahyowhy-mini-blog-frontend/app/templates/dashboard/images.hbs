@@ -4,7 +4,7 @@
       {{#each images as |image|}}
         <div class="col-sm-4">
           <a href="{{image.src}}" data-lightbox="user-image">
-            <div class="inner" style="background-image:url('{{image.src}}')"></div>
+            {{background-image-container src=image.src class="inner"}}
           </a>
         </div>
       {{/each}}

@@ -8,7 +8,9 @@ let offset = 0;
 export default Ember.Controller.extend(BaseController, {
   token: '0',
   userId: 0,
-  ifPostIsEmpty: false,
+  ifPostIsEmpty: Ember.computed('posts', function () {
+    return this.get('posts').length === 0;
+  }),
   afterRender(){
     this.set('token', this.commonService.getToken());
     this.set('userId', this.commonService.getId());

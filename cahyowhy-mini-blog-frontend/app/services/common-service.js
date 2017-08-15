@@ -35,6 +35,17 @@ export default Ember.Service.extend({
 
     return id;
   },
+  getImageProfile(){
+    let imageProfile;
+    try {
+      imageProfile = JSON.parse(this.get('cookies').read('user')).user.imageurl.toString();
+    } catch (err) {
+      imageProfile = null;
+      this.debug(err);
+    }
+
+    return imageProfile;
+  },
   getUsername(){
     let username;
     try {

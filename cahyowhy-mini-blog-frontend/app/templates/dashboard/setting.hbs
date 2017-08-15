@@ -1,1 +1,51 @@
-{{outlet}}
+<div class="setting-item">
+  <div class="col-sm-12"><p>Username</p></div>
+  <div class="input-group">
+    <span class="input-group-addon" id="basic-addon1"><i class="ion ion-person"></i></span>
+    {{input value=user.user.username type="text" class="form-control" placeholder="Username" aria-label="Username"
+            aria-describedby="basic-addon1"}}
+  </div>
+</div>
+<div class="setting-item">
+  <div class="col-sm-12"><p>Name</p></div>
+  <div class="input-group">
+    <span class="input-group-addon" id="basic-addon1"><i class="ion ion-person"></i></span>
+    {{input value=user.user.name type="text" class="form-control" placeholder="Username" aria-label="Username"
+            aria-describedby="basic-addon1"}}
+  </div>
+</div>
+<div class="edit-password">
+  <div class="edit-password-title">
+    <p class="pull-left"> Password Setting</p>
+    <div class="pull-right"><a class="btn btn-default btn-sm">edit
+      password</a></div>
+  </div>
+  <div class="edit-password-body">
+    <div class="setting-item">
+      <div class="col-sm-12"><p>Password lama</p></div>
+      <div class="input-group">
+        <span id="basic-addon1" class="input-group-addon"><i class="ion ion-person"></i></span>
+        <input placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" class="form-control"
+               type="text">
+      </div>
+    </div>
+    <div class="setting-item">
+      <div class="col-sm-12"><p>Password baru</p></div>
+      <div class="input-group">
+        <span id="basic-addon1" class="input-group-addon"><i class="ion ion-person"></i></span>
+        <input placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" class="form-control"
+               type="text">
+      </div>
+    </div>
+    <div class="setting-item">
+      <div class="col-sm-12"><p>Konfirmasi Password</p></div>
+      <div class="input-group">
+        <span id="basic-addon1" class="input-group-addon"><i class="ion ion-person"></i></span>
+        <input placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" class="form-control"
+               type="text">
+      </div>
+    </div>
+    <div class="btn-wrapper"><a class="btn-primary btn">Simpan Password</a></div>
+  </div>
+</div>
+<div class="btn-wrapper"><a class="btn-primary btn">Simpan</a></div>

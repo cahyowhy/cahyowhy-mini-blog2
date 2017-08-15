@@ -7,7 +7,9 @@ import BaseController from '../base-controller';
 let offset = 0;
 export default Ember.Controller.extend(BaseController, {
     images: '',
-    isContentEmpty: false,
+    isContentEmpty: Ember.computed('images', function () {
+      return this.get('images').length === 0;
+    }),
     actions: {
       onLoadImage(){
         const context = this;

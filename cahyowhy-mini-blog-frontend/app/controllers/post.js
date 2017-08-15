@@ -5,7 +5,9 @@ import offsetlimit from '../entity/offsetlimit';
 
 let offset = 0;
 export default Ember.Controller.extend(BaseController, {
-  ifPostIsEmpty: false,
+  ifPostIsEmpty: Ember.computed('posts', function () {
+    return this.get('posts').length === 0;
+  }),
   queryParams: ['category'],
   category: null,
   posts: [],
@@ -74,13 +76,13 @@ export default Ember.Controller.extend(BaseController, {
     this.debug(this.get("category"));
     const category = this.get("category");
     const query = category !== null && category !== undefined ? {
-      offset: ENV.APP.DEFAULT_OFFSET,
-      limit: ENV.APP.DEFAULT_LIMIT,
-      category: category
-    } : {
-      offset: ENV.APP.DEFAULT_OFFSET,
-      limit: ENV.APP.DEFAULT_LIMIT
-    };
+        offset: ENV.APP.DEFAULT_OFFSET,
+        limit: ENV.APP.DEFAULT_LIMIT,
+        category: category
+      } : {
+        offset: ENV.APP.DEFAULT_OFFSET,
+        limit: ENV.APP.DEFAULT_LIMIT
+      };
     const request = this.doFind('post', query);
     this.doRequest(request);
   }),
@@ -91,8 +93,6 @@ export default Ember.Controller.extend(BaseController, {
   doRequest(promise){
     const context = this;
     promise.then(function (results) {
-      results.length === 0 ? context.set("ifPostIsEmpty", true) : context.set("ifPostIsEmpty", false);
-      context.debug(context.get("ifPostIsEmpty"));
       context.set("posts", results);
     });
   },
@@ -115,7 +115,6 @@ export default Ember.Controller.extend(BaseController, {
         results.forEach(function (item) {
           context.get('posts').pushObject(item);
         });
-        results.length === 0 ? context.set("ifPostIsEmpty", true) : context.set("ifPostIsEmpty", false);
       });
     }
   }

@@ -14,8 +14,6 @@ export default Ember.Component.extend(BaseController, {
   didInsertElement(){
     this._super(...arguments);
     this.set('userId', this.commonService.getId());
-    this.debug(this.get('userId'));
-    this.debug(this.get('routeUserId'));
     let image = Image.create();
     const context = this;
     image.set('image.user_id', this.get('userId'));

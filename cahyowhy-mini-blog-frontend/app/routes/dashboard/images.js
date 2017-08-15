@@ -1,7 +1,6 @@
 import Ember from 'ember';
 import Image from '../../entity/image';
 import offsetlimit from '../../entity/offsetlimit';
-import ENV from '../../config/environment';
 
 export default Ember.Route.extend({
   model(){
@@ -24,7 +23,7 @@ export default Ember.Route.extend({
     model.images.forEach(function (item) {
       images.push({
         id: item.id,
-        src: ENV.APP.API_URL + item.path.url
+        src: item.path.url
       });
     });
     model.images = images;

@@ -7,16 +7,16 @@
     onDelImage=(action "onDelImage")}}
   <div class="create-status">
     <div class="pull-left">
-      <img src="/img/no-image.png">
+      {{background-image-container src=(image-url-helper imageProfile) class="cust21"}}
     </div>
     <div class="media-body">
       {{tinymce-editor options=options class="form-control no-border"
                        onValueChanged=(action "onTypeSomething")}}
       <div class="add-photo-to-status">
         {{#each images as |image|}}
-          <div style="background-image: url('{{image.src}}')" class="photo-item">
+          {{#background-image-container class="photo-item" src=image.src}}
             <i {{action 'onDeleteStatusPhoto' image.id}} class="ion ion-close-circled"></i>
-          </div>
+          {{/background-image-container}}
         {{/each}}
       </div>
       <a onclick={{action "doSave"}} disabled={{isBtnDisable}} class="btn btn-primary">Update status</a>
@@ -30,7 +30,9 @@
     {{#if (eq status.mark "STATUS")}}
       {{status-item
         username=status.user.username
+        imageProfile = status.user.imageurl
         status=status.statushtml
+        statusText = status.statustext
         statusId=status.id
         statusImages = status.imagestatuses
         commentstatuses=status.commentstatuses}}

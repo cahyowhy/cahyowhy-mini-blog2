@@ -10,9 +10,9 @@ export default Ember.Component.extend(BaseController, {
    * when you try to texting in one of status-item,
    * all your textarea status-item will also has a value!
    * */
+  // comment: Commentstatus.create(),
   comment: "",
   isBtnDisable: Ember.computed.empty('comment'),
-  // comment: Commentstatus.create(),
   doEmptyField(){
     this.set("comment", "");
   },
@@ -42,8 +42,8 @@ export default Ember.Component.extend(BaseController, {
           context.get('commentstatuses').pushObject({
             id: results.id,
             comment: results.comment,
-            imageurl: results.imageurl,
             user: {
+              imageurl: results.user.imageurl,
               username: results.user.username
             }
           });

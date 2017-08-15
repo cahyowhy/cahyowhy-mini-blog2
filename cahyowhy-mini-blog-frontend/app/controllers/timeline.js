@@ -6,13 +6,15 @@ import offsetlimit from '../entity/offsetlimit';
 let offset = 0;
 export default Ember.Controller.extend(BaseController, {
   queryParams: ['token'],
-  /**
-   * ifPostIsEmpty checked
-   * if user request the data and get response,
-   * response.length===0
-   * set true
-   */
-  ifPostIsEmpty: false,
+  imageProfile: "",
+  ifPostIsEmpty: Ember.computed('statuses', function () {
+    return this.get('statuses').length === 0;
+  }),
+  afterRender(){
+    this._super(...arguments);
+    this.debug(this.commonService.getImageProfile());
+    this.set('imageProfile', this.commonService.getImageProfile());
+  },
   /**
    * check if status that we wrote
    * on create status component is empty

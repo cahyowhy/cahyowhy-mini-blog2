@@ -12,7 +12,9 @@ export default Ember.Controller.extend(BaseController, {
    * response.length===0
    * set true
    */
-  ifPostIsEmpty: false,
+  ifPostIsEmpty: Ember.computed('statuses', function () {
+    return this.get('statuses').length === 0;
+  }),
   /**
    * check if status that we wrote
    * on create status component is empty

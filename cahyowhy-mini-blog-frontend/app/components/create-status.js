@@ -10,11 +10,11 @@ export default Ember.Component.extend(BaseController, {
   imagestatus: ImageStatus.create(),
   currentProfile: false,
   isBtnDisable: Ember.computed.empty('status.status.statushtml'),
-  isPropertyEmpty: Ember.computed('isBtnDisable', 'imagestatuses', function () {
+  isPropertyEmpty: Ember.computed('isBtnDisable', function () {
     /**
      * return true if booth empty
      */
-    return this.get('isBtnDisable') && this.get('imagestatuses').length === 0;
+    return this.get('isBtnDisable');
   }),
   didInsertElement(){
     this._super(...arguments);
