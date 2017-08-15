@@ -18,7 +18,7 @@ export default Ember.Controller.extend(Basecontroller, {
     return new Blob([blobArray], {type: mimetypeFile});
   },
   actions: {
-    doUpload(params, modalId){
+    doUpload(params, modalId, filename){
       const context = this;
       const authorization = {
         headers: {
@@ -49,7 +49,7 @@ export default Ember.Controller.extend(Basecontroller, {
         /**
          * response return an array
          */
-        user.set("user.imageurl", response[0].path.url);
+        user.set("user.imageurl", filename + ".jpg");
         context.doUpdate('user', user.select(['imageurl'])).then(function () {
           context.set("user.imageurl", ENV.APP.API_URL + response[0].path.url);
           context.commonService.showCustomNotification("Berhasil Menmperbarui foto profile");
@@ -59,37 +59,6 @@ export default Ember.Controller.extend(Basecontroller, {
         context.debug(error);
       });
     },
-    /*onUploadPictureProfile(){
-     const context = this;
-     let imgUrl = Ember.$('#img-cropper').cropper('getCroppedCanvas', {
-     width: imgWidth,
-     height: imgHeight
-     }).toDataURL("image/png");
-     let blob = this.dataURLtoBlob(imgUrl);
-     let fileUploadNewBlob = new File([blob], "imageprofile.jpg");
-
-     let uploader = EmberUploader.Uploader.create({
-     ajaxSettings: {
-     headers: {
-     'Authorization': context.commonService.getToken()
-     }
-     },
-     paramName: ENV.APP.API_IMAGE_PARAM_NAME,
-     url: context.get('url'),
-     method: 'POST'
-     });
-
-     let user = this.get('userEntity');
-     uploader.upload([fileUploadNewBlob]).then(response => {
-     user.set("user.imageurl", ENV.APP.API_URL + response[0].path.url);
-     context.doUpdate('user', user.select(['imageurl'])).then(function () {
-     context.set("user.imageurl", ENV.APP.API_URL + response[0].path.url);
-     context.commonService.showCustomNotification("Berhasil Menmperbarui foto profile");
-     });
-     }, error => {
-     context.debug(error);
-     });
-     },*/
     onCloseModal(){
       Ember.$('#myModal').modal('hide');
       Ember.$('#img-cropper').cropper('destroy');

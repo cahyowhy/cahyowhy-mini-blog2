@@ -1,25 +1,22 @@
 import Ember from 'ember';
+import {generateRandomId} from '../entity/generateRandomId';
+import {dataUrlToBlob} from '../entity/dataUrlToBlob';
 
 /**
  * this component is allow user to crop
  * and edit their photo using filter(caman js) like
  * instagram
  */
-let imgWidth, imgHeight, file, editMode, src;
+let imgWidth, imgHeight, file, editMode, src, filename = generateRandomId();
 export default Ember.Component.extend({
   efects: ['vintage', 'lomo', 'clarity', 'sinCity', 'sunrise', 'crossProcess', 'orangePeel', 'love', 'grungy', 'jarques', 'pinhole', 'oldBoot', 'glowingSun', 'hazyDays', 'herMajesty', 'nostalgia', 'hemingway', 'concentrate',],
   didInsertElement(){
     this._super(...arguments);
   },
-  dataURLtoBlob(dataurl) {
-    let data = dataurl.split(','),
-      mimetypeFile = data[0].match(/:(.*?);/)[1],
-      bytestring = atob(data[1]),
-      index = bytestring.length, blobArray = new window.Uint8Array(index);
-    while (index--) {
-      blobArray[index] = bytestring.charCodeAt(index);
-    }
-    return new Blob([blobArray], {type: mimetypeFile});
+  willDestroyElement() {
+    this._super(...arguments);
+    this.emptyFields();
+    filename = "";
   },
   emptyFields(){
     const id = this.get("id");
@@ -34,6 +31,8 @@ export default Ember.Component.extend({
     }
 
     editMode = "";
+    imgWidth = "";
+    imgHeight = "";
   },
   /**
    * when user click edit button (wand icon)
@@ -83,15 +82,16 @@ export default Ember.Component.extend({
       });
     },
     onOpenModal(e){
-      file = e.target.files[0];
       const context = this;
-
       if (e.target.files.length) {
         const fileReader = new FileReader();
         let parentElement = "#uploadphoto-" + context.get("id");
         fileReader.onload = (e) => {
           if (e.target.result) {
             src = e.target.result;
+            let blob = dataUrlToBlob(src);
+            file = new File([blob], filename);
+
             Ember.$('#img-gallery-' + context.get("id")).attr('src', src);
 
             /**
@@ -165,13 +165,13 @@ export default Ember.Component.extend({
                   width: imgWidth,
                   height: imgHeight
                 }).toDataURL("image/png");
-                let blob = context.dataURLtoBlob(src);
-                file = new File([blob], "image.jpg");
+                let blob = dataUrlToBlob(src);
+                file = new File([blob], filename);
               } else {
                 let canvas = Ember.$('canvas#img-gallery-' + context.get("id"));
                 src = canvas[0].toDataURL("image/png");
-                let blob = context.dataURLtoBlob(src);
-                file = new File([blob], "image.jpg");
+                let blob = dataUrlToBlob(src);
+                file = new File([blob], filename);
                 canvas.remove();
               }
               context.emptyFields();
@@ -189,7 +189,8 @@ export default Ember.Component.extend({
       }
     },
     doUpload(){
-      this.sendAction("action", file, '#uploadphoto-' + this.get("id"));
+      this.sendAction("action", file, '#uploadphoto-' + this.get("id"), filename);
+      filename = generateRandomId();
     }
   }
 });

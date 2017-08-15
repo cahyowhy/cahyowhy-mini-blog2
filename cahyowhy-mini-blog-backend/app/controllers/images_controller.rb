@@ -9,6 +9,7 @@ class ImagesController < BaseController
     image_params[:imagepath_data].each.with_index do |file, index|
       @single_image = Image.new(:path => file, :user_id => curent_user.id)
       if @single_image.save
+        puts @single_image.to_json
         @multi_images.push(@single_image)
         if image_params[:imagepath_data].length == index+1
           render json: @multi_images, httpstatus: postsuccess

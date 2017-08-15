@@ -1,5 +1,6 @@
 import EmberUploader from 'ember-uploader';
 import ENV from '../config/environment';
+import {generateRandomId} from '../entity/generateRandomId';
 
 export default EmberUploader.FileField.extend({
   url: "",
@@ -32,7 +33,9 @@ export default EmberUploader.FileField.extend({
       // Handle unsuccessful upload
       context.debug(textStatus);
     });
-    this.get('files').pushObject(files[0]);
+    const filename = generateRandomId();
+    const file = new File([files[0]], filename);
+    this.get('files').pushObject(file);
 
     /*
      * langsung upload
@@ -40,7 +43,7 @@ export default EmberUploader.FileField.extend({
     if (!this.get("isEditFirst")) {
       uploader.upload(this.get('files')).then(response => { //response return an array
         let lastdata = response.length - 1;
-        context.sendAction("action", response[lastdata].id, response[lastdata].path.url);
+        context.sendAction("action", response[lastdata].id, ENV.APP.IMAGE_RESOURCES + filename + ".jpg");
         context.commonService.showNotification(response[lastdata].httpstatus);
         files = null;
         context.debug(response);

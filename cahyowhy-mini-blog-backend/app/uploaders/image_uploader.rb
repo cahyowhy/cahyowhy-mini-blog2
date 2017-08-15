@@ -46,11 +46,17 @@ class ImageUploader < CarrierWave::Uploader::Base
     %w(jpg jpeg gif png)
   end
 
+  def public_id
+    return original_filename
+  end
+
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.
+=begin
   def filename
     Time.new.to_i.to_s+original_filename
   end
+=end
 
   # store width height
   # private

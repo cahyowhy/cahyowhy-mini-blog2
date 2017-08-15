@@ -47,8 +47,7 @@ module.exports = function (environment) {
 
   if (environment === 'development') {
     ENV.APP.LOGGER = true;
-    ENV.APP.IMAGE_RESOURCES = "http://res.cloudinary.com/dxdelmsib";
-    ENV.APP.IMAGE_RESOURCES = "http://res.cloudinary.com/dn8p95u2f";
+    ENV.APP.IMAGE_RESOURCES = "http://res.cloudinary.com/dxdelmsib/";
     ENV.APP.API_URL = 'http://127.0.0.1:3000/';
     ENV.APP.API_USER = ENV.APP.API_URL + "users/";
     ENV.APP.API_TIMELINES = ENV.APP.API_URL + "timelines/";
@@ -84,7 +83,7 @@ module.exports = function (environment) {
 
   if (environment === 'production') {
     ENV.APP.LOGGER = false;
-    ENV.APP.IMAGE_RESOURCES = "http://res.cloudinary.com/dn8p95u2f";
+    ENV.APP.IMAGE_RESOURCES = "http://res.cloudinary.com/dn8p95u2f/";
     ENV.APP.API_URL = 'http://127.0.0.1:3000/';
     ENV.APP.API_USER = ENV.APP.API_URL + "users/";
     ENV.APP.API_TIMELINES = ENV.APP.API_URL + "timelines/";
