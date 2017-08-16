@@ -1,18 +1,13 @@
 import Ember from 'ember';
 import BaseController from '../controllers/base-controller';
-// import Commentstatus from '../entity/commentstatus';
+import offsetLimit from '../entity/offsetlimit';
+import ENV from '../config/environment';
 
 export default Ember.Component.extend(BaseController, {
-  /*
-   * lets pay attention the syntax that i've comment out
-   * this shit is make all your  comment.Commentstatus.comment value
-   * in your textarea is redundant for all the component status-item
-   * when you try to texting in one of status-item,
-   * all your textarea status-item will also has a value!
-   * */
-  // comment: Commentstatus.create(),
+  commentOffset: 0,
   comment: "",
   isBtnDisable: Ember.computed.empty('comment'),
+  isCommentMax: true,
   doEmptyField(){
     this.set("comment", "");
   },
@@ -23,12 +18,30 @@ export default Ember.Component.extend(BaseController, {
     return this.get("statusImagesSize") > 4 ? this.get("statusImagesSize") - 4 : 0;
   }),
   actions: {
+    onloadcomment(param){
+      const context = this;
+      this.set('commentOffset', this.get('commentOffset') + ENV.APP.DEFAULT_LIMIT);
+      let query = function () {
+        let commentstatus = {};
+        commentstatus['status_id'] = param;
+        for (let key in offsetLimit(context.get('commentOffset'))) {
+          commentstatus[key] = offsetLimit(context.get('commentOffset'))[key];
+        }
+
+        return commentstatus;
+      };
+
+      this.doFind('commentstatus', query()).then(function (results) {
+        results.forEach(function (item) {
+          context.get('commentstatuses').unshiftObject(item);
+        });
+        context.set('isCommentMax', results.length > 0);
+      }).catch(function () {
+        context.set('isCommentMax', results.length > 0);
+      });
+    },
     doSaveComment(event){
       const context = this;
-      /*let comment = this.get("comment");
-       comment.set('commentstatus.user_id', this.commonService.getId());
-       comment.set('commentstatus.status_id', this.get('statusId'));
-       this.debug(comment);*/
       if (this.checkBtnSaveDisabled(event)) {
         let comment = {
           commentstatus: {

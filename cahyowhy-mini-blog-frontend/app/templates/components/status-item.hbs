@@ -55,11 +55,17 @@
   <div class="comment-statuses">
     <div class="detailwrapper">
       <h3 class="pull-left">Komentar</h3>
-      {{!-- {{action "onToggleComment" "#comment-"statusId }}  --}}
       <a href="javascript:void(0);" data-target="#comment-{{statusId}}" data-toggle="collapse"
          class="pull-right"><p class="pull-right">lihat komentar</p></a>
     </div>
     <div id="comment-{{statusId}}" class="collapse in comment-wrapper">
+      {{#if isCommentMax}}
+        <div onclick={{action "onloadcomment" statusId}} class="more-comment">
+        <span class="text-muted">
+          lihat komentar sebelumnya
+        </span>
+        </div>
+      {{/if}}
       {{#each commentstatuses as |comment index|}}
         <div id="user-status-{{comment.id}}" class="comment-status">
           <div class="pull-left">

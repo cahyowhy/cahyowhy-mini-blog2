@@ -94,9 +94,14 @@ body {
   overflow: auto;
   padding: 15px;
   background: $greyDark;
+  .more-comment {
+    text-align: right;
+    border-bottom: 1px solid $gretDarkest;
+    margin-bottom: 10px;
+  }
   .detailwrapper {
     overflow: auto;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
     h3 {
       font-size: 15px;
       font-weight: 500;

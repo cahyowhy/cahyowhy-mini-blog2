@@ -9,11 +9,10 @@ class StatusSerializer < BaseSerializer
   end
 
   def commentstatuses
-    arr=[]
-    object.commentstatuses.each do |item|
-      arr<<{id: item.id, user: {id: item.user.id, imageurl: item.user.imageurl, username: item.user.username}, created_at: item.created_at, comment: item.comment}
+    entities=[]
+    object.commentstatuses.comment_limit_in_status.each do |item|
+      entities<<{id: item.id, user: {id: item.user.id, imageurl: item.user.imageurl, username: item.user.username}, created_at: item.created_at, comment: item.comment}
     end
-
-    arr
+    entities
   end
 end

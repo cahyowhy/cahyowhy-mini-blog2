@@ -59,6 +59,9 @@ export default Ember.Mixin.create({
       case "comment":
         find = this.commentpostService.find(param);
         break;
+      case "commentstatus":
+        find = this.commentstatusService.find(param);
+        break;
       case "status":
         find = this.statusService.find(param);
         break;
@@ -135,6 +138,8 @@ export default Ember.Mixin.create({
           resolve(response);
         }, 1200);
       }).catch(function (err) {
+        context.commonService.showCustomNotification(err.statusText);
+        context.debug(err);
         reject(err);
       });
     });
