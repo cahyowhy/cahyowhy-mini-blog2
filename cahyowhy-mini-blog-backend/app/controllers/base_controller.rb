@@ -66,7 +66,8 @@ class BaseController < ApplicationController
 
   def index
     paramshash={}
-    params.each do |key, value| #params dapat dari url hash di extract disini
+    params.each do |key, value|
+      #params dapat dari url hash di extract disini
       # the content of params is url hash, request body hash, and current method
       # you can search through the url params with this method. example GET http://localhost:3000/statuses?limit=21&offset=0&user_id=2
       # will add user_id=2 hash object through the paramshash and search the status where limit=VALUE, offset=VALUE and where id user = 2
@@ -132,15 +133,19 @@ class BaseController < ApplicationController
     link=''
     message=''
     data=''
+    mark=''
 
     case (@current_entity)
       when POST
         link = "post-detail/#{@entity.id}"
         data = PostSerializer.new(@entity).to_json
         message = "#{@entity.user.username} membuat post baru dengan judul '#{@entity.title}'"
+        mark='post'
       when STATUS
         data = StatusSerializer.new(@entity).to_json
-      # data = @entity.as_json
+        link = "dashboard/#{@entity.user.id}/status-#{@entity.id}"
+        message = "#{@entity.user.username} membuat status baru"
+        mark='status'
       when LIKEPOST
         link = "post-detail/#{@entity.post_id}"
         message = "#{@entity.user.username} menyukai postingan anda yang berjudul '#{@entity.post.title}'"
@@ -156,31 +161,31 @@ class BaseController < ApplicationController
       when RELATIONSHIP
         link = "dashboard/#{curent_user.id}"
         message = "#{curent_user.username} sekarang mengikuti anda"
+      else
+        link=""
+        message=""
     end
 
     if @current_entity == RELATIONSHIP
-      is_user_online = ConnectionList.all.any? { |user| user[:id] == @entity.id.to_s } #check apakah user yang difollow online
+      #check apakah user yang difollow online
+      is_user_online = ConnectionList.all.any? { |user| user[:id] == @entity.id.to_s }
 
       # set notifikasi ke user yang di follow
       @entity.notifications.create!(:user_id => @entity.id, :link => link, :message => message, :userhasresponse_id => curent_user.id)
       BroadcastSingleWorker.perform_async(@entity.id, message, link) if is_user_online && !is_current_user_response
 
     elsif @current_entity == POST || @current_entity == STATUS
-      chanels=[]
       curent_user.followers.each do |item|
         is_user_online = ConnectionList.all.any? { |user| user[:id] == item.id.to_s }
         if @current_entity == POST
           item.notifications.create!(:user_id => item.id, :link => link, :message => message, :userhasresponse_id => curent_user.id)
         end
-        if is_user_online #only user online will be subscribed
-          if @current_entity == POST
-            # chanels << (ActionCable.server.broadcast "notification_channel_#{item.id}", {message: message, link: link, mark: "post", data: data})
-          else
-            # chanels << (ActionCable.server.broadcast "notification_channel_#{item.id}", {data: data, mark: "status"})
-          end
+
+        #only user online will be subscribed
+        if is_user_online
+          BroadcastMultiWorker.perform_async(item.id, message, link, data, mark) if is_user_online && !is_current_user_response
         end
 
-        # BroadcastNotificationJob.perform_now(chanels)
       end
 
     elsif @current_entity == LIKEPOST || @current_entity == COMMENTPOST

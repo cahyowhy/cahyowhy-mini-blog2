@@ -2,21 +2,21 @@ Rails.application.routes.draw do
   require 'sidekiq/web'
   mount ActionCable.server => '/cable'
   mount Sidekiq::Web => '/sidekiq'
-  resources :commentstatuses
-  resources :notifications, only: [:create, :destroy, :show, :index]
-  resources :imageposts
-  resources :imagestatuses
-  resources :statuses
-  resources :likeposts, only: [:create, :index, :show]
-  resources :likecommentposts, only: [:create, :index, :show]
-  resources :commentposts
-  resources :images, only: [:create, :index, :show, :destroy]
-  resources :posts
   resources :users do
     member do
       get :following, :followers
     end
   end
+  resources :posts
+  resources :statuses
+  resources :commentstatuses
+  resources :imageposts
+  resources :imagestatuses
+  resources :commentposts
+  resources :notifications, only: [:create, :destroy, :show, :index]
+  resources :likeposts, only: [:create, :index, :show]
+  resources :likecommentposts, only: [:create, :index, :show]
+  resources :images, only: [:create, :index, :show, :destroy]
   resources :relationships, only: [:create]
   post 'authenticate', to: 'authentication#authenticate'
   get 'posts/next/:id', to: 'posts#show_post_next'

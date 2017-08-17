@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :commentpostn do
+  factory :commentpost do
     comment { Faker::Lorem.words(10) }
   end
 end

@@ -73,8 +73,4 @@ class User < ApplicationRecord
   end
 end
 
-User.__elasticsearch__.client.indices.delete index: User.index_name rescue nil
-User.__elasticsearch__.client.indices.create \
-  index: User.index_name,
-  body: {settings: User.settings.to_hash, mappings: User.mappings.to_hash}
 User.import force: true
