@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe CommentstatusesController, type: :controller do
+  let(:model) { create(:commentstatus) }
+  let(:class_name) { "commentstatus" }
+  let(:user) { create(:user) }
+  let(:status) { create(:status) }
 
   describe "GET #index" do
     context "when query param visible" do
@@ -9,20 +13,16 @@ RSpec.describe CommentstatusesController, type: :controller do
   end
 
   describe "GET #show" do
-    it_behaves_like "running show method" do
-      let(:model) { create(:commentstatus) }
-    end
+    it_behaves_like "running show method"
   end
 
   describe "delete #delete" do
-    it_behaves_like "running delete method", User, :commentstatus do
-      let(:model) { create(:commentstatus) }
-    end
+    it_behaves_like "running delete method", Commentstatus, :commentstatus
   end
 
   describe "create #create" do
     context "when params is valid" do
-      it_behaves_like "running create method on valid param", User, :commentstatus do
+      it_behaves_like "running create method on valid param", Commentstatus, :commentstatus do
         let!(:model) { attributes_for(:commentstatus) }
       end
     end
@@ -35,10 +35,9 @@ RSpec.describe CommentstatusesController, type: :controller do
   end
 
   describe "UPDATE #put" do
+
     it_behaves_like "running update method", :commentstatus do
-      # in ruby everything start with : its mean symbol
-      let!(:model) { create(:commentstatus) }
-      let(:model_update) { attributes_for(:commentstatus) }
+      let!(:model_update) { attributes_for(:commentstatus) }
     end
   end
 end

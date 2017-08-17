@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
+  let(:class_name) { "user" }
+  let(:model) { create(:user) }
 
   describe "GET #index" do
     context "when query param visible" do
@@ -9,15 +11,11 @@ RSpec.describe UsersController, type: :controller do
   end
 
   describe "GET #show" do
-    it_behaves_like "running show method" do
-      let(:model) { create(:user) }
-    end
+    it_behaves_like "running show method"
   end
 
   describe "delete #delete" do
-    it_behaves_like "running delete method", User, :user do
-      let(:model) { create(:user) }
-    end
+    it_behaves_like "running delete method", User, :user
   end
 
   describe "create #create" do
@@ -37,8 +35,7 @@ RSpec.describe UsersController, type: :controller do
   describe "UPDATE #put" do
     it_behaves_like "running update method", :user do
       # in ruby everything start with : its mean symbol
-      let!(:model) { create(:user) }
-      let(:model_update) { attributes_for(:user) }
+      let!(:model_update) { attributes_for(:user) }
     end
   end
 end

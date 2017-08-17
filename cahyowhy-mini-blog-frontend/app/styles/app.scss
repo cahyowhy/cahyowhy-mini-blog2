@@ -242,6 +242,12 @@ body {
   }
 }
 
+.posting {
+  label {
+    color: $textDefault;
+  }
+}
+
 .post-item {
   border-right: 0px !important;
 }
@@ -1016,6 +1022,10 @@ div[id^="uploadphoto"], div[id*="uploadphoto"] {
       padding: 0;
       list-style-type: none;
       li {
+        a {
+          width: auto;
+          min-width: 60px;
+        }
         a i {
           color: white !important;
         }
@@ -1258,4 +1268,9 @@ ul.list-group {
     width: auto;
     min-width: 150px;
   }
+}
+
+.custom-pp {
+  width: 50px;
+  height: 50px;
 }

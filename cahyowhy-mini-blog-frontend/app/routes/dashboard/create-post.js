@@ -1,9 +1,11 @@
 import Ember from 'ember';
-import ENV from '../../config/environment'
-import Image from '../../entity/image';
-import offsetlimit from '../../entity/offsetlimit';
 
 export default Ember.Route.extend({
+  model(){
+    return Ember.RSVP.hash({
+      postCategories: this.postService.find("categories/all")
+    });
+  },
   beforeModel(transition){
     const context = this;
     this.debug(transition.queryParams);
@@ -18,5 +20,8 @@ export default Ember.Route.extend({
     } else {
       window.location.href = "/not-found";
     }
+  },
+  setupController(controller, model){
+    this.controllerFor('dashboard.create-post').set('postCategories', model.postCategories);
   }
 });

@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe PostsController, type: :controller do
+  let(:model) { create(:post) }
+  let(:class_name) {"post"}
+  let(:user) { create(:user) }
 
   describe "GET #index" do
     context "when query param visible" do
@@ -9,20 +12,16 @@ RSpec.describe PostsController, type: :controller do
   end
 
   describe "GET #show" do
-    it_behaves_like "running show method" do
-      let(:model) { create(:post) }
-    end
+    it_behaves_like "running show method"
   end
 
   describe "delete #delete" do
-    it_behaves_like "running delete method", User, :post do
-      let(:model) { create(:post) }
-    end
+    it_behaves_like "running delete method", Post, :post
   end
 
   describe "create #create" do
     context "when params is valid" do
-      it_behaves_like "running create method on valid param", User, :post do
+      it_behaves_like "running create method on valid param", Post, :post do
         let!(:model) { attributes_for(:post) }
       end
     end
@@ -35,10 +34,9 @@ RSpec.describe PostsController, type: :controller do
   end
 
   describe "UPDATE #put" do
+
     it_behaves_like "running update method", :post do
-      # in ruby everything start with : its mean symbol
-      let!(:model) { create(:post) }
-      let(:model_update) { attributes_for(:post) }
+      let!(:model_update) { attributes_for(:post) }
     end
   end
 end
