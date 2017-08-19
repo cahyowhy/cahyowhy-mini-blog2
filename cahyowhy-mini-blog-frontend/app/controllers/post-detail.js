@@ -17,6 +17,19 @@ export default Ember.Controller.extend(BaseController, {
       this.set("commentDisabled", false);
     }
   }),
+  afterRender(){
+    this._super(...arguments);
+    const nextPost = this.get('nexPost');
+    const prevPost = this.get('prevPost');
+    nextPost === null || nextPost === undefined ? this.hideArrow("post-right") : this.showArrow("post-right");
+    prevPost === null || prevPost === undefined ? this.hideArrow("post-left") : this.showArrow("post-left");
+  },
+  hideArrow(param){
+    Ember.$(`.${param}`).addClass('hide');
+  },
+  showArrow(param){
+    Ember.$(`.${param}`).removeClass('hide');
+  },
   isLoadCommentBtnDisplayed: Ember.computed("comments", function () {
     return this.get("comments") > 0
   }),
@@ -31,7 +44,7 @@ export default Ember.Controller.extend(BaseController, {
     this.set("commentpost.commentpost.comment", "");
   },
   actions: {
-    onFavouriteComment(id, param){
+    onFavouriteComment(id){
       let likecommentpost = Likecommentpost.create();
       likecommentpost.set('likecommentpost.user_id', this.commonService.getId());
       likecommentpost.set('likecommentpost.commentpost_id', id);

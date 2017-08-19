@@ -24,18 +24,6 @@ export default Ember.Route.extend({
     // this.set('headData.title', model.post.title);
     // this.set('headData.description', model.post.description);
     // this.set('headData.image', "http://lorempixel.com/210/210");
-    model.nextPost === null || model.nextPost === undefined ? this.hideArrow("post-right") : this.showArrow("post-right");
-    model.prevPost === null || model.prevPost === undefined ? this.hideArrow("post-left") : this.showArrow("post-left");
-  },
-  hideArrow(param){
-    Ember.run.schedule("afterRender", function () {
-      Ember.$(`.${param}`).addClass('hide');
-    });
-  },
-  showArrow(param){
-    Ember.run.schedule("afterRender", function () {
-      Ember.$(`.${param}`).removeClass('hide');
-    });
   },
   setupController(controller, model){
     this.controllerFor('post-detail').set('post', model.post);
