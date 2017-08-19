@@ -1,0 +1,15 @@
+<div class="emoticons-list" id="{{unless isCurrentUserLikeIt (concat "likestatus-" statusId)}}" class="collapse">
+  {{#each emoticons as |emoticon|}}
+    <img src="/img/{{emoticon.name}}.png" alt="" onclick={{action "onSelectEmoticon" emoticon.value}}>
+  {{/each}}
+</div>
+<div data-target="#likestatus-{{statusId}}" data-toggle="collapse" class="fadeIn animated">
+  {{#if isCurrentUserLikeIt}}
+    <span onclick={{action "onSelectEmoticon" 1}} class="fa margin-ri5">
+      <img src={{thumbIcon}} alt="" width="18px">
+    </span>
+  {{else}}
+    <i class="{{thumbIcon}} fa margin-ri5"></i>
+  {{/if}}
+  <h3 class="pull-right">{{detailIcon}}</h3>
+</div>

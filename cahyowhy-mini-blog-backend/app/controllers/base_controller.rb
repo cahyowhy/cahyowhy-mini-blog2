@@ -17,6 +17,7 @@ class BaseController < ApplicationController
   COMMENTSTATUS = "commentstatus"
   TIMELINE = "timeline"
   NOTIFICATION = "notification"
+  LIKESTATUS = "likestatus"
   RELATIONSHIP = "relationship"
   attr_accessor :entity
   before_action :init_value
@@ -25,10 +26,13 @@ class BaseController < ApplicationController
 
   def init_value(param)
     case (param)
-      when USER;
+      when USER
         @entity = User
         @current_entity = USER
-      when RELATIONSHIP;
+      when LIKESTATUS
+        @entity = Likestatus
+        @current_entity = LIKESTATUS
+      when RELATIONSHIP
         @current_entity = RELATIONSHIP
       # @entity = User
       when STATUS
@@ -119,9 +123,12 @@ class BaseController < ApplicationController
     @entity = @entity.new(@entity_params)
 
     if @entity.save
-      broadcast_notification if @current_entity == STATUS || @current_entity == POST || @current_entity == COMMENTPOST || @current_entity == COMMENTSTATUS || @current_entity == LIKEPOST || @current_entity == LIKECOMMENTPOST || @current_entity == RELATIONSHIP || @current_entity == STATUS # invoke method in child after entity has been saved
-
-      render json: @entity, httpstatus: postsuccess, status: :created, location: @entity
+      broadcast_notification if @current_entity == STATUS || @current_entity == LIKESTATUS || @current_entity == POST || @current_entity == COMMENTPOST || @current_entity == COMMENTSTATUS || @current_entity == LIKEPOST || @current_entity == LIKECOMMENTPOST || @current_entity == RELATIONSHIP || @current_entity == STATUS # invoke method in child after entity has been saved
+      if @current_entity==LIKESTATUS
+        render json: @entity, httpstatus: postsuccess, userlike: !@user_like_it, status: :created, location: @entity
+      else
+        render json: @entity, httpstatus: postsuccess, status: :created, location: @entity
+      end
     else
       render json: @entity.errors, httpstatus: postfailed, status: :unprocessable_entity
     end
@@ -143,7 +150,7 @@ class BaseController < ApplicationController
         mark='post'
       when STATUS
         data = StatusSerializer.new(@entity).to_json
-        link = "dashboard/#{@entity.user.id}/status-#{@entity.id}"
+        link = "dashboard/#{@entity.user.id}/#status-#{@entity.id}"
         message = "#{@entity.user.username} membuat status baru"
         mark='status'
       when LIKEPOST
@@ -152,6 +159,9 @@ class BaseController < ApplicationController
       when LIKECOMMENTPOST
         link = "post-detail/#{@entity.post_id}/#user-commentpost-#{@entity.id}"
         message = "#{@entity.user.username} menyukai commen anda pada komen '#{@entity.commentpost.comment}''"
+      when LIKESTATUS
+        link = "dashboard/#{@entity.status.user_id}/#status-#{@entity.status.id}"
+        message = "#{@entity.user.username} menyukai status anda"
       when COMMENTPOST
         link = "post-detail/#{@entity.post_id}/#user-commentpost-#{@entity.id}"
         message = "#{@entity.user.username} mengomentari postingan anda yang berjudul '#{@entity.post.title}'"
@@ -196,7 +206,7 @@ class BaseController < ApplicationController
       user.notifications.create!(:user_id => user.id, :link => link, :message => message, :userhasresponse_id => curent_user.id) unless is_current_user_response
       BroadcastSingleWorker.perform_async(@entity.post.user_id, message, link) if is_user_online && !is_current_user_response
 
-    elsif @current_entity == COMMENTSTATUS
+    elsif @current_entity == COMMENTSTATUS|| @current_entity == LIKESTATUS
       is_user_online = ConnectionList.all.any? { |user| user[:id] == @entity.status.user_id.to_s } #check apakah user yang punya postingan online
       is_current_user_response = @entity.status.user_id == curent_user.id #check apakah yang comment status itu yang bikin postingan ini
 
@@ -243,6 +253,8 @@ class BaseController < ApplicationController
         @entity_params = commentstatus_params
       when NOTIFICATION
         @entity_params = notification_params
+      when LIKESTATUS
+        @entity_params = likestatus_params
     end
   end
 

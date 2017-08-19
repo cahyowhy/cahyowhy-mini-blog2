@@ -5,6 +5,7 @@ class Status < ApplicationRecord
   belongs_to :user
   has_many :imagestatuses, inverse_of: :status, dependent: :destroy
   has_many :commentstatuses, dependent: :destroy
+  has_many :likestatuses, dependent: :destroy
   accepts_nested_attributes_for :imagestatuses
   validates_presence_of :statushtml, :statustext, on: :create
 

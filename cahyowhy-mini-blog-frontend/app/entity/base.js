@@ -12,6 +12,7 @@ export default Ember.Mixin.create({
   imagestatuses_attributes: "imagestatuses_attributes",
   imageposts_attributes: "imageposts_attributes",
   likepost: "likepost",
+  likestatus: "likestatus",
   commentpost: "commentpost",
   commentstatus: "commentstatus",
   likecommentpost: "likecommentpost",

@@ -276,6 +276,33 @@ body {
   margin-right: 5px;
 }
 
+.emoticons-list {
+  position: absolute;
+  width: auto;
+  height: auto;
+  padding: 10px;
+  background: white;
+  z-index: 2;
+  border-radius: 50px;
+  margin-top: -60px;
+  box-shadow: 1px 1px 3px $greyDark;
+  margin-left: -10px;
+  img {
+    &:hover{
+      width: 50px;
+      height: 50px;
+    }
+    margin-right: 5px;
+    width: 30px;
+    height: 30px;
+    margin-top: 4px;
+  }
+}
+
+.margin-ri15 {
+  margin-right: 15px;
+}
+
 nav {
   border-bottom: 1px solid $almostWhite;
   box-shadow: 1px 3px 3px $greyYoung;

@@ -3,6 +3,7 @@ class StatusSerializer < BaseSerializer
   has_one :user
   has_many :imagestatuses
   has_many :commentstatuses
+  has_many :likestatuses
 
   def mark
     "STATUS"
