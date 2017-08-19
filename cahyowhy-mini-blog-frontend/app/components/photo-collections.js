@@ -6,16 +6,20 @@ import ENV from '../config/environment';
 export default Ember.Component.extend(BaseController, {
   images: [],
   url: ENV.APP.API_IMAGE,
-  files: [],
   userId: 0,
   isUserIdEqRouteId: Ember.computed('userId', 'routeUserId', 'isTimeline', function () {
     return this.get('isTimeline') ? true : this.get("userId") === this.get("routeUserId");
   }),
+  clearAny(){
+    this.set('images', []);
+    this.set('userId', 0);
+  },
   didInsertElement(){
     this._super(...arguments);
-    this.set('userId', this.commonService.getId());
     let image = Image.create();
     const context = this;
+    this.clearAny();
+    this.set('userId', this.commonService.getId());
     image.set('image.user_id', this.get('userId'));
     image = image.getChildWithSelection(['user_id']);
 

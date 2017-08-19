@@ -47,6 +47,9 @@ export default Ember.Mixin.create({
       case "post":
         find = this.postService.find(param);
         break;
+      case "likestatus":
+        find = this.likestatusService.find(param);
+        break;
       case "user":
         find = this.userService.find(param);
         break;
@@ -120,6 +123,9 @@ export default Ember.Mixin.create({
         break;
       case "likecommentpost":
         post = this.likecommentpostService.save(obj, this.commonService.getToken());
+        break;
+      case "likestatus":
+        post = this.likestatusService.save(obj, this.commonService.getToken());
         break;
       case "likepost":
         post = this.likepostService.save(obj, this.commonService.getToken());

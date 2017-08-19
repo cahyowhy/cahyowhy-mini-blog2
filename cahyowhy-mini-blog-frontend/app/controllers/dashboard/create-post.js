@@ -44,6 +44,9 @@ export default Ember.Controller.extend(Basecontroller, {
     this._super(...arguments);
   },
   actions: {
+    onSelectCategory(value){
+      this.set("post.post.category", parseInt(value));
+    },
     onAddImageToPost(index, id, url){
       this.debug(index + " ", url);
       let img = `<img id="${index}" class="imgPost" src="${url}" style="width: 100%; height: auto"> `;

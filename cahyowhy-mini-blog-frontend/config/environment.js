@@ -62,6 +62,7 @@ module.exports = function (environment) {
     ENV.APP.API_STATUS = ENV.APP.API_URL + "statuses/";
     ENV.APP.API_LOGIN = ENV.APP.API_URL + "authenticate/";
     ENV.APP.API_IMAGE_PARAM_NAME = "image[imagepath_data]";
+    ENV.APP.API_STATUS_LIKE = ENV.APP.API_URL+"likestatuses";
 
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
@@ -85,6 +86,7 @@ module.exports = function (environment) {
     ENV.APP.LOGGER = false;
     ENV.APP.IMAGE_RESOURCES = "http://res.cloudinary.com/dn8p95u2f/";
     ENV.APP.API_URL = 'http://127.0.0.1:3000/';
+    ENV.APP.API_STATUS_LIKE = ENV.APP.API_URL+"likestatuses";
     ENV.APP.API_USER = ENV.APP.API_URL + "users/";
     ENV.APP.API_TIMELINES = ENV.APP.API_URL + "timelines/";
     ENV.APP.API_AUTH = ENV.APP.API_URL + "auth/";

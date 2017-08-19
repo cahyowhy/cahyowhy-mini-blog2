@@ -36,7 +36,7 @@
         <li class="list-group-item comment-input{{if commentDisabled " hidden"}}">
           <div class="comment-inner">
             <div class="title  pull-left">
-              <img src="http://loremflickr.com/30/30" alt="">
+              {{background-image-container class="custom-pp" src=(image-url-helper imageProfile)}}
             </div>
             <div class="contentcomment media-body">
               {{textarea class="form-control" value=commentpost.commentpost.comment}}
@@ -53,7 +53,7 @@
               {{fav-icon _id = comment.id likes=comment.likecommentposts action="onFavouriteComment"}}
               <div class="comment-inner">
                 <div class="pull-left">
-                  <img src="http://loremflickr.com/30/30" alt="">
+                  {{background-image-container src=(image-url-helper comment.user.imageurl) class="custom-pp"}}
                 </div>
                 <div class="media-body">
                   <div class="namecomment">

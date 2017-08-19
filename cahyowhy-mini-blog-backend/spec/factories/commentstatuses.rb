@@ -1,5 +1,7 @@
 FactoryGirl.define do
   factory :commentstatus do
-    comment { Faker::Lorem.words(10) }
+    association :user, factory: :user
+    association :status, factory: :status
+    comment { Faker::Lorem.sentence(10) }
   end
 end

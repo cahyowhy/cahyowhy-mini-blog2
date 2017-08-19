@@ -9,6 +9,9 @@ let offset = 0;
 export default Ember.Controller.extend(BaseController, {
   commentDisabled: true,
   commentpost: Commentpost.create(),
+  isCommentEmpty: Ember.computed('comments', function () {
+    return this.get('comments').length === 0;
+  }),
   authentication: Ember.observer('applicationRoute.authentication', function () {
     if (this.get("applicationRoute.authentication")) {
       this.set("commentDisabled", false);
@@ -16,6 +19,9 @@ export default Ember.Controller.extend(BaseController, {
   }),
   isLoadCommentBtnDisplayed: Ember.computed("comments", function () {
     return this.get("comments") > 0
+  }),
+  imageProfile: Ember.computed('commonService', function () {
+    return this.commonService.getImageProfile();
   }),
   username: Ember.computed('commonService', function () {
     return this.commonService.getUsername();
@@ -46,7 +52,6 @@ export default Ember.Controller.extend(BaseController, {
         response.forEach(function (item) {
           context.get('comments').pushObject(item);
         });
-        response.length === 0 ? this.set("isCommentEmpty", true) : this.set("isCommentEmpty", false);
       })
     },
     doSave(event){

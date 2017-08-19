@@ -14,7 +14,12 @@ class PostsController < BaseController
   end
 
   def print_category
-    render json: @entity.get_categories
+    categories=[]
+    @entity.get_categories.each do |key, value|
+      categories<<{name: key, value: value}
+    end
+
+    render json: categories
   end
 
   # GET /posts/prev/2
