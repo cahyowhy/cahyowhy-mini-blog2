@@ -1,4 +1,4 @@
-<div class="status-item">
+<div class="status-item" id="status-{{statusId}}">
   <div class="status-detail">
     <div class="pull-left">
       {{background-image-container src=(image-url-helper imageProfile) class="cust21"}}
@@ -8,7 +8,6 @@
       {{{status}}}
       <div class="imagestatuses-wrapper">
         {{#each statusImages as |statusImage index|}}
-        {{!-- if imagestatuses morethan 4 --}}
           {{#if (or (eq statusImagesSize 2)(gte statusImagesSize 4))}}
             {{#if (lte index 2)}}
               <a href="{{statusImage.imageurl}}" data-lightbox="status-image-{{statusId}}" data-title="{{statusText}}">
