@@ -17,8 +17,6 @@ export default Ember.Controller.extend(BaseController, {
   afterRender(){
     this._super(...arguments);
   },
-  removeSubscription(){
-  },
   handleActionCable(){
     const context = this;
     let consumer = context.cableService.createConsumer('ws://localhost:3000/cable?token=' + context.commonService.getToken());

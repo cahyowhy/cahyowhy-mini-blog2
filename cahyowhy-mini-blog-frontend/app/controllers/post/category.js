@@ -1,14 +1,14 @@
 import Ember from 'ember';
-import BaseController from './base-controller';
-import ENV from '../config/environment';
-import offsetlimit from '../entity/offsetlimit';
+import BaseController from '../base-controller';
+import ENV from '../../config/environment';
+import offsetlimit from '../../entity/offsetlimit';
 
 let offset = 0;
 export default Ember.Controller.extend(BaseController, {
   ifPostIsEmpty: Ember.computed('posts', function () {
+    this.debug(this.get('posts').length);
     return this.get('posts').length === 0;
   }),
-  queryParams: ['category'],
   category: null,
   posts: [],
   title: Ember.computed('category', function () {
@@ -39,82 +39,22 @@ export default Ember.Controller.extend(BaseController, {
                       "Postingan terbaru yang menyegarkan";
 
   }),
-  /**
-   * init scrollbar bottom
-   * on container post category
-   */
-  initScrollBottomCategory(){
-    const width = Ember.$("#post-main").width();
-    Ember.$("#post-main .post-ul-category").slimscroll({
-      height: '120px',
-      width: width + "px",
-      axis: 'x'
-    });
-  },
-  /**
-   * called every route leave the post
-   * to disable the Ember.$("#post-main .post-ul-category")
-   */
-  disableScrollBar(){
-    Ember.$("#post-main .post-ul-category").off();
-  },
-  run(){
-    const query = {
-      offset: ENV.APP.DEFAULT_OFFSET,
-      limit: ENV.APP.DEFAULT_LIMIT
-    };
-
-    const request = this.doFind('post', query);
-    this.doRequest(request);
-  },
-  afterRender(){
-    this._super(...arguments);
-    this.initScrollBottomCategory();
-  },
-  onChangeCategory: Ember.observer('category', function () {
-    this.set('posts', []);
-    this.debug(this.get("category"));
-    const category = this.get("category");
-    const query = category !== null && category !== undefined ? {
-        offset: ENV.APP.DEFAULT_OFFSET,
-        limit: ENV.APP.DEFAULT_LIMIT,
-        category: category
-      } : {
-        offset: ENV.APP.DEFAULT_OFFSET,
-        limit: ENV.APP.DEFAULT_LIMIT
-      };
-    const request = this.doFind('post', query);
-    this.doRequest(request);
-  }),
-  /**
-   * called every this.get("category") changed
-   * @param promise
-   */
-  doRequest(promise){
-    const context = this;
-    promise.then(function (results) {
-      context.set("posts", results);
-    });
-  },
   actions: {
     onLoadPost(){
       const context = this;
       offset = offset + ENV.APP.DEFAULT_LIMIT;
       const category = this.get("category");
       let query;
-      if (category !== null && category !== undefined) {
-        query = {category: category};
-        for (let key in offsetlimit(offset)) {
-          query[key] = offsetlimit(offset)[key];
-        }
-      } else {
-        query = offsetlimit(offset);
+      query = {category: category};
+      for (let key in offsetlimit(offset)) {
+        query[key] = offsetlimit(offset)[key];
       }
 
       this.doFind("post", query).then(function (results) {
         results.forEach(function (item) {
           context.get('posts').pushObject(item);
         });
+        context.set('ifPostIsEmpty', results.length === 0);
       });
     }
   }

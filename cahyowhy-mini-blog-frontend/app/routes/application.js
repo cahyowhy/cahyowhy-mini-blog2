@@ -6,17 +6,6 @@ export default Ember.Route.extend(Ember.Evented, {
   onDocumentReady(){
     Ember.run.schedule('afterRender', this, function () {
       const context = this;
-      /*Ember.$(".loading").animate({
-       width: "100%"
-       }, {
-       duration: 500,
-       specialEasing: {
-       width: "linear"
-       },
-       complete: function () {
-       Ember.$(this).css("width", "0%");
-       }
-       });*/
       this.trigger("onDocumentReady");
       this.set("documentReady", true);
       if (this.commonService.getToken() === null || this.commonService.getToken() === undefined) {

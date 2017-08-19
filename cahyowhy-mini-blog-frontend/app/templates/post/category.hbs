@@ -1,0 +1,26 @@
+<div class="row margin-b-40">
+  <div class="col-sm-12 textCenter">
+    <h2>{{title}}</h2>
+    <p>{{pengantar}}</p>
+  </div>
+</div>
+<div id="post-container" class="row post">
+  {{#each posts as |post|}}
+    {{post-item
+      idPost=post.id
+      username=post.user.username
+      createdAt=post.created_at
+      likes=post.likeposts
+      category=post.category
+      img =  post.image
+      title = post.title
+      review = post.review
+    }}
+  {{/each}}
+</div>
+{{#if ifPostIsEmpty}}
+  {{content-is-empty}}
+{{else}}
+  <div class="btn-wrapper-post"><a onclick={{action "onLoadPost"}} class="btn-primary btn-medium btn">Load more</a>
+  </div>
+{{/if}}

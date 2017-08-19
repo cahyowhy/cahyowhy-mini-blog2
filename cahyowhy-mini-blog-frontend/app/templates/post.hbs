@@ -1,43 +1,18 @@
 <div class="work-section" id="post-main">
   <div class="container content-lg">
-    <ul class="post-ul-category">
-      <li>{{#link-to 'post' (query-params category=null) class="btn btn-sm btn-primary"}}semua{{/link-to}}</li>
-      <li>{{#link-to 'post' (query-params category=0) class="btn btn-sm btn-primary"}}uncategorized{{/link-to}}</li>
-      <li>{{#link-to 'post' (query-params category=1) class="btn btn-sm btn-primary"}}sains{{/link-to}}</li>
-      <li>{{#link-to 'post' (query-params category=2) class="btn btn-sm btn-primary"}}komedi{{/link-to}}</li>
-      <li>{{#link-to 'post' (query-params category=3) class="btn btn-sm btn-primary"}}sejarah{{/link-to}}</li>
-      <li>{{#link-to 'post' (query-params category=4) class="btn btn-sm btn-primary"}}gosip{{/link-to}}</li>
-      <li>{{#link-to 'post' (query-params category=5) class="btn btn-sm btn-primary"}}puisi{{/link-to}}</li>
-      <li>{{#link-to 'post' (query-params category=6) class="btn btn-sm btn-primary"}}pribadi{{/link-to}}</li>
-      <li>{{#link-to 'post' (query-params category=7) class="btn btn-sm btn-primary"}}mistis{{/link-to}}</li>
-      <li>{{#link-to 'post' (query-params category=8) class="btn btn-sm btn-primary"}}berita{{/link-to}}</li>
-      <li>{{#link-to 'post' (query-params category=9) class="btn btn-sm btn-primary"}}teknologi{{/link-to}}</li>
-    </ul>
-    <div class="row margin-b-40">
-      <div class="col-sm-12 textCenter">
-        <h2>{{title}}</h2>
-        <p>{{pengantar}}</p>
-      </div>
-    </div>
-    <div id="post-container" class="row post">
-      {{#each posts as |post|}}
-        {{post-item
-          idPost=post.id
-          username=post.user.username
-          createdAt=post.created_at
-          likes=post.likeposts
-          category=post.category
-          img =  post.image
-          title = post.title
-          review = post.review
-        }}
-      {{/each}}
-    </div>
-    {{#if ifPostIsEmpty}}
-      {{content-is-empty}}
-    {{else}}
-      <div class="btn-wrapper-post"><a onclick={{action "onLoadPost"}} class="btn-primary btn-medium btn">Load more</a>
-      </div>
-    {{/if}}
+    {{#slider-horizontal height=50}}
+      <li>{{#link-to 'post' class="btn btn-sm btn-primary"}}semua{{/link-to}}</li>
+      <li>{{#link-to 'post.category' 0 class="btn btn-sm btn-primary"}}uncategorized{{/link-to}}</li>
+      <li>{{#link-to 'post.category' 1 class="btn btn-sm btn-primary"}}sains{{/link-to}}</li>
+      <li>{{#link-to 'post.category' 2 class="btn btn-sm btn-primary"}}komedi{{/link-to}}</li>
+      <li>{{#link-to 'post.category' 3 class="btn btn-sm btn-primary"}}sejarah{{/link-to}}</li>
+      <li>{{#link-to 'post.category' 4 class="btn btn-sm btn-primary"}}gosip{{/link-to}}</li>
+      <li>{{#link-to 'post.category' 5 class="btn btn-sm btn-primary"}}puisi{{/link-to}}</li>
+      <li>{{#link-to 'post.category' 6 class="btn btn-sm btn-primary"}}pribadi{{/link-to}}</li>
+      <li>{{#link-to 'post.category' 7 class="btn btn-sm btn-primary"}}mistis{{/link-to}}</li>
+      <li>{{#link-to 'post.category' 8 class="btn btn-sm btn-primary"}}berita{{/link-to}}</li>
+      <li>{{#link-to 'post.category' 9 class="btn btn-sm btn-primary"}}teknologi{{/link-to}}</li>
+    {{/slider-horizontal}}
+    {{outlet}}
   </div>
 </div>

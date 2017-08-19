@@ -15,7 +15,9 @@ if (config.APP.LOGGER) {
 Router.map(function () {
   this.route('login');
   this.route('sign-up');
-  this.route('post', {queryParams: ['category']});
+  this.route('post', function () {
+    this.route('category',{path:'/category/:id'});
+  });
   this.route('post-detail', {path: '/post-detail/:id'});
   this.route('dashboard', {path: '/dashboard/:id'}, function () {
     this.route('create-post', {queryParams: ['token']});

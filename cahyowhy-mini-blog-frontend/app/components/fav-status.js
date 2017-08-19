@@ -33,9 +33,14 @@ export default Ember.Component.extend(BaseController, {
   init(){
     this._super(...arguments);
   },
+  clearAttributes(){
+    this.set('emoticons', []);
+    this.set('isCurrentUserLikeIt', false);
+  },
   didInsertElement(){
     this._super(...arguments);
     const context = this;
+    this.clearAttributes();
     const userId = parseInt(this.commonService.getId());
     const isCurrentUserLikeIt = this.get('likestatuses').filter((item) => {
         return item.user_id === userId

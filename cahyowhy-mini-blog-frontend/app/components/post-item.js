@@ -5,25 +5,17 @@ import Likepost from '../entity/likepost';
 export default Ember.Component.extend(BaseController, {
   posts: "",
   applyLayout(){
-    Ember.$(document).ready(function () {
-      let $grid = Ember.$('#post-container').imagesLoaded(function () {
-        $grid.masonry({
-          itemSelector: '.post-item',
-          percentPosition: true,
-          columnWidth: '.post-item',
-        });
+    let $grid = Ember.$('#post-container').imagesLoaded(function () {
+      $grid.masonry({
+        itemSelector: '.post-item',
+        percentPosition: true,
+        columnWidth: '.post-item',
       });
-      $grid.masonry('reloadItems');
     });
+    $grid.masonry('reloadItems');
   },
   init(){
     this._super(...arguments);
-  },
-  didReceiveAttrs(){
-    this._super(...arguments);
-    if (!this.get("isVertical")) {
-      this.applyLayout();
-    }
   },
   didInsertElement(){
     this._super(...arguments);
