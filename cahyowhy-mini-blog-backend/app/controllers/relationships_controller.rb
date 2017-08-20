@@ -3,7 +3,7 @@ class RelationshipsController < BaseController
 
   # follow user POST /relationships
   def create
-    user = User.find(params[:followed_id])
+    user = User.find(params[:id])
     if curent_user.following?(user)
       @entity=user #entity disini berarti user yang di follow si current user! BUKAN CURENT_USER!
       broadcast_notification

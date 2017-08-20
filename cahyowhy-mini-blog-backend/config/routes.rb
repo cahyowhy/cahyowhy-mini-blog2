@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   resources :likeposts, only: [:create, :index, :show]
   resources :likecommentposts, only: [:create, :index, :show]
   resources :images, only: [:create, :index, :show, :destroy]
-  resources :relationships, only: [:create]
+  resources :relationships, only: [:create, :destroy]
   post 'authenticate', to: 'authentication#authenticate'
   post 'authenticate/facebook', to: 'authentication#authenticate_facebook'
   get 'posts/next/:id', to: 'posts#show_post_next'
