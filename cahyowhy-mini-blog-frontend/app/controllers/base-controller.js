@@ -3,7 +3,7 @@ import Ember from 'ember';
 export default Ember.Mixin.create({
   init(){
     this._super(...arguments);
-    Ember.run.scheduleOnce('afterRender', this, function () {
+    Ember.run.schedule('afterRender', this, function () {
       this.afterRender();
     });
   },

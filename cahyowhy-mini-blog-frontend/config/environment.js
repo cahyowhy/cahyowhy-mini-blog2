@@ -27,7 +27,7 @@ module.exports = function (environment) {
 
     APP: {
       LOGGER: false,
-      APP_FB_ID: '106474983194157',
+      APP_FB_ID: '836518019843190',
       DEFAULT_OFFSET: 0,
       DEFAULT_LIMIT: 9
       // Here you can pass flags/options to your application instance

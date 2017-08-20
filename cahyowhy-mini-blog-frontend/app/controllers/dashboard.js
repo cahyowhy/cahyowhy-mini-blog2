@@ -7,6 +7,9 @@ let imgWidth, imgHeight;
 export default Ember.Controller.extend(Basecontroller, {
   userEntity: User.create(),
   subscription: '',
+  navigationClass: Ember.computed('isCurrentUser', function () {
+    return this.get('isCurrentUser') ? "col-sm-3" : "col-sm-4";
+  }),
   dataURLtoBlob(dataurl) {
     let data = dataurl.split(','),
       mimetypeFile = data[0].match(/:(.*?);/)[1],
@@ -18,6 +21,11 @@ export default Ember.Controller.extend(Basecontroller, {
     return new Blob([blobArray], {type: mimetypeFile});
   },
   actions: {
+    onFollowing(){
+      if (!this.get('isCurrentUser')) {
+
+      }
+    },
     doUpload(params, modalId, filename){
       const context = this;
       const authorization = {

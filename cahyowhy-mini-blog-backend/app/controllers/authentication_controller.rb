@@ -13,7 +13,7 @@ class AuthenticationController < ApplicationController
   end
 
   def authenticate_facebook
-    is_user_has_facebook_id = User.is_user_has_facebook_id(params[:facebook_id])
+    is_user_has_facebook_id = User.has_facebook_id(params[:facebook_id])
     if is_user_has_facebook_id
       user = User.find_by(facebook_id: params[:facebook_id])
       command = AuthenticateUser.call(user.username, user.password_digest)

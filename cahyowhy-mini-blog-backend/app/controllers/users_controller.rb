@@ -1,7 +1,7 @@
 class UsersController < BaseController
   before_action :check_username_exist, only: [:create, :update]
   before_action :set_entity, only: [:show, :update, :destroy, :following, :followers]
-  before_action :authenticate_request, only: [:update, :destroy]
+  before_action :authenticate_request, only: [:update, :destroy, :check_user_follow]
 
   # GET users/:id/following
   def following
@@ -11,6 +11,12 @@ class UsersController < BaseController
   # GET users/:id/followers
   def followers
     render json: @entity.followers, httpstatus: getsuccess
+  end
+
+  def check_user_follow
+    user = User.find(params[:id])
+    is_current_user_follow_user = curent_user.following?(user)
+    render json: {httpstatus: getsuccess, isfollowing: is_current_user_follow_user}
   end
 
   private

@@ -5778,7 +5778,7 @@ window.fbAsyncInit = function() {
   //1947660855514393 1645055635737772 kris sadewo //225385801228932
 
   FB.init({
-    appId            : '106474983194157',
+    appId            : '836518019843190',
     autoLogAppEvents : true,
     xfbml            : true,
     version          : 'v2.10'

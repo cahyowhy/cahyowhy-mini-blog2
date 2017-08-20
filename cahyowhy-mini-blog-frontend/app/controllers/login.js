@@ -26,15 +26,20 @@ export default Ember.Controller.extend(BaseController, {
         if (response.authResponse) {
           window.FB.api('/me', {fields: 'email,id,name,picture.width(2048),birthday'},
             function (result) {
-              let user = context.get('user');
-              user.set('facebook_id', result.id);
-              user = user.getChildWithSelection(['facebook_id']);
-              context.doSave("login", user, null, "facebook").then(function (response) {
+              // let user = context.get('user');
+              // user.set('facebook_id', result.id);
+              // user = user.getChildWithSelection(['facebook_id']);
+              // context.debug(result);
+              // context.debug(user);
+              const user = {
+                facebook_id: parseInt(result.id)
+              };
+              context.doSave("login", user, "facebook").then(function (response) {
                 if (response.httpstatus !== 404) {
                   context.commonService.setCookies(response);
                   context.transitionToRoute('dashboard', response.user.id);
                 } else {
-                  context.transitionToRoute('sign-up', {queryParams: {facebook_id: result.id}});
+                  context.transitionToRoute('sign-up', {queryParams: {facebook_id: parseInt(result.id)}});
                 }
               }).catch(function (err) {
                 context.debug(err);

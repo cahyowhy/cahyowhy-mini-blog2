@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   post 'authenticate', to: 'authentication#authenticate'
   post 'authenticate/facebook', to: 'authentication#authenticate_facebook'
   get 'posts/next/:id', to: 'posts#show_post_next'
+  get 'users/isfollow/:id', to: 'users#check_user_follow'
   get 'posts/categories/all', to: 'posts#print_category'
   get 'likestatuses/emoticons/all', to: 'likestatuses#print_emoticon'
   get 'posts/prev/:id', to: 'posts#show_post_prev'

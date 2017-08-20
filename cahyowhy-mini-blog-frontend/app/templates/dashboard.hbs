@@ -4,39 +4,48 @@
       <div class="col-sm-12 sm-margin-b-50 margin-top30 dashboard-index">
         <div class="header-profile">
           <div class="pull-left">
-            <i class="ion ion-android-camera">
-              {{photocropper-uploader-galleries id="photos" action="doUpload"}}
-            </i>
+            {{#if navigationClass}}
+              <i class="ion ion-android-camera">
+                {{photocropper-uploader-galleries id="photos" action="doUpload"}}
+              </i>
+            {{/if}}
             {{background-image-container src=(image-url-helper user.imageurl) class="img-profile-dashboard"}}
           </div>
           <div class="media-body">
             <div class="inner">
               <h1>{{user.name}}</h1>
               <p>{{user.username}}</p>
+              {{#unless isCurrentUser}}
+                <a {{action "onFollowing"}} class="btn btn-primary">{{btnFollow}}</a>
+              {{/unless}}
+              <a class="btn btn-default">{{user.total_follower}} follower</a>
+              <a class="btn btn-default">{{user.total_following}} following</a>
             </div>
           </div>
         </div>
         <div class="navigation">
-          <div class="col-sm-3 textCenter">
+          <div class="{{navigationClass}} textCenter">
             {{#link-to 'dashboard' tagName='i' class="ion-compose ion"}}
               <p>status</p>
             {{/link-to}}
           </div>
-          <div class="col-sm-3 textCenter">
+          <div class="{{navigationClass}} textCenter">
             {{#link-to 'dashboard.post' tagName='i' class="ion-ios-bookmarks-outline ion"}}
               <p>post</p>
             {{/link-to}}
           </div>
-          <div class="col-sm-3 textCenter">
+          <div class="{{navigationClass}} textCenter">
             {{#link-to 'dashboard.images' tagName='i' class="ion-images ion"}}
               <p>gallery</p>
             {{/link-to}}
           </div>
-          <div class="col-sm-3 textCenter">
-            {{#link-to 'dashboard.setting' tagName='i' class="ion-android-settings ion"}}
-              <p>pengaturan</p>
-            {{/link-to}}
-          </div>
+          {{#if isCurrentUser}}
+            <div class="col-sm-3 textCenter">
+              {{#link-to 'dashboard.setting' tagName='i' class="ion-android-settings ion"}}
+                <p>pengaturan</p>
+              {{/link-to}}
+            </div>
+          {{/if}}
         </div>
         <div class="content overflow-hiden padtopbot15px">
           {{outlet}}

@@ -10,17 +10,20 @@ export default Ember.Controller.extend(BaseController, {
     let password = this.get("user.user.password"), confirmPwd = this.get("passwordConfirmation");
     return !((password === confirmPwd) && (password.length >= 8));
   }),
-  afterRender(){
+  run(){
     this._super(...arguments);
-    if (this.get('isUserFailFbLogin')) {
-      window.FB.api(`/${this.get('facebook_id')}`, {fields: 'email,id,name,picture.width(2048),birthday'},
-        function (response) {
-          let user = this.get('user');
-          user.set('user.name', response.name);
-          user.set('user.imageurl', response.picture.data.url);
-          user.set('user.facebook_id', response.id);
-        });
-    }
+    Ember.run.scheduleOnce('afterRender', this, function () {
+      if (this.get('isUserFailFbLogin')) {
+        const context = this;
+        window.FB.api(`/${this.get('facebook_id')}`, {fields: 'email,id,name,picture.width(2048),birthday'},
+          function (response) {
+            let user = context.get('user');
+            user.set('user.name', response.name);
+            user.set('user.imageurl', response.picture.data.url);
+            user.set('user.facebook_id', response.id);
+          });
+      }
+    });
   },
   actions: {
     doSave(event){

@@ -1,6 +1,5 @@
 class User < ApplicationRecord
   include Searchable
-  scope :is_user_has_facebook_id, -> (id) { exists?(:facebook_id => id) }
   setting_index([{attr: :username, type: :string}, {attr: :name, type: :string}])
 
   has_secure_password
@@ -18,6 +17,10 @@ class User < ApplicationRecord
   has_many :notifications
   has_many :posts
   has_many :statuses
+
+  def self.has_facebook_id(id)
+    self.exists?(:facebook_id => id)
+  end
 
   def self.search(query)
     __elasticsearch__.search(
