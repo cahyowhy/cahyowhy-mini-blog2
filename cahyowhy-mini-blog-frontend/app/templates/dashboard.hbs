@@ -29,6 +29,13 @@
               <p>status</p>
             {{/link-to}}
           </div>
+          {{#if isCurrentUser}}
+            <div class="{{navigationClass}} textCenter">
+              {{#link-to 'dashboard.notification' tagName='i' class="ion-earth ion"}}
+                <p>pemberitahuan</p>
+              {{/link-to}}
+            </div>
+          {{/if}}
           <div class="{{navigationClass}} textCenter">
             {{#link-to 'dashboard.post' tagName='i' class="ion-ios-bookmarks-outline ion"}}
               <p>post</p>
@@ -40,7 +47,7 @@
             {{/link-to}}
           </div>
           {{#if isCurrentUser}}
-            <div class="col-sm-3 textCenter">
+            <div class="{{navigationClass}} textCenter">
               {{#link-to 'dashboard.setting' tagName='i' class="ion-android-settings ion"}}
                 <p>pengaturan</p>
               {{/link-to}}

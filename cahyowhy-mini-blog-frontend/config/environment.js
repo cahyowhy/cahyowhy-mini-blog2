@@ -6,7 +6,7 @@ module.exports = function (environment) {
     modulePrefix: 'cahyowhy-mini-blog',
     environment,
     rootURL: '/',
-    locationType: 'auto',
+    locationTypNOTIFICATIONauto',
     'ember-cli-notifications': {
       includeFontAwesome: true
     },
@@ -50,6 +50,7 @@ module.exports = function (environment) {
     ENV.APP.IMAGE_RESOURCES = "http://res.cloudinary.com/dxdelmsib/";
     ENV.APP.API_URL = 'http://127.0.0.1:3000/';
     ENV.APP.API_USER = ENV.APP.API_URL + "users/";
+    ENV.APP.API_NOTIFICATION = ENV.APP.API_URL + "notifications/";
     ENV.APP.API_RELATIONSHIP = ENV.APP.API_URL + "relationships/";
     ENV.APP.API_TIMELINES = ENV.APP.API_URL + "timelines/";
     ENV.APP.API_AUTH = ENV.APP.API_URL + "auth/";
@@ -89,6 +90,7 @@ module.exports = function (environment) {
     ENV.APP.API_URL = 'http://127.0.0.1:3000/';
     ENV.APP.API_STATUS_LIKE = ENV.APP.API_URL+"likestatuses";
     ENV.APP.API_USER = ENV.APP.API_URL + "users/";
+    ENV.APP.API_NOTIFICATION = ENV.APP.API_URL + "notifications/";
     ENV.APP.API_RELATIONSHIP = ENV.APP.API_URL + "relationships/";
     ENV.APP.API_TIMELINES = ENV.APP.API_URL + "timelines/";
     ENV.APP.API_AUTH = ENV.APP.API_URL + "auth/";

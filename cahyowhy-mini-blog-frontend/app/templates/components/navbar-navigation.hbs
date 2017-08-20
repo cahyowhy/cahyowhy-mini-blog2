@@ -22,7 +22,7 @@
           <ul class="nav navbar-nav navbar-nav-right">
             <li class="js_nav-item nav-item">{{#link-to 'index' class="nav-item-child nav-item-hover"}}
               Index{{/link-to}}</li>
-            <li class="js_nav-item nav-item">{{#link-to 'post' (query-params category=null) class="nav-item-child nav-item-hover"}}
+            <li class="js_nav-item nav-item">{{#link-to 'post' class="nav-item-child nav-item-hover"}}
               Post{{/link-to}}</li>
             {{#if isLinkProfileVisible}}
               <li class="js_nav-item nav-item login">{{#link-to 'timeline' (query-params token=token)

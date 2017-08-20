@@ -12,13 +12,16 @@ export default Ember.Mixin.create({
   checkBtnSaveDisabled(event){
     return !(Ember.$(event.target).attr("disabled"));
   },
-  doRemove(type = "", param){
+  doRemove(type = "", param = "", obj = {}){
     let del;
     const context = this;
     this.debug(this.commonService.getToken());
     switch (type) {
       case "image":
         del = this.imageService.delete(param, this.commonService.getToken());
+        break;
+      case "relation":
+        del = this.relationshipService.delete(null, this.commonService.getToken(), obj);
         break;
       default:
         break;
@@ -105,7 +108,7 @@ export default Ember.Mixin.create({
         post = this.userService.save(obj);
         break;
       case "relation":
-        post = this.relationshipService.save(obj);
+        post = this.relationshipService.save(obj, this.commonService.getToken());
         break;
       case "login":
         post = this.loginService.save(obj, null, param);

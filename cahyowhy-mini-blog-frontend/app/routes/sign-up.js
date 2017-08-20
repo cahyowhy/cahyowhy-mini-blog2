@@ -17,7 +17,7 @@ export default Ember.Route.extend({
     };
   },
   setupController(controller, model){
-    this.controllerFor('sign-up').set('facebook_id', model.facebook_id);
+    this.controllerFor('sign-up').set('facebook_id', this.facebook_id);
     this.controllerFor('sign-up').set('isUserFailFbLogin', model.isUserFailFbLogin);
   },
   afterModel(){

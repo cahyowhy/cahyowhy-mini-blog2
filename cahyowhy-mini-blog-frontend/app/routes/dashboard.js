@@ -19,8 +19,8 @@ export default Ember.Route.extend({
     return Ember.RSVP.hash(hash)
   },
   afterModel(model){
-    model.isFollowing = model.isFollowing.isfollowing;
     if (!this.isCurrentUser) {
+      model.isFollowing = model.isFollowing.isfollowing;
       this.controllerFor('dashboard').set('isFollowing', model.isFollowing);
       this.controllerFor('dashboard').set('btnFollow', Ember.computed('isFollowing', () => {
         return this.get('isFollowing') ? "unfollow" : "follow";
@@ -28,6 +28,7 @@ export default Ember.Route.extend({
     }
 
     this.controllerFor('dashboard').set('user', model.user);
+    this.controllerFor('dashboard').set('id', model.id);
     this.controllerFor('dashboard').set('isCurrentUser', model.isCurrentUser);
     this.controllerFor('dashboard.index').set('imageProfile', model.user.imageurl);
     this.controllerFor('dashboard.index').set('id', model.id);

@@ -8,7 +8,7 @@ export default Ember.Controller.extend(Basecontroller, {
   userEntity: User.create(),
   subscription: '',
   navigationClass: Ember.computed('isCurrentUser', function () {
-    return this.get('isCurrentUser') ? "col-sm-3" : "col-sm-4";
+    return this.get('isCurrentUser') ? "col-sm-5ths" : "col-sm-4";
   }),
   dataURLtoBlob(dataurl) {
     let data = dataurl.split(','),
@@ -23,8 +23,16 @@ export default Ember.Controller.extend(Basecontroller, {
   actions: {
     onFollowing(){
       if (!this.get('isCurrentUser')) {
-        if(this.get('isFollowing')){
-          this.doSave("relation", )
+        const userFollowing = {id: this.get('id')};
+        const context = this;
+        if (this.get('isFollowing')) {
+          this.doRemove("relation", null, userFollowing).then(function (result) {
+            context.set('isFollowing', false);
+          });
+        } else {
+          this.doSave("relation", userFollowing).then(function (result) {
+            context.set('isFollowing', true);
+          });
         }
       }
     },

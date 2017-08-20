@@ -16,8 +16,8 @@ class AuthenticationController < ApplicationController
     is_user_has_facebook_id = User.has_facebook_id(params[:facebook_id])
     if is_user_has_facebook_id
       user = User.find_by(facebook_id: params[:facebook_id])
-      command = AuthenticateUser.call(user.username, user.password_digest)
-      render json: {auth_token: command.result, user: @user, httpstatus: authsucces} if command.success?
+      command = AuthenticateUser.call(user.username, nil, params[:facebook_id])
+      render json: {auth_token: command.result, user: user, httpstatus: authsucces} if command.success?
     else
       render json: {message: "not authorized", httpstatus: authfailed}
     end

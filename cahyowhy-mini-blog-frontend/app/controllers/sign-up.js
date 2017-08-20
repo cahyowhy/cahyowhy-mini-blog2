@@ -20,7 +20,9 @@ export default Ember.Controller.extend(BaseController, {
             let user = context.get('user');
             user.set('user.name', response.name);
             user.set('user.imageurl', response.picture.data.url);
-            user.set('user.facebook_id', response.id);
+            context.debug(response);
+            context.debug(context.get('facebook_id'));
+            user.set('user.facebook_id', context.get('facebook_id'));
           });
       }
     });

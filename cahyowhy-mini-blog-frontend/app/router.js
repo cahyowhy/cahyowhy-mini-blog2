@@ -24,6 +24,7 @@ Router.map(function () {
     this.route('images');
     this.route('setting');
     this.route('post');
+    this.route('notification');
   });
   this.route('not-found', {path: '/*path'});
   this.route('timeline', {queryParams: ['search', 'type']});
