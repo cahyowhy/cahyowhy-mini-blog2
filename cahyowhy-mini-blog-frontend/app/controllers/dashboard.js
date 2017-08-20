@@ -23,7 +23,9 @@ export default Ember.Controller.extend(Basecontroller, {
   actions: {
     onFollowing(){
       if (!this.get('isCurrentUser')) {
-
+        if(this.get('isFollowing')){
+          this.doSave("relation", )
+        }
       }
     },
     doUpload(params, modalId, filename){

@@ -97,12 +97,15 @@ export default Ember.Mixin.create({
       });
     });
   },
-  doSave(type = "", obj = null, param=""){
+  doSave(type = "", obj = null, param = ""){
     let post;
     const context = this;
     switch (type) {
       case "user":
         post = this.userService.save(obj);
+        break;
+      case "relation":
+        post = this.relationshipService.save(obj);
         break;
       case "login":
         post = this.loginService.save(obj, null, param);

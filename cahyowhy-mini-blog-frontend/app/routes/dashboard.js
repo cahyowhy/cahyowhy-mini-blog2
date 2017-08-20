@@ -18,7 +18,8 @@ export default Ember.Route.extend({
 
     return Ember.RSVP.hash(hash)
   },
-  setupController(controller, model){
+  afterModel(model){
+    model.isFollowing = model.isFollowing.isfollowing;
     if (!this.isCurrentUser) {
       this.controllerFor('dashboard').set('isFollowing', model.isFollowing);
       this.controllerFor('dashboard').set('btnFollow', Ember.computed('isFollowing', () => {
