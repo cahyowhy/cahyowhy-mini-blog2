@@ -8,7 +8,7 @@ export default Ember.Controller.extend(BaseController, {
     return this.get("user.user.username").length === 0 || this.get("user.user.password").length === 0;
   }),
   actions: {
-    doSave(event){
+    onLogin(event){
       const context = this;
       let user = this.get('user');
       if (this.checkBtnSaveDisabled(event)) {
@@ -19,6 +19,31 @@ export default Ember.Controller.extend(BaseController, {
           context.debug(err);
         });
       }
+    },
+    onLoginFacebook(){
+      const context = this;
+      window.FB.login(function (response) {
+        if (response.authResponse) {
+          window.FB.api('/me', {fields: 'email,id,name,picture.width(2048),birthday'},
+            function (result) {
+              let user = context.get('user');
+              user.set('facebook_id', result.id);
+              user = user.getChildWithSelection(['facebook_id']);
+              context.doSave("login", user, null, "facebook").then(function (response) {
+                if (response.httpstatus !== 404) {
+                  context.commonService.setCookies(response);
+                  context.transitionToRoute('dashboard', response.user.id);
+                } else {
+                  context.transitionToRoute('sign-up', {queryParams: {facebook_id: result.id}});
+                }
+              }).catch(function (err) {
+                context.debug(err);
+              });
+            });
+        } else {
+          context.debug('User cancelled login or did not fully authorize.');
+        }
+      }, {scope: 'public_profile,email'});
     }
   }
 });

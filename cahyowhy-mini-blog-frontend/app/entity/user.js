@@ -12,6 +12,7 @@ export default Ember.Object.extend(BaseEntity, {
         username: "",
         imageurl: "",
         password: '',
+        facebook_id: '',
       }
     });
   }

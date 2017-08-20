@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   resources :images, only: [:create, :index, :show, :destroy]
   resources :relationships, only: [:create]
   post 'authenticate', to: 'authentication#authenticate'
+  post 'authenticate/facebook', to: 'authentication#authenticate_facebook'
   get 'posts/next/:id', to: 'posts#show_post_next'
   get 'posts/categories/all', to: 'posts#print_category'
   get 'likestatuses/emoticons/all', to: 'likestatuses#print_emoticon'

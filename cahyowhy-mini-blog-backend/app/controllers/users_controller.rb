@@ -3,6 +3,7 @@ class UsersController < BaseController
   before_action :set_entity, only: [:show, :update, :destroy, :following, :followers]
   before_action :authenticate_request, only: [:update, :destroy]
 
+  # GET users/:id/following
   def following
     render json: @entity.following, httpstatus: getsuccess
   end

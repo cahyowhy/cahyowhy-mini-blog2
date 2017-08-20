@@ -17,8 +17,11 @@ export default Ember.Mixin.create({
   find(param = "", authorization = "") {
     let api = "?";
     if (typeof param === 'object' && param !== null) {
+      const objectLength = Object.keys(param).length;
+      let index = 0;
       for (let key in param) {
-        api = api + key + "=" + param[key] + "&";
+        index = index + 1;
+        api = objectLength - 1 === index ? api + key + "=" + param[key] : api + key + "=" + param[key] + "&";
       }
 
       api = this.api + api;
@@ -27,9 +30,22 @@ export default Ember.Mixin.create({
     }
     return this.service(this.method.get, api, authorization);
   },
-  save(obj, authorization = ""){
-    this.debug(obj);
-    return this.service(this.method.post, this.api, authorization, this.convertJSON(obj));
+  save(obj, authorization = "", param = ""){
+    let api = "?";
+    if (typeof param === 'object' && param !== null) {
+      const objectLength = Object.keys(param).length;
+      let index = 0;
+      for (let key in param) {
+        index = index + 1;
+        api = objectLength - 1 === index ? api + key + "=" + param[key] : api + key + "=" + param[key] + "&";
+      }
+
+      api = this.api + api;
+    } else {
+      api = this.api + param;
+    }
+
+    return this.service(this.method.post, api, authorization, this.convertJSON(obj));
   },
   update(param = "", obj, authorization = ""){
     return this.service(this.method.put, this.api + param, authorization, this.convertJSON(obj));

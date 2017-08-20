@@ -2,7 +2,6 @@ import Ember from 'ember';
 import User from '../entity/user';
 import BaseController from './base-controller';
 
-
 export default Ember.Controller.extend(BaseController, {
   user: User.create(),
   passwordConfirmation: "",
@@ -11,6 +10,18 @@ export default Ember.Controller.extend(BaseController, {
     let password = this.get("user.user.password"), confirmPwd = this.get("passwordConfirmation");
     return !((password === confirmPwd) && (password.length >= 8));
   }),
+  afterRender(){
+    this._super(...arguments);
+    if (this.get('isUserFailFbLogin')) {
+      window.FB.api(`/${this.get('facebook_id')}`, {fields: 'email,id,name,picture.width(2048),birthday'},
+        function (response) {
+          let user = this.get('user');
+          user.set('user.name', response.name);
+          user.set('user.imageurl', response.picture.data.url);
+          user.set('user.facebook_id', response.id);
+        });
+    }
+  },
   actions: {
     doSave(event){
       const context = this;

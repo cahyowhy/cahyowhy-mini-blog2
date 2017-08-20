@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   include Searchable
+  scope :is_user_has_facebook_id, -> (id) { exists?(:facebook_id => id) }
   setting_index([{attr: :username, type: :string}, {attr: :name, type: :string}])
 
   has_secure_password

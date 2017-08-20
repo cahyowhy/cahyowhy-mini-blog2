@@ -7,7 +7,8 @@ export default Ember.Mixin.create({
       this.afterRender();
     });
   },
-  afterRender(){},
+  afterRender(){
+  },
   checkBtnSaveDisabled(event){
     return !(Ember.$(event.target).attr("disabled"));
   },
@@ -96,7 +97,7 @@ export default Ember.Mixin.create({
       });
     });
   },
-  doSave(type = "", obj = null){
+  doSave(type = "", obj = null, param=""){
     let post;
     const context = this;
     switch (type) {
@@ -104,7 +105,7 @@ export default Ember.Mixin.create({
         post = this.userService.save(obj);
         break;
       case "login":
-        post = this.loginService.save(obj);
+        post = this.loginService.save(obj, null, param);
         break;
       case "post":
         post = this.postService.save(obj, this.commonService.getToken());
