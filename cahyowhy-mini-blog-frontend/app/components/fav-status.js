@@ -57,33 +57,37 @@ export default Ember.Component.extend(BaseController, {
   },
   actions: {
     onSelectEmoticon(value){
-      let likestatus = Likestatus.create();
-      const statusId = this.get('statusId');
-      const context = this;
-      const userId = parseInt(this.commonService.getId());
-      const likestatusItem = {
-        status_id: statusId,
-        user_id: userId,
-        emoticons: this.get('emoticons')[value].name
-      };
+      if (this.get('isLogedIn')) {
+        let likestatus = Likestatus.create();
+        const statusId = this.get('statusId');
+        const context = this;
+        const userId = parseInt(this.commonService.getId());
+        const likestatusItem = {
+          status_id: statusId,
+          user_id: userId,
+          emoticons: this.get('emoticons')[value].name
+        };
 
-      likestatus.set('likestatus.status_id', statusId);
-      likestatus.set('likestatus.user_id', userId);
-      likestatus.set('likestatus.emoticons', value);
-      likestatus = likestatus.select(['status_id', 'user_id', 'emoticons']);
+        likestatus.set('likestatus.status_id', statusId);
+        likestatus.set('likestatus.user_id', userId);
+        likestatus.set('likestatus.emoticons', value);
+        likestatus = likestatus.select(['status_id', 'user_id', 'emoticons']);
 
-      this.doSave("likestatus", likestatus).then(function (result) {
-        if (result.userlike) {
-          Ember.$(`#likestatus-${context.get('statusId')}`).collapse('hide');
-          context.get('likestatuses').pushObject(likestatusItem);
-        } else {
-          context.set('likestatuses', context.get('likestatuses').filter((item) => {
-            return item.user_id !== userId
-          }));
-        }
+        this.doSave("likestatus", likestatus).then(function (result) {
+          if (result.userlike) {
+            Ember.$(`#likestatus-${context.get('statusId')}`).collapse('hide');
+            context.get('likestatuses').pushObject(likestatusItem);
+          } else {
+            context.set('likestatuses', context.get('likestatuses').filter((item) => {
+              return item.user_id !== userId
+            }));
+          }
 
-        context.set('isCurrentUserLikeIt', result.userlike);
-      });
+          context.set('isCurrentUserLikeIt', result.userlike);
+        });
+      } else {
+        Ember.$("#modal-not-login").modal('show');
+      }
     }
   }
 });

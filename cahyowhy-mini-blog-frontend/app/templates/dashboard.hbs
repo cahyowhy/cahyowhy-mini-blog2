@@ -15,9 +15,9 @@
             <div class="inner">
               <h1>{{user.name}}</h1>
               <p>{{user.username}}</p>
-              {{#unless isCurrentUser}}
+              {{#if (and (not isCurrentUser) isLogedIn)}}
                 <a {{action "onFollowing"}} class="btn btn-primary">{{btnFollow}}</a>
-              {{/unless}}
+              {{/if}}
               <a class="btn btn-default">{{user.total_follower}} follower</a>
               <a class="btn btn-default">{{user.total_following}} following</a>
             </div>

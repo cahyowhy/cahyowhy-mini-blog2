@@ -82,9 +82,11 @@
           </div>
         </div>
       {{/each}}
-      {{textarea value=comment class="form-control" placeholder="tulis komentar"}}
-      <a disabled={{isBtnDisable}} onclick={{action "doSaveComment"}} style="margin-top: 15px;width: 150px;" class="btn btn-primary
+      {{#if isLogedIn}}
+        {{textarea value=comment class="form-control" placeholder="tulis komentar"}}
+        <a disabled={{isBtnDisable}} onclick={{action "doSaveComment"}} style="margin-top: 15px;width: 150px;" class="btn btn-primary
       pull-right">Save</a>
+      {{/if}}
     </div>
   </div>
 </div>

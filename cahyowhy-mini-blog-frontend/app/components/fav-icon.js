@@ -3,14 +3,8 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   isIconHide: true,
   currentUsserLikes: false,
-  /*
-   * watch for authentication if the value is changed,
-   * only work in 1st time
-   * */
-  authentication: Ember.observer('applicationRoute.authentication', function () {
-    if (this.get("applicationRoute.authentication")) {
-      this.showIcon();
-    }
+  isLogedIn: Ember.computed('applicationRoute.authentication', function () {
+    return this.get("applicationRoute.authentication");
   }),
   init(){
     this._super(...arguments);
@@ -36,8 +30,12 @@ export default Ember.Component.extend({
   },
   actions: {
     onFav(){
-      this.set("currentUsserLikes", !this.get("currentUsserLikes"));
-      this.sendAction("action", this.get("_id"));
+      if (this.get('isLogedIn')) {
+        this.set("currentUsserLikes", !this.get("currentUsserLikes"));
+        this.sendAction("action", this.get("_id"));
+      } else {
+        Ember.$("#modal-not-login").modal('show');
+      }
     }
   }
 });

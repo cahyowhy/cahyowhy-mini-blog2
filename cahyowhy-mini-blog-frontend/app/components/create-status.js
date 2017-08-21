@@ -16,6 +16,9 @@ export default Ember.Component.extend(BaseController, {
      */
     return this.get('isBtnDisable');
   }),
+  isLogedIn: Ember.computed('applicationRoute.authentication', function () {
+    return this.get("applicationRoute.authentication");
+  }),
   didInsertElement(){
     this._super(...arguments);
     this.debug(this.get('routeUserId'));

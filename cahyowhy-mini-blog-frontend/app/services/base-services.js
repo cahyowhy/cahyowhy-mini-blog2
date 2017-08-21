@@ -21,7 +21,7 @@ export default Ember.Mixin.create({
       let index = 0;
       for (let key in param) {
         index = index + 1;
-        api = objectLength - 1 === index ? api + key + "=" + param[key] : api + key + "=" + param[key] + "&";
+        api = objectLength === index ? api + key + "=" + param[key] : api + key + "=" + param[key] + "&";
       }
 
       api = this.api + api;

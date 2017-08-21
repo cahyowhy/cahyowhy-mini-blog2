@@ -2,12 +2,14 @@
   <div class="content-lg padding0px width800">
     <div id="post-container" class="post">
       <div class="button-fly-wrapper">
-        <div class="btn-wrapper">
-          {{#link-to 'dashboard.create-post' (query-params token=token userId=userId)
-                     class="btn btn-lg btn-primary pull-right"}}
-            <i class="ion-plus-round ion"></i>
-          {{/link-to}}
-        </div>
+        {{#if isLogedIn}}
+          <div class="btn-wrapper">
+            {{#link-to 'dashboard.create-post' (query-params token=token userId=userId)
+                       class="btn btn-lg btn-primary pull-right"}}
+              <i class="ion-plus-round ion"></i>
+            {{/link-to}}
+          </div>
+        {{/if}}
       </div>
       {{#each posts as |post|}}
         {{post-item

@@ -6,7 +6,7 @@ module.exports = function (environment) {
     modulePrefix: 'cahyowhy-mini-blog',
     environment,
     rootURL: '/',
-    locationTypNOTIFICATIONauto',
+    locationType: 'auto',
     'ember-cli-notifications': {
       includeFontAwesome: true
     },
