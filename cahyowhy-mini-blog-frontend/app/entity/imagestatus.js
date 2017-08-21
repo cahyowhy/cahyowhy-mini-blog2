@@ -1,12 +1,13 @@
-import Ember from 'ember';
-import BaseEntity from './base';
-
-export default Ember.Object.extend(BaseEntity, {
-  init(){
-    this._super(this.get("imagestatuses_attributes"), {
+import Base from './base';
+export default class ImageStatus extends Base {
+  constructor() {
+    const imagestatus = {
       imagestatuses_attributes: {
         imageurl: '',
+        status_id: '',
+        user_id: ''
       }
-    });
+    };
+    super(imagestatus);
   }
-});
+}

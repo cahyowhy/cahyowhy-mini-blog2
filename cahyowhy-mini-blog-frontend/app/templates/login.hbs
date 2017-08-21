@@ -9,15 +9,16 @@
         <div class="overlap-text">
           {{input type="password" value=user.user.password placeholder="Pasword" class="input-2"}}
         </div>
-        <input disabled={{btnDisabled}} type="button" enter={{action "onLogin"}} value="login" class="btn btn-login"
-               onclick={{action "onLogin"}}/>
+        <input disabled={{btnDisabled}} type="button" enter={{route-action "onLogin"}} value="login"
+               class="btn btn-login"
+               onclick={{route-action "onLogin"}}/>
       </div>
     </div>
     <div class="sub-content">
       <div class="s-part">
         {{#link-to 'sign-up'}}Don't have an account?{{/link-to}}
         {{#link-to 'sign-up' tagName="p" class="no-margin-bottom custom_"}}daftar disini dulu ya{{/link-to}}
-        <a {{action "onLoginFacebook"}} class="login-btn">
+        <a onclick={{route-action "onLoginFacebook"}} class="login-btn">
           <img src="/img/facebook-login.png">
         </a>
       </div>

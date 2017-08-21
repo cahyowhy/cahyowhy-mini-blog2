@@ -3,6 +3,7 @@ import BaseController from '../controllers/base-controller';
 import Status from '../entity/status';
 import ImageStatus from '../entity/imagestatus';
 import Statuses from '../entity/statuses';
+
 export default Ember.Component.extend(BaseController, {
   images: [],
   imagestatuses: [],

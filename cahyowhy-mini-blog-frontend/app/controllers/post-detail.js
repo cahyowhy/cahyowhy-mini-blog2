@@ -21,8 +21,9 @@ export default Ember.Controller.extend(BaseController, {
     this._super(...arguments);
     const nextPost = this.get('nexPost');
     const prevPost = this.get('prevPost');
-    nextPost === null || nextPost === undefined ? this.hideArrow("post-right") : this.showArrow("post-right");
-    prevPost === null || prevPost === undefined ? this.hideArrow("post-left") : this.showArrow("post-left");
+    this.debug(Ember.$("body"));
+    // nextPost === null || nextPost === undefined ? this.hideArrow("post-right") : this.showArrow("post-right");
+    // prevPost === null || prevPost === undefined ? this.hideArrow("post-left") : this.showArrow("post-left");
   },
   hideArrow(param){
     Ember.$(`.${param}`).addClass('hide');

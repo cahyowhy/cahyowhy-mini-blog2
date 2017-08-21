@@ -1,10 +1,9 @@
-import Ember from 'ember';
-import BaseEntity from './base';
-
-export default Ember.Object.extend(BaseEntity, {
-  init(){
-    this._super(this.get("post"), {
+import Base from './base';
+export default class Post extends Base {
+  constructor() {
+    const post = {
       post: {
+        user_id: '',
         title: "",
         category: "",
         imageposts_attributes: [],
@@ -12,6 +11,7 @@ export default Ember.Object.extend(BaseEntity, {
         review: '',
         descriptiontext: ''
       }
-    });
+    };
+    super(post);
   }
-});
+}

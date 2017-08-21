@@ -1,10 +1,8 @@
 {{loading-load}}
-{{#window-reset routeName=currentRouteName}}
-  {{notification-container position="top-right" class="z-index"}}
-  {{navbar-navigation id="navbar" action="onTransitionToSearch"}}
-  {{outlet}}
-  {{footer-foot}}
-{{/window-reset}}
+{{notification-container position="top-right" class="z-index"}}
+{{navbar-navigation id="navbar" action="onTransitionToSearch"}}
+{{outlet}}
+{{footer-foot}}
 <!-- Modal rung login -->
 <div class="modal fade" id="modal-not-login" role="dialog">
   <div class="modal-dialog">

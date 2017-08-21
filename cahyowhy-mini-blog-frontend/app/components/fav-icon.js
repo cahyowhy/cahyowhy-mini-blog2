@@ -1,26 +1,15 @@
 import Ember from 'ember';
+import BaseController from '../controllers/base-controller';
 
-export default Ember.Component.extend({
+export default Ember.Component.extend(BaseController, {
   isIconHide: true,
   currentUsserLikes: false,
   isLogedIn: Ember.computed('applicationRoute.authentication', function () {
     return this.get("applicationRoute.authentication");
   }),
-  init(){
-    this._super(...arguments);
-  },
-  afterAuthFinished(){
-    this._super(...arguments);
-  },
-  showIcon(){
-    this.set("isIconHide", false);
-  },
   didInsertElement(){
     this._super(...arguments);
     const context = this;
-    if (this.applicationRoute.get("authentication")) {
-      this.showIcon();
-    }
 
     this.get("likes").forEach(function (item) {
       if (item.user.id.toString() === context.commonService.getId()) {
@@ -34,7 +23,7 @@ export default Ember.Component.extend({
         this.set("currentUsserLikes", !this.get("currentUsserLikes"));
         this.sendAction("action", this.get("_id"));
       } else {
-        Ember.$("#modal-not-login").modal('show');
+        this.showAlertLogin();
       }
     }
   }

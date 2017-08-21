@@ -1,16 +1,16 @@
 import Ember from 'ember';
-
-export default Ember.Mixin.create({
-  init(){
+export default Ember.Route.extend({
+  authentication: false,
+  activate(){
     this._super(...arguments);
-    Ember.run.schedule('afterRender', this, function () {
+    Ember.run.scheduleOnce('afterRender', this, () => {
+      const applicationRoute = Ember.getOwner(this).lookup('route:application');
+      this.authentication = applicationRoute.authentication;
       this.afterRender();
     });
   },
   afterRender(){
-    Ember.run.schedule('afterRender', this, function () {
-      this.addObserver('routeName', this, 'onScrollTop');
-    });
+    window.scrollTo(0, 0);
   },
   showAlertLogin(){
     Ember.$("#modal-not-login").modal('show');

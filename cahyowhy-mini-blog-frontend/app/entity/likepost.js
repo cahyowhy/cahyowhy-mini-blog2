@@ -1,12 +1,12 @@
-import Ember from 'ember';
-import BaseEntity from './base';
-
-export default Ember.Object.extend(BaseEntity, {
-  init(){
-    this._super(this.get("likepost"), {
-      likepost: {
-        post_id: "",
+import Base from './base';
+export default class LikePost extends Base {
+  constructor() {
+    const likepost = {
+      post_id: {
+        status_id: "",
+        user_id: ""
       }
-    });
+    };
+    super(likepost);
   }
-});
+}

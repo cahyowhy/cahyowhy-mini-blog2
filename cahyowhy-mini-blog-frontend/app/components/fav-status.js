@@ -86,7 +86,7 @@ export default Ember.Component.extend(BaseController, {
           context.set('isCurrentUserLikeIt', result.userlike);
         });
       } else {
-        Ember.$("#modal-not-login").modal('show');
+        this.showAlertLogin();
       }
     }
   }

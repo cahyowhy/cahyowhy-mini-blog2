@@ -1,14 +1,13 @@
-
-import Ember from 'ember';
-import BaseEntity from './base';
-
-export default Ember.Object.extend(BaseEntity, {
-  init(){
-    this._super(this.get("commentstatus"), {
+import Base from './base';
+export default class CommentStatus extends Base {
+  constructor() {
+    const commentstatus = {
       commentstatus: {
         status_id: "",
+        user_id: "",
         comment: "",
       }
-    });
+    };
+    super(commentstatus);
   }
-});
+}
