@@ -10,6 +10,6 @@ export default class User extends Base {
         facebook_id: '',
       }
     };
-    super(user);
+    super(user, "user");
   }
 }

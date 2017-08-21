@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import BaseRouter from 'base';
+import BaseRouter from './base';
 import User from '../entity/user';
 
 export default BaseRouter.extend({
@@ -9,6 +9,7 @@ export default BaseRouter.extend({
     let user = new User().getInitializeValue();
     this.controller.set('user', user);
     this.controller.set('btnDisabled', false);
+    this.debug(this.controller.get('user'));
   },
   actions: {
     onLogin(event){

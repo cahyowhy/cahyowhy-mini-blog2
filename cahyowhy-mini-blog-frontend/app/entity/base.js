@@ -21,8 +21,9 @@
 
 const lodash = window._;
 export default class Base {
-  constructor(value) {
+  constructor(value, type) {
     this.value = value;
+    this.type = type;
   }
 
   getInitializeValue() {
@@ -31,24 +32,24 @@ export default class Base {
 
   /**
    * elminate all nul, blank, undef value
-   * @param {object} user
+   * @param {object} value
    * @returns {object} {*}
    */
-  getValue(user) {
-    this.value = user;
+  getValue(value) {
+    this.value = value;
     return lodash.pickBy(this.value, lodash.identity);
   }
 
   /**
    * elminate all nul, blank, undef value
    * return only child off element
-   * @param {object} user
+   * @param {object} value
    * @returns {object} {*}
    */
-  getChildValue(user) {
-    let valueparam;
-    for (let key in user['user']) {
-      valueparam[key] = user['user'][key];
+  getChildValue(value) {
+    let valueparam = {};
+    for (let key in value[this.type]) {
+      valueparam[key] = value[this.type][key];
     }
 
     this.value = valueparam;
