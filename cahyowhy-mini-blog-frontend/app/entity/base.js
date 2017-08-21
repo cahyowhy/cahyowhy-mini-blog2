@@ -46,12 +46,12 @@ export default class Base {
    * @returns {object} {*}
    */
   getChildValue(user) {
-    let userparam;
+    let valueparam;
     for (let key in user['user']) {
-      userparam[key] = user['user'][key];
+      valueparam[key] = user['user'][key];
     }
 
-    this.value = userparam;
+    this.value = valueparam;
     return lodash.pickBy(this.value, lodash.identity);
   }
 }
