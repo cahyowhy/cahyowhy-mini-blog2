@@ -8,6 +8,6 @@ export default class LikeStatus extends Base {
         emoticons: ""
       }
     };
-    super(likestatus);
+    super(likestatus,"likestatus");
   }
 }

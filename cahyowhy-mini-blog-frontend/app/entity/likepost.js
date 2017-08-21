@@ -7,6 +7,6 @@ export default class LikePost extends Base {
         user_id: ""
       }
     };
-    super(likepost);
+    super(likepost,"likepost");
   }
 }

@@ -8,6 +8,6 @@ export default class CommentPost extends Base {
         comment: "",
       }
     };
-    super(commentpost);
+    super(commentpost, "commentpost");
   }
 }

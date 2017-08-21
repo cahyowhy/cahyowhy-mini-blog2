@@ -12,6 +12,6 @@ export default class Post extends Base {
         descriptiontext: ''
       }
     };
-    super(post);
+    super(post,"post");
   }
 }

@@ -8,6 +8,6 @@ export default class ImageStatus extends Base {
         user_id: ''
       }
     };
-    super(imagestatus);
+    super(imagestatus, "imagestatuses_attributes");
   }
 }

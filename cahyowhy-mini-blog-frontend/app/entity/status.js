@@ -9,6 +9,6 @@ export default class Status extends Base {
         imagestatuses_attributes: []
       }
     };
-    super(status);
+    super(status,"status");
   }
 }

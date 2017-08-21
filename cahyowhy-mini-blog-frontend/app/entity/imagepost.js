@@ -8,6 +8,6 @@ export default class ImagePost extends Base {
         user_id: ''
       }
     };
-    super(imagepost);
+    super(imagepost,"imageposts_attributes");
   }
 }

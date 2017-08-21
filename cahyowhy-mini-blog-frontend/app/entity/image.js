@@ -6,6 +6,6 @@ export default class Image extends Base {
         path: ""
       }
     };
-    super(image);
+    super(image,"image");
   }
 }

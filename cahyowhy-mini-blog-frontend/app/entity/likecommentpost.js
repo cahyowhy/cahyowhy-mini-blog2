@@ -8,6 +8,6 @@ export default class LikeCommentPost extends Base {
         commentpost_id: "",
       }
     };
-    super(likecommentpost);
+    super(likecommentpost,"likecommentpost");
   }
 }

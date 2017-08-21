@@ -8,6 +8,6 @@ export default class CommentStatus extends Base {
         comment: "",
       }
     };
-    super(commentstatus);
+    super(commentstatus,"commentstatus");
   }
 }
