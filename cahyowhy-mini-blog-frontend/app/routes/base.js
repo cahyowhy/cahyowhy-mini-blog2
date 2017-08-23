@@ -16,6 +16,15 @@ export default Ember.Route.extend({
       });
     }
   },
+  /**
+   * normalize weak map
+   * that has setter getter val into
+   * normal javascript object
+   * @param {object} param
+   */
+  normalize(param){
+    return JSON.parse(JSON.stringify(param));
+  },
   afterRender(){
     const token = this.commonService.getToken();
     const context = this;

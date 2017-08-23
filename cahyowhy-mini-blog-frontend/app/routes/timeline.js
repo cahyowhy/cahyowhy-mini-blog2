@@ -1,28 +1,63 @@
 import Ember from 'ember';
 import offsetlimit from '../entity/offsetlimit';
 import Statuses from '../entity/statuses';
+import BaseController from '../controllers/base-controller';
+import ENV from '../config/environment';
 
-export default Ember.Route.extend({
+export default BaseController.extend({
+  offset: ENV.APP.DEFAULT_OFFSET,
+  controller: null,
+  token: '',
   beforeModel(transition){
-    if (transition.queryParams.token === null || transition.queryParams.token === undefined) {
-      window.location.href = "/not-found";
+    const token = transition.queryParams.token;
+
+    if (token === null || token === undefined) {
+      this.transitionTo('not-found');
+    } else {
+      this.token = token;
     }
   },
-  model(queryparams){
+  model(){
+    this.offset = ENV.APP.DEFAULT_OFFSET;
     return Ember.RSVP.hash({
-      statuses: this.timelineService.find(offsetlimit(), queryparams.token)
+      statuses: this.timelineService.find(offsetlimit(), this.token),
+      authentication: this.authService.auth(this.token)
     });
   },
   setupController(controller, model){
-    Statuses.statuses = model.statuses;
-    this.controllerFor('timeline').set('statuses', model.statuses);
+    if (model.authentication.status === 204) {
+      this.controller = controller;
+      Statuses.statuses = model.statuses;
+      this.controller.set('statuses', model.statuses);
+      this.controller.set('ifCreateStatusEmpty', true);
+      this.controller.set('imageProfile', this.commonService.getImageProfile());
+    } else {
+      this.transitionTo('login');
+    }
   },
   actions: {
-    /*
-     * on the first refresh this method won't be called. after the page is transition
-     * to another page, now its will be called
-     * */
-    willTransition(transition){
+    /**
+     * check if status is empty if user
+     * decide to leave route,
+     * if doesnt empty showed up confirm window
+     * @param {boolean} params
+     */
+    checkStatusEmpty(params){
+      this.controller.set('ifCreateStatusEmpty', params);
+    },
+    onLoadStatuses(){
+      const context = this;
+      this.offset = this.offset + ENV.APP.DEFAULT_LIMIT;
+
+      this.doFind("timeline", offsetlimit(this.offset)).then(function (response) {
+        response.forEach(function (item) {
+          context.controller.get('statuses').pushObject(item);
+        });
+
+        context.controller.set('ifPostIsEmpty', response.length === 0);
+      });
+    },
+    deactivate(transition){
       /*
        * when move to another page be sure to empty this status
        * */
@@ -32,13 +67,13 @@ export default Ember.Route.extend({
        * accidentally click link to
        * and display the confirmation tab
        */
-      if (!this.controllerFor('timeline').get('ifCreateStatusEmpty')) {
+      if (!this.controller.get('ifCreateStatusEmpty')) {
         let confirmation = confirm("Your changes haven't saved yet. Would you like to leave this form?");
         /**
          * need to be set ifCreateStatusEmpty = true, every user accept leave the route
          * when the status doesnt empty
          */
-        !confirmation ? transition.abort() : this.controllerFor('timeline').set('ifCreateStatusEmpty', true);
+        !confirmation ? transition.abort() : this.controller.set('ifCreateStatusEmpty', true);
       }
     },
   }

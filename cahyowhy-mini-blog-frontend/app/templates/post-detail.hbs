@@ -43,7 +43,7 @@
                 {{textarea class="form-control" value=commentpost.commentpost.comment}}
               </div>
             </div>
-            <div class="btn-wrapper cust2"><a class="btn btn-sm btn-primary" disabled={{isBtnDisabled}} onclick={{action
+            <div class="btn-wrapper cust2"><a class="btn btn-sm btn-primary" disabled={{isBtnDisabled}} onclick={{route-action
               'doSave'}}>comment</a></div>
           </li>
           {{#if isCommentEmpty}}
@@ -51,7 +51,7 @@
           {{else}}
             {{#each comments as |comment|}}
               <li id="user-commentpost-{{comment.id}}" class="list-group-item">
-                {{fav-icon _id = comment.id likes=comment.likecommentposts action="onFavouriteComment"}}
+                {{fav-icon _id = comment.id likes=comment.likecommentposts route-action="onFavouriteComment"}}
                 <div class="comment-inner">
                   <div class="pull-left">
                     {{background-image-container src=(image-url-helper comment.user.imageurl) class="custom-pp"}}
@@ -75,7 +75,7 @@
     </div>
     <div class="btn-wrapper-post">
       {{#if isLoadCommentBtnDisplayed}}
-        <a {{action "onloadcomment"}} class="btn-primary btn-medium btn width800" style="margin-bottom: 30px;">Load more
+        <a onclick={{route-action "onloadcomment"}} class="btn-primary btn-medium btn width800 margin-bottom-30px">Load more
           commment</a>
       {{/if}}
     </div>

@@ -22,7 +22,8 @@ export default BaseRouter.extend({
       'user.user.username', 'user.user.name', 'user.user.email'];
     /**
      * since i did'nt know to solve this
-     * ill keep this shit
+     * ill keep this shit separate
+     * to make 1btn disabled/not
      */
     this.controller.set('isAllPropertyPresent', computed.allPresent(allProperty));
     this.controller.set('signUpRule', computed(
@@ -42,8 +43,6 @@ export default BaseRouter.extend({
           let user = context.get('user');
           user.set('user.name', response.name);
           user.set('user.imageurl', response.picture.data.url);
-          context.debug(response);
-          context.debug(context.get('facebook_id'));
           user.set('user.facebook_id', context.get('facebook_id'));
         });
     }
@@ -68,8 +67,7 @@ export default BaseRouter.extend({
       let user = new User().getValue(this.controller.get('user'));
       if (this.checkBtnSaveDisabled(event)) {
         this.doSave("user", user).then(function (response) {
-          // context.transitionToRoute('login');
-          context.debug(response);
+          context.transitionToRoute('login');
         });
       }
     }
