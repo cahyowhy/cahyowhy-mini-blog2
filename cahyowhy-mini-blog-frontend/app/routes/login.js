@@ -1,15 +1,24 @@
-import Ember from 'ember';
 import BaseRouter from './base';
 import User from '../entity/user';
+const {get} = Ember;
 
 export default BaseRouter.extend({
   controller: null,
+  user: new User().getInitializeValue(),
   setupController(controller){
     this.controller = controller;
-    let user = new User().getInitializeValue();
-    this.controller.set('user', user);
-    this.controller.set('btnDisabled', false);
-    this.debug(this.controller.get('user'));
+    this.controller.set('user', this.user);
+  },
+  /**
+   * note, if you have a computed property.
+   * be sure to have the property in route (not in controller)
+   * and set on the setupController
+   */
+  afterRender(){
+    this._super(...arguments);
+    this.controller.set('btnDisabled', Ember.computed('user.user.username', 'user.user.password', () => {
+      return get(this, 'user.user.username').length === 0 || get(this, 'user.user.password').length === 0;
+    }));
   },
   actions: {
     onLogin(event){

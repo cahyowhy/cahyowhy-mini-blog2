@@ -4,7 +4,7 @@ class User < ApplicationRecord
 
   has_secure_password
   validates :password, :presence => true, :length => {:minimum => 8}, on: :create
-  validates_presence_of :username, :name, on: :create
+  validates_presence_of :username, :name, :email, on: :create
 
   has_many :active_relationships, class_name: "Relationship",
            foreign_key: "follower_id",

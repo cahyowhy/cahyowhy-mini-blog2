@@ -7,6 +7,7 @@ export default class User extends Base {
         username: "",
         imageurl: "",
         password: '',
+        email: '',
         facebook_id: '',
       }
     };

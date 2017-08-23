@@ -1,16 +1,33 @@
 import Ember from 'ember';
+const {set} = Ember;
+
 export default Ember.Route.extend({
   authentication: false,
   activate(){
     this._super(...arguments);
-    Ember.run.scheduleOnce('afterRender', this, () => {
-      const applicationRoute = Ember.getOwner(this).lookup('route:application');
-      this.authentication = applicationRoute.authentication;
-      this.afterRender();
-    });
+    const applicationRoute = Ember.getOwner(this).lookup('route:application');
+    if (applicationRoute.isDocumentReady) {
+      Ember.run.scheduleOnce('afterRender', this, () => {
+        this.afterRender();
+      });
+    } else {
+      applicationRoute.on('documentReady', this, () => {
+        this.afterRender();
+      });
+    }
   },
   afterRender(){
+    const token = this.commonService.getToken();
+    const context = this;
     window.scrollTo(0, 0);
+
+    if (token === null || token === undefined) {
+      set(this, 'authentication', false);
+    } else {
+      this.authService.auth(token).then(function (response) {
+        set(context, 'authentication', response.status === 204);
+      });
+    }
   },
   showAlertLogin(){
     Ember.$("#modal-not-login").modal('show');

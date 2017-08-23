@@ -19,6 +19,10 @@ class UsersController < BaseController
     render json: {httpstatus: getsuccess, isfollowing: is_current_user_follow_user}
   end
 
+  def send_mail_notification
+    UsermailerMailer.welcome_email(@entity).deliver_later
+  end
+
   private
   def init_value
     super(USER)
@@ -32,6 +36,6 @@ class UsersController < BaseController
 
   # Only allow a trusted parameter "white list" through.
   def user_params
-    params.require(:user).permit(:username, :name, :password_confirmation, :password, :imageurl, :facebook_id)
+    params.require(:user).permit(:username, :email, :name, :password_confirmation, :password, :imageurl, :facebook_id)
   end
 end

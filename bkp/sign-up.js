@@ -1,6 +1,6 @@
 import Ember from 'ember';
-import User from '../entity/user';
-import BaseController from './base-controller';
+import User from '../cahyowhy-mini-blog-frontend/app/entity/user';
+import BaseController from '../cahyowhy-mini-blog-frontend/app/controllers/base-controller';
 
 export default Ember.Controller.extend(BaseController, {
   user: User.create(),

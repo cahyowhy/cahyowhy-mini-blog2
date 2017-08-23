@@ -123,6 +123,7 @@ class BaseController < ApplicationController
     @entity = @entity.new(@entity_params)
 
     if @entity.save
+      send_mail_notification if @current_entity == USER
       broadcast_notification if @current_entity == STATUS || @current_entity == LIKESTATUS || @current_entity == POST || @current_entity == COMMENTPOST || @current_entity == COMMENTSTATUS || @current_entity == LIKEPOST || @current_entity == LIKECOMMENTPOST || @current_entity == RELATIONSHIP || @current_entity == STATUS # invoke method in child after entity has been saved
       if @current_entity==LIKESTATUS
         render json: @entity, httpstatus: postsuccess, userlike: !@user_like_it, status: :created, location: @entity

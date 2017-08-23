@@ -20,6 +20,8 @@
       <div class="collapse navbar-collapse nav-collapse">
         <div class="menu-container">
           <ul class="nav navbar-nav navbar-nav-right">
+            <li class="js_nav-item nav-item login">{{#link-to 'login' class="nav-item-child nav-item-hover"}}
+              Masuk{{/link-to}}</li>
             {{!--
               <li class="js_nav-item nav-item">{{#link-to 'index' class="nav-item-child nav-item-hover"}}
               Index{{/link-to}}</li>
@@ -41,7 +43,8 @@
                 Registrasi{{/link-to}}</li>
             {{/if}}
             --}}
-            <li class="js_nav-item nav-item">
+            {{!--
+              <li class="js_nav-item nav-item">
               <div class="search-wrapp-nav">
                 <div class="input-group">
                   <span onclick={{action "onsearch"}} class="input-group-addon" id="basic-addon1">
@@ -51,6 +54,7 @@
                 </div>
               </div>
             </li>
+            --}}
           </ul>
         </div>
       </div>

@@ -10,6 +10,7 @@
         <img src="/img/logo.png"/>
       </div>
       <div class="l-part">
+        {{input id="email" type="text" value = user.user.email placeholder="Email" class="input-3"}}
         {{input id="name" type="text" value = user.user.name placeholder="Name" class="input-1"}}
         {{input id="username" type="text" value = user.user.username placeholder="Username" class="input-3"}}
         <div class="overlap-text">
@@ -19,7 +20,7 @@
           {{input id="confirmpassword" type="password" value = passwordConfirmation placeholder="Confirmation Password"
                   class="input-2"}}
         </div>
-        <a id="btn-signup" type="button" class="btn" disabled={{btnDisable}} onclick={{action "doSave"}}>Sign up</a>
+        <a id="btn-signup" disabled={{not (and isAllPropertyPresent signUpRule)}} type="button" class="btn" onclick={{route-action "doSave"}}>Sign up</a>
       </div>
     </div>
   </div>

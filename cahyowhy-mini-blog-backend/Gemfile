@@ -17,6 +17,7 @@ gem 'carrierwave'
 gem "mini_magick"
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 0.18'
+gem "figaro"
 gem 'bcrypt', '~> 3.1.11'
 # Use Puma as the app server
 gem 'jwt'
