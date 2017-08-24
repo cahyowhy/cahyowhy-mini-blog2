@@ -1,9 +1,9 @@
 import Ember from 'ember';
-import BaseController from '../controllers/base-controller';
+import mainService from '../mixin/main-service';
 import offsetLimit from '../entity/offsetlimit';
 import ENV from '../config/environment';
 
-export default Ember.Component.extend(BaseController, {
+export default Ember.Component.extend(mainService, {
   commentOffset: 0,
   comment: "",
   isBtnDisable: Ember.computed.empty('comment'),
@@ -11,8 +11,8 @@ export default Ember.Component.extend(BaseController, {
   doEmptyField(){
     this.set("comment", "");
   },
-  isLogedIn: Ember.computed('applicationRoute.authentication', function () {
-    return this.get("applicationRoute.authentication");
+  isLogedIn: Ember.computed('authentication', function () {
+    return this.get("authentication");
   }),
   statusImagesSize: Ember.computed('statusImages', function () {
     return this.get('statusImages').length;

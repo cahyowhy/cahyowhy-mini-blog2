@@ -1,9 +1,9 @@
 import Ember from 'ember';
-import BaseController from '../controllers/base-controller';
+import mainService from '../mixin/main-service';
 import Likestatus from '../entity/likestatus';
 
 const lodash = window._;
-export default Ember.Component.extend(BaseController, {
+export default Ember.Component.extend(mainService, {
   emoticons: [],
   isCurrentUserLikeIt: false,
   thumbIcon: Ember.computed('isCurrentUserLikeIt', function () {

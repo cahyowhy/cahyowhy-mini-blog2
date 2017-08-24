@@ -1,11 +1,11 @@
 import Ember from 'ember';
-import BaseController from '../controllers/base-controller';
+import mainService from '../mixin/main-service';
 
-export default Ember.Component.extend(BaseController, {
+export default Ember.Component.extend(mainService, {
   isIconHide: true,
   currentUsserLikes: false,
-  isLogedIn: Ember.computed('applicationRoute.authentication', function () {
-    return this.get("applicationRoute.authentication");
+  isLogedIn: Ember.computed('authentication', function () {
+    return this.get("authentication");
   }),
   didInsertElement(){
     this._super(...arguments);

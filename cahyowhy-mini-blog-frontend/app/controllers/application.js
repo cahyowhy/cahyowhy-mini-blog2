@@ -1,14 +1,14 @@
 import Ember from 'ember';
 import Statuses from '../entity/statuses';
-import BaseController from '../controllers/base-controller';
+import mainService from '../mixin/main-service';
 
-export default Ember.Controller.extend(BaseController, {
+export default Ember.Controller.extend(mainService, {
   router: Ember.inject.service("-routing"),
   currentRouteName: Ember.computed('router', function () {
     return this.get('router.router.currentRouteName');
   }),
-  authentication: Ember.observer('applicationRoute.authentication', function () { //executed after dom loaded
-    if (this.get("applicationRoute.authentication")) {
+  authentication: Ember.observer('authentication', function () { //executed after dom loaded
+    if (this.get("authentication")) {
       this.handleActionCable();
     } else {
       this.removeSubscription();

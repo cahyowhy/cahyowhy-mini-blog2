@@ -56,13 +56,5 @@ export default EmberUploader.FileField.extend({
        * */
       this.sendAction("action", files[0]);
     }
-
-    /*if ((files[0].size < 10000000) && (this.get("files").length < 5)) {
-     this.get('files').pushObject(files[0]);
-     this.sendAction("action", files[0]);
-     this.set('uploader', uploader);
-     } else {
-     alert("Batas Upload Maksimal Sudah terpenuhi");
-     }*/
   }
 });

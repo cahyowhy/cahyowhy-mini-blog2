@@ -17,7 +17,7 @@
 <div class="edit-password">
   <div class="edit-password-title">
     <p class="pull-left"> Password Setting</p>
-    <div class="pull-right"><a {{action 'onEditPassword'}} class="btn btn-default btn-sm">edit password</a></div>
+    <div class="pull-right"><a {{route-action 'onEditPassword'}} class="btn btn-default btn-sm">edit password</a></div>
   </div>
   {{#if isPasswordEdit}}
     <div class="edit-password-body">
@@ -48,7 +48,7 @@
                   type="text"}}
         </div>
       </div>
-      <div class="btn-wrapper"><a onclick={{action 'onUpdatePassword'}} disabled={{ifPasswordMatch}}
+      <div class="btn-wrapper"><a onclick={{route-action 'onUpdatePassword'}} disabled={{ifPasswordMatch}}
                                   class="btn-primary btn">Simpan
         Password</a></div>
     </div>
@@ -56,6 +56,6 @@
 </div>
 {{#unless isPasswordEdit}}
   <div class="btn-wrapper-setting">
-    <a onclick={{action "onUpdateUser"}} class="btn-primary btn">Simpan</a>
+    <a onclick={{route-action "onUpdateUser"}} class="btn-primary btn">Simpan</a>
   </div>
 {{/unless}}

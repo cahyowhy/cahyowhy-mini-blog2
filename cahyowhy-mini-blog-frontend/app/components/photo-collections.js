@@ -1,9 +1,9 @@
 import Ember from 'ember';
-import BaseController from '../controllers/base-controller';
+import mainService from '../mixin/main-service';
 import Image from '../entity/image';
 import ENV from '../config/environment';
 
-export default Ember.Component.extend(BaseController, {
+export default Ember.Component.extend(mainService, {
   images: [],
   url: ENV.APP.API_IMAGE,
   userId: 0,

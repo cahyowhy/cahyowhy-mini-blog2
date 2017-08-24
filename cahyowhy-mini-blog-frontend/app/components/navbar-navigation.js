@@ -1,12 +1,13 @@
 import Ember from 'ember';
+import mainService from '../mixin/main-service';
 
-export default Ember.Component.extend({
+export default Ember.Component.extend(mainService, {
   id: '',
   token: '',
   search: '',
   isLinkProfileVisible: false,
-  authentication: Ember.observer("applicationRoute.authentication", function () {
-    if (this.get("applicationRoute.authentication")) {
+  authenticate: Ember.observer("authentication", function () {
+    if (this.get("authentication")) {
       this.toggleNav();
     }
   }),

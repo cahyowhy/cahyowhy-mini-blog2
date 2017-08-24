@@ -1,10 +1,10 @@
 import Ember from 'ember';
-import BaseController from './base-controller';
+import mainService from '../mixin/main-service';
 import offsetlimit from '../entity/offsetlimit';
 import ENV from '../config/environment';
 
 let offset = 0;
-export default Ember.Controller.extend(BaseController, {
+export default Ember.Controller.extend(mainService, {
   queryParams: ['search', 'type'],
   search: "",
   type: "",

@@ -9,17 +9,17 @@
           </div>
           <div class="form-group">
             <label for="sel1">Kategori</label>
-            <select class="form-control" id="sel1" onchange={{action "onSelectCategory" value="target.value"}}>
+            <select class="form-control" id="sel1" onchange={{route-action "onSelectCategory" value="target.value"}}>
               {{#each postCategories as |postCategory|}}
                 <option value={{postCategory.value}}>{{postCategory.name}}</option>
               {{/each}}
             </select>
           </div>
-          {{photo-collections routeUserId=userId onAddImage=(action "onAddImageToPost")
-                              onDelImage=(action "onDeleteImage")}}
+          {{photo-collections routeUserId=userId onAddImage=(route-action "onAddImageToPost")
+                              onDelImage=(route-action "onDeleteImage")}}
         </div>
-        {{tinymce-editor options=options value=post.post.description onValueChanged=(action "onTypeSomething")}}
-        <div class="btn-wrapper margin-top30"><a disabled={{isBtnDisable}} onclick={{action "doSave"}} class="btn btn-primary btn-md">Save</a></div>
+        {{tinymce-editor options=options value=post.post.description onValueChanged=(route-action "onTypeSomething")}}
+        <div class="btn-wrapper margin-top30"><a disabled={{isBtnDisable}} onclick={{route-action "doSave"}} class="btn btn-primary btn-md">Save</a></div>
       </div>
     </div>
   </div>
