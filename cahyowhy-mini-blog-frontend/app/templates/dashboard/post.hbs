@@ -27,7 +27,7 @@
     {{#if ifPostIsEmpty}}
       {{content-is-empty}}
     {{else}}
-      <div class="btn-wrapper-post"><a onclick={{action "onLoadPost"}} class="btn-primary btn-medium btn">Load more</a>
+      <div class="btn-wrapper-post"><a onclick={{route-action "onLoadPost"}} class="btn-primary btn-medium btn">Load more</a>
       </div>
     {{/if}}
   </div>

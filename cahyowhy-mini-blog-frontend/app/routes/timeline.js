@@ -57,7 +57,7 @@ export default BaseController.extend({
         context.controller.set('ifPostIsEmpty', response.length === 0);
       });
     },
-    deactivate(transition){
+    willTransition(transition){
       /*
        * when move to another page be sure to empty this status
        * */

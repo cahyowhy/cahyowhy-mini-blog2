@@ -1,8 +1,8 @@
 import Ember from 'ember';
-import BaseController from '../base-controller';
+import BaseController from '../../cahyowhy-mini-blog-frontend/app/controllers/base-controller';
 import ENV from '../../config/environment';
-import offsetlimit from '../../entity/offsetlimit';
-import Post from '../../entity/post';
+import offsetlimit from '../../cahyowhy-mini-blog-frontend/app/entity/offsetlimit';
+import Post from '../../cahyowhy-mini-blog-frontend/app/entity/post';
 
 let offset = 0;
 export default Ember.Controller.extend(BaseController, {

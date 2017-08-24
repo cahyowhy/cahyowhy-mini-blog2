@@ -6,7 +6,7 @@
           <div class="pull-left">
             {{#if navigationClass}}
               <i class="ion ion-android-camera">
-                {{photocropper-uploader-galleries id="photos" action="doUpload"}}
+                {{photocropper-uploader-galleries id="photos" route-action="doUpload"}}
               </i>
             {{/if}}
             {{background-image-container src=(image-url-helper user.imageurl) class="img-profile-dashboard"}}
@@ -16,7 +16,7 @@
               <h1>{{user.name}}</h1>
               <p>{{user.username}}</p>
               {{#if (and (not isCurrentUser) isLogedIn)}}
-                <a {{action "onFollowing"}} class="btn btn-primary">{{btnFollow}}</a>
+                <a onclick={{route-action "onFollowing"}} class="btn btn-primary">{{btnFollow}}</a>
               {{/if}}
               <a class="btn btn-default">{{user.total_follower}} follower</a>
               <a class="btn btn-default">{{user.total_following}} following</a>

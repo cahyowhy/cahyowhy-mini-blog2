@@ -1,8 +1,8 @@
 import Ember from 'ember';
-import Basecontroller from './base-controller';
+import Basecontroller from '../cahyowhy-mini-blog-frontend/app/controllers/base-controller';
 import ENV from '../config/environment';
 import EmberUploader from 'ember-uploader';
-import User from '../entity/user';
+import User from '../cahyowhy-mini-blog-frontend/app/entity/user';
 let imgWidth, imgHeight;
 export default Ember.Controller.extend(Basecontroller, {
   userEntity: User.create(),
@@ -80,6 +80,6 @@ export default Ember.Controller.extend(Basecontroller, {
     onCloseModal(){
       Ember.$('#myModal').modal('hide');
       Ember.$('#img-cropper').cropper('destroy');
-    },
+    }
   }
 });

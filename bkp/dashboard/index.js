@@ -1,7 +1,7 @@
 import Ember from 'ember';
-import offsetlimit from '../../entity/offsetlimit';
-import BaseController from '../base-controller';
-import Status from '../../entity/status';
+import offsetlimit from '../../cahyowhy-mini-blog-frontend/app/entity/offsetlimit';
+import BaseController from '../../cahyowhy-mini-blog-frontend/app/controllers/base-controller';
+import Status from '../../cahyowhy-mini-blog-frontend/app/entity/status';
 import ENV from '../../config/environment';
 
 let offset = 0;
