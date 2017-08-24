@@ -56,5 +56,23 @@ export default {
     application.inject('component', 'likestatusService', 'service:likestatusService');
     application.inject('component', 'relationshipService', 'service:relationshipService');
     application.inject('component', 'notificationService', 'service:notificationService');
+
+    application.inject('mixin', 'commonService', 'service:commonService');
+    application.inject('mixin', 'userService', 'service:userService');
+    application.inject('mixin', 'postService', 'service:postService');
+    application.inject('mixin', 'loginService', 'service:loginService');
+    application.inject('mixin', 'imageService', 'service:imageService');
+    application.inject('mixin', 'authService', 'service:authService');
+    application.inject('mixin', 'commentpostService', 'service:commentpostService');
+    application.inject('mixin', 'likecommentpostService', 'service:likecommentpostService');
+    application.inject('mixin', 'likepostService', 'service:likepostService');
+    application.inject('mixin', 'applicationRoute', 'route:application');
+    application.inject('mixin', 'cableService', 'service:cable');
+    application.inject('mixin', 'statusService', 'service:statusService');
+    application.inject('mixin', 'commentstatusService', 'service:commentstatusService');
+    application.inject('mixin', 'timelineService', 'service:timelineService');
+    application.inject('mixin', 'likestatusService', 'service:likestatusService');
+    application.inject('mixin', 'relationshipService', 'service:relationshipService');
+    application.inject('mixin', 'notificationService', 'service:notificationService');
   }
 };
