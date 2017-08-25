@@ -14,7 +14,8 @@ export default BaseRouter.extend({
     post.post.category = param.id;
     post.post.offset = ENV.APP.DEFAULT_OFFSET;
     post.post.limit = ENV.APP.DEFAULT_LIMIT;
-    post = new Post().getValue(post);
+    delete post.post.imageposts_attributes;
+    post = new Post().getChildValue(post);
 
     return Ember.RSVP.hash({
       posts: this.postService.find(post),
@@ -23,10 +24,7 @@ export default BaseRouter.extend({
   },
   afterReder(){
     this._super(...arguments);
-    /**
-     * alsco check this
-     */
-    this.controller.set('ifPostIsEmpty', computed.equal('posts.length', 0));
+    this.controller.set('ifPostIsEmpty', computed.equal('posts.length',0));
   },
   getTitlePost(){
     const category = parseInt(this.controller.get("category"));
@@ -78,7 +76,9 @@ export default BaseRouter.extend({
       post.post.category = category;
       post.post.offset = this.offset;
       post.post.limit = ENV.APP.DEFAULT_LIMIT;
-      post = new Post().getValue(post);
+      delete post.post.imageposts_attributes;
+
+      post = new Post().getChildValue(post);
 
       this.doFind("post", post).then(function (results) {
         results.forEach(function (item) {

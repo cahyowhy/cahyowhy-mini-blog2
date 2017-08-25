@@ -14,9 +14,6 @@ export default BaseRouter.extend({
   },
   afterReder(){
     this._super(...arguments);
-    /**
-     * alsco check this
-     */
     this.controller.set('ifPostIsEmpty', Ember.computed.equal('posts.length', 0));
   },
   model(){

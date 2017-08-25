@@ -54,13 +54,13 @@ export default BaseRouter.extend({
           context.controller.set('isContentEmpty', true);
         }
         response.forEach(function (item) {
-          const item = {
+          const image = {
             id: item.id,
             src: ENV.APP.API_URL + item.path.url
           };
 
-          context.images.pushObject(item);
-          context.controller.get('images').pushObject(item);
+          context.images.pushObject(image);
+          context.controller.get('images').pushObject(image);
         });
       });
     }

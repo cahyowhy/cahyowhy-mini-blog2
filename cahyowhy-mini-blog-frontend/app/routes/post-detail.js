@@ -20,14 +20,13 @@ export default BaseRouter.extend({
     commentpost = new Commentpost().getChildValue(commentpost);
     let offsetlimit = OffsetLimit();
     this.offset = ENV.APP.DEFAULT_OFFSET;
-
     for (let key in offsetlimit) {
       commentpost[key] = offsetlimit[key];
     }
 
     return Ember.RSVP.hash({
-      post: this.postService.find(param.id),
-      comments: this.commentpostService.find(commentpost),
+      post: this.doFind("post", param.id),
+      comments: this.doFind("comment", commentpost),
       nextPost: this.postService.findPostNextById(param.id),
       prevPost: this.postService.findPostPrevById(param.id),
       fbAPPID: ENV.APP.APP_FB_ID,
@@ -59,11 +58,11 @@ export default BaseRouter.extend({
     nextPost === null || nextPost === undefined ? this.hideArrow("post-right") : this.showArrow("post-right");
     prevPost === null || prevPost === undefined ? this.hideArrow("post-left") : this.showArrow("post-left");
   },
-  afterModel(model) {
-    // this.set('headData.title', model.post.title);
-    // this.set('headData.description', model.post.description);
-    // this.set('headData.image', "http://lorempixel.com/210/210");
-  },
+  // afterModel(model) {
+  // this.set('headData.title', model.post.title);
+  // this.set('headData.description', model.post.description);
+  // this.set('headData.image', "http://lorempixel.com/210/210");
+  // },
   setupController(controller, model){
     const imageProfile = this.commonService.getImageProfile();
     const username = this.commonService.getUsername();
