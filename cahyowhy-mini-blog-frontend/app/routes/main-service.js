@@ -41,7 +41,7 @@ export default Ember.Mixin.create({
   },
   doFindPostNextById(id){
     const nextPost = this.postService.findPostNextById(id);
-    return Ember.RSVP.Promise(function (resolve, reject) {
+    return new Ember.RSVP.Promise(function (resolve, reject) {
       nextPost.then(function (response) {
         resolve(response);
       }).catch(function (err) {
@@ -51,7 +51,7 @@ export default Ember.Mixin.create({
   },
   doFindPostPrevById(id){
     const nextPost = this.postService.findPostPrevById(id);
-    return Ember.RSVP.Promise(function (resolve, reject) {
+    return new Ember.RSVP.Promise(function (resolve, reject) {
       nextPost.then(function (response) {
         resolve(response);
       }).catch(function (err) {
@@ -61,7 +61,7 @@ export default Ember.Mixin.create({
   },
   doAuth(){
     const auth = this.authService.auth();
-    return Ember.RSVP.Promise(function (resolve, reject) {
+    return new Ember.RSVP.Promise(function (resolve, reject) {
       auth.then(function (response) {
         resolve(response)
       }).catch(function (err) {
