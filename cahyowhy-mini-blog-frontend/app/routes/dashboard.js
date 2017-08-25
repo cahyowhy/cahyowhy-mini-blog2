@@ -28,17 +28,17 @@ export default BaseRouter.extend({
     const isCurrentUser = this.commonService.getId() === param.id.toString();
     this.isCurrentUser = isCurrentUser;
     hash = (isCurrentUser || !this.isLogedIn) ? {
-        isCurrentUser: isCurrentUser,
-        id: param.id,
-        user: this.userService.find(param.id),
-        isLogedIn: this.isLogedIn
-      } : {
-        isCurrentUser: isCurrentUser,
-        id: param.id,
-        user: this.userService.find(param.id),
-        isFollowing: this.userService.find("isfollow/" + param.id, this.commonService.getToken()),
-        isLogedIn: this.isLogedIn
-      };
+      isCurrentUser: isCurrentUser,
+      id: param.id,
+      user: this.doFind('user', param.id),
+      isLogedIn: this.isLogedIn
+    } : {
+      isCurrentUser: isCurrentUser,
+      id: param.id,
+      user: this.doFind('user', param.id),
+      isFollowing: this.doFind("user", "isfollow/" + param.id),
+      isLogedIn: this.isLogedIn
+    };
 
     return Ember.RSVP.hash(hash)
   },

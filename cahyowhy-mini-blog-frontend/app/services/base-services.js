@@ -69,15 +69,8 @@ export default Ember.Mixin.create({
             'Content-Type': 'application/json',
             "Authorization": authorization
           },
-          /*xhrFields: {
-           onprogress: function (e) {
-           context.debug(e);
-           }
-           }*/
           body: body,
-        })/*.progress(function (progress) {
-         context.debug(progress);
-         })*/.then(function (response) {
+        }).then(function (response) {
           resolve(response);
         }).catch(function (error) {
           reject(error);

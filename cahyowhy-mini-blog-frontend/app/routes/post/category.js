@@ -18,7 +18,7 @@ export default BaseRouter.extend({
     post = new Post().getChildValue(post);
 
     return Ember.RSVP.hash({
-      posts: this.postService.find(post),
+      posts: this.doFind("post",post),
       category: this.category
     });
   },

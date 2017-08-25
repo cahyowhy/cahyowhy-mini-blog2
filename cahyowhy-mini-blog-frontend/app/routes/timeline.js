@@ -20,8 +20,8 @@ export default BaseController.extend({
   model(){
     this.offset = ENV.APP.DEFAULT_OFFSET;
     return Ember.RSVP.hash({
-      statuses: this.timelineService.find(offsetlimit(), this.token),
-      authentication: this.authService.auth(this.token)
+      statuses: this.doFind("timeline", offsetlimit()),
+      authentication: this.doAuth()
     });
   },
   setupController(controller, model){

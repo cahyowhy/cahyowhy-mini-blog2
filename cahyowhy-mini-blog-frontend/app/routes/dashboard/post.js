@@ -19,7 +19,7 @@ export default BaseRouter.extend({
 
     return Ember.RSVP.hash({
       isLogedIn: this.modelFor('dashboard').isLogedIn,
-      posts: this.postService.find(post)
+      posts: this.doFind("post", post)
     })
   },
   afterRender(){

@@ -15,7 +15,7 @@ export default BaseRouter.extend({
     }
 
     return Ember.RSVP.hash({
-      images: this.imageService.find(image)
+      images: this.doFind("image", image)
     });
   },
   afterRender(){

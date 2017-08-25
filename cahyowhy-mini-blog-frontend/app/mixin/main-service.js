@@ -37,6 +37,36 @@ export default Ember.Mixin.create({
       });
     });
   },
+  doFindPostNextById(id){
+    const nextPost = this.postService.findPostNextById(id);
+    return Ember.RSVP.Promise(function (resolve, reject) {
+      nextPost.then(function (response) {
+        resolve(response);
+      }).catch(function (err) {
+        reject(err);
+      });
+    })
+  },
+  doFindPostPrevById(id){
+    const nextPost = this.postService.findPostPrevById(id);
+    return Ember.RSVP.Promise(function (resolve, reject) {
+      nextPost.then(function (response) {
+        resolve(response);
+      }).catch(function (err) {
+        reject(err);
+      });
+    })
+  },
+  doAuth(){
+    const auth = this.authService.auth();
+    return Ember.RSVP.Promise(function (resolve, reject) {
+      auth.then(function (response) {
+        resolve(response)
+      }).catch(function (err) {
+        reject(err);
+      });
+    })
+  },
   doFind(type = "", param){
     let find;
     const context = this;
@@ -54,7 +84,7 @@ export default Ember.Mixin.create({
         find = this.imageService.find(param);
         break;
       case "timeline":
-        find = this.timelineService.find(param, this.commonService.getToken());
+        find = this.timelineService.find(param);
         break;
       case "comment":
         find = this.commentpostService.find(param);

@@ -10,10 +10,10 @@ export default BaseRouter.extend({
   token: '',
   post: new Post().getInitializeValue(),
   model(){
-    this.imageposts = []
+    this.imageposts = [];
     return Ember.RSVP.hash({
-      postCategories: this.postService.find("categories/all"),
-      authentication: this.authService.auth(this.token)
+      postCategories: this.doFind("post", "categories/all"),
+      authentication: this.doAuth(this.token)
     });
   },
   beforeModel(transition){

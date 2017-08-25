@@ -27,8 +27,8 @@ export default BaseRouter.extend({
     return Ember.RSVP.hash({
       post: this.doFind("post", param.id),
       comments: this.doFind("comment", commentpost),
-      nextPost: this.postService.findPostNextById(param.id),
-      prevPost: this.postService.findPostPrevById(param.id),
+      nextPost: this.doFindPostNextById(param.id),
+      prevPost: this.doFindPostPrevById(param.id),
       fbAPPID: ENV.APP.APP_FB_ID,
     })
   },
@@ -98,7 +98,7 @@ export default BaseRouter.extend({
         commentpost[key] = offsetlimit[key];
       }
 
-      this.commentpostService.find(commentpost).then(function (response) {
+      this.doFind("comment", commentpost).then(function (response) {
         response.forEach(function (item) {
           /**
            * carefull of this

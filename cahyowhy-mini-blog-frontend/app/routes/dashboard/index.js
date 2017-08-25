@@ -19,7 +19,7 @@ export default BaseRouter.extend({
     }
 
     return Ember.RSVP.hash({
-      statuses: this.statusService.find(status),
+      statuses: this.doFind("status", status),
       routeUserId: id,
       imageProfile: this.modelFor('dashboard').user.imageurl
     });
