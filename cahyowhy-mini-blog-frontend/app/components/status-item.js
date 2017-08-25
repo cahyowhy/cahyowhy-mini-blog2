@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import mainService from '../mixin/main-service';
+import mainService from '../routes/main-service';
 import offsetLimit from '../entity/offsetlimit';
 import ENV from '../config/environment';
 

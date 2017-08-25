@@ -2,6 +2,9 @@ import Ember from 'ember';
 const {set} = Ember;
 export default Ember.Mixin.create({
   authentication: false,
+  init(){
+    this._super(...arguments);
+  },
   setAuthentication(param){
     set(this, 'authentication', param);
   },
@@ -14,13 +17,12 @@ export default Ember.Mixin.create({
   doRemove(type = "", param = "", obj = {}){
     let del;
     const context = this;
-    this.debug(this.commonService.getToken());
     switch (type) {
       case "image":
-        del = this.imageService.delete(param, this.commonService.getToken());
+        del = this.imageService.delete(param);
         break;
       case "relation":
-        del = this.relationshipService.delete(null, this.commonService.getToken(), obj);
+        del = this.relationshipService.delete(null, obj);
         break;
       default:
         break;
@@ -112,7 +114,7 @@ export default Ember.Mixin.create({
     const context = this;
     switch (type) {
       case "user":
-        update = this.userService.doUpdateUser(this.commonService.getId(), obj, this.commonService.getToken());
+        update = this.userService.doUpdateUser(this.commonService.getId(), obj);
         break;
       default:
         break;
@@ -137,31 +139,31 @@ export default Ember.Mixin.create({
         post = this.userService.save(obj);
         break;
       case "relation":
-        post = this.relationshipService.save(obj, this.commonService.getToken());
+        post = this.relationshipService.save(obj);
         break;
       case "login":
         post = this.loginService.save(obj, null, param);
         break;
       case "post":
-        post = this.postService.save(obj, this.commonService.getToken());
+        post = this.postService.save(obj);
         break;
       case "status":
-        post = this.statusService.save(obj, this.commonService.getToken());
+        post = this.statusService.save(obj);
         break;
       case "comment":
-        post = this.commentpostService.save(obj, this.commonService.getToken());
+        post = this.commentpostService.save(obj);
         break;
       case "likecommentpost":
-        post = this.likecommentpostService.save(obj, this.commonService.getToken());
+        post = this.likecommentpostService.save(obj);
         break;
       case "likestatus":
-        post = this.likestatusService.save(obj, this.commonService.getToken());
+        post = this.likestatusService.save(obj);
         break;
       case "likepost":
-        post = this.likepostService.save(obj, this.commonService.getToken());
+        post = this.likepostService.save(obj);
         break;
       case "commentstatus":
-        post = this.commentstatusService.save(obj, this.commonService.getToken());
+        post = this.commentstatusService.save(obj);
         break;
       default :
         break;

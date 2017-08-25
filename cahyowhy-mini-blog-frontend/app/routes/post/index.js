@@ -19,7 +19,7 @@ export default BaseRouter.extend({
   model(){
     this.offset = ENV.APP.DEFAULT_OFFSET;
     return Ember.RSVP.hash({
-      posts: this.doFind("post", post),
+      posts: this.doFind("post"),
     });
   },
   actions: {

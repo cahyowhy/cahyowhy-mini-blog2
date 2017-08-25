@@ -27,7 +27,7 @@ export default BaseRouter.extend({
       if (this.checkBtnSaveDisabled(event)) {
         this.doSave("login", user).then(function (response) {
           context.commonService.setCookies(response);
-          // context.transitionToRoute('dashboard', response.user.id);
+          context.transitionToRoute('dashboard', response.user.id);
         }).catch(function (err) {
           context.debug(err);
         });

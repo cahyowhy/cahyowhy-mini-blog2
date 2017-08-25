@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import mainService from '../mixin/main-service';
+import mainService from '../routes/main-service';
 import Likepost from '../entity/likepost';
 
 export default Ember.Component.extend(mainService, {

@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import mainService from '../mixin/main-service';
+import mainService from '../routes/main-service';
 
 export default Ember.Component.extend(mainService, {
   id: '',

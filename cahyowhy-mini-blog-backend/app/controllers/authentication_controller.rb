@@ -6,7 +6,12 @@ class AuthenticationController < ApplicationController
 
     if command.success?
       @user = User.find_by_username(params[:username])
-      render json: {auth_token: command.result, user: @user, httpstatus: authsucces}
+
+      if @user.confirmed
+        render json: {auth_token: command.result, user: @user, httpstatus: authsucces}
+      else
+        render json: {message: "not authorized", httpstatus: authfailed}, status: :unauthorized
+      end
     else
       render json: {message: "not authorized", httpstatus: authfailed}, status: :unauthorized
     end
@@ -17,7 +22,13 @@ class AuthenticationController < ApplicationController
     if is_user_has_facebook_id
       user = User.find_by(facebook_id: params[:facebook_id])
       command = AuthenticateUser.call(user.username, nil, params[:facebook_id])
-      render json: {auth_token: command.result, user: user, httpstatus: authsucces} if command.success?
+
+      if command.success? && user.confirmed
+        render json: {auth_token: command.result, user: user, httpstatus: authsucces}
+      else
+        render json: {message: "not authorized", httpstatus: authfailed}
+      end
+
     else
       render json: {message: "not authorized", httpstatus: authfailed}
     end

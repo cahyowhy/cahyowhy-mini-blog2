@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import Statuses from '../entity/statuses';
-import mainService from '../mixin/main-service';
+import mainService from '../routes/main-service';
 
 export default Ember.Controller.extend(mainService, {
   router: Ember.inject.service("-routing"),
@@ -14,9 +14,6 @@ export default Ember.Controller.extend(mainService, {
       this.removeSubscription();
     }
   }),
-  afterRender(){
-    this._super(...arguments);
-  },
   handleActionCable(){
     const context = this;
     let consumer = context.cableService.createConsumer('ws://localhost:3000/cable?token=' + context.commonService.getToken());

@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import mainService from '../mixin/main-service';
+import mainService from '../routes/main-service';
 import Status from '../entity/status';
 import ImageStatus from '../entity/imagestatus';
 import Statuses from '../entity/statuses';

@@ -1,6 +1,7 @@
 import Ember from "ember";
 import fetch from 'ember-fetch/ajax';
 export default Ember.Mixin.create({
+  commonService: Ember.inject.service(),
   method: {
     get: 'GET',
     post: 'POST',
@@ -10,11 +11,11 @@ export default Ember.Mixin.create({
   init(api) {
     this.api = api;
   },
-  delete(param = "", authorization = "", obj){
+  delete(param = "", obj){
     let api = this.api + param;
-    return this.service(this.method.delete, api, authorization, this.convertJSON(obj));
+    return this.service(this.method.delete, api, this.convertJSON(obj));
   },
-  find(param = "", authorization = "") {
+  find(param = "") {
     let api = "?";
     if (typeof param === 'object' && param !== null) {
       const objectLength = Object.keys(param).length;
@@ -28,9 +29,9 @@ export default Ember.Mixin.create({
     } else {
       api = this.api + param;
     }
-    return this.service(this.method.get, api, authorization);
+    return this.service(this.method.get, api);
   },
-  save(obj, authorization = "", param = ""){
+  save(obj, param = ""){
     let api = "?";
     if (typeof param === 'object' && param !== null) {
       const objectLength = Object.keys(param).length;
@@ -45,10 +46,10 @@ export default Ember.Mixin.create({
       api = this.api + param;
     }
 
-    return this.service(this.method.post, api, authorization, this.convertJSON(obj));
+    return this.service(this.method.post, api, this.convertJSON(obj));
   },
-  update(param = "", obj, authorization = ""){
-    return this.service(this.method.put, this.api + param, authorization, this.convertJSON(obj));
+  update(param = "", obj){
+    return this.service(this.method.put, this.api + param, this.convertJSON(obj));
   },
   convertJSON(obj) {
     try {
@@ -59,16 +60,18 @@ export default Ember.Mixin.create({
 
     return obj;
   },
-  service(type = this.method.get, url = '', authorization = null, body = null) {
-    const context = this;
+  service(type = this.method.get, url = '', body = null) {
+    const authorization = this.get('commonService').getToken();
+    const header = authorization !== null ? {
+      'Content-Type': 'application/json',
+      "Authorization": authorization
+    } : {'Content-Type': 'application/json'};
+
     return new Ember.RSVP.Promise(
       function (resolve, reject) {
         fetch(url, {
           method: type,
-          headers: {
-            'Content-Type': 'application/json',
-            "Authorization": authorization
-          },
+          headers: header,
           body: body,
         }).then(function (response) {
           resolve(response);

@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import mainService from '../mixin/main-service';
+import mainService from '../routes/main-service';
 import Image from '../entity/image';
 import ENV from '../config/environment';
 
