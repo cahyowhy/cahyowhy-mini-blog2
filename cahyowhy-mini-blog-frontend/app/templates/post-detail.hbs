@@ -51,7 +51,7 @@
           {{else}}
             {{#each comments as |comment|}}
               <li id="user-commentpost-{{comment.id}}" class="list-group-item">
-                {{fav-icon _id = comment.id likes=comment.likecommentposts route-action="onFavouriteComment"}}
+                {{fav-icon _id = comment.id likes=comment.likecommentposts action=(route-action "onFavouriteComment")}}
                 <div class="comment-inner">
                   <div class="pull-left">
                     {{background-image-container src=(image-url-helper comment.user.imageurl) class="custom-pp"}}

@@ -62,6 +62,7 @@ export default BaseRouter.extend({
     this.controller.set('user', model.user);
     this.controller.set('id', model.id);
     this.controller.set('subscription', '');
+    this.controller.set('userEntity', get(this,'userEntity'));
 
     if (!this.isCurrentUser && this.isLogedIn) {
       this.isFollowing = model.isFollowing.isfollowing;
@@ -120,8 +121,8 @@ export default BaseRouter.extend({
          * response return an array
          */
         user.set("user.imageurl", filename + ".jpg");
-        context.doUpdate('user', user.select(['imageurl'])).then(function () {
-          context.controller.set("user.imageurl", ENV.APP.API_URL + response[0].path.url);
+        const userUpdate = new User().getValue(user);
+        context.doUpdate('user', userUpdate).then(function () {
           context.commonService.showCustomNotification("Berhasil Menmperbarui foto profile");
           location.reload();
         });
