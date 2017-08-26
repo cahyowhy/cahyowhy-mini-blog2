@@ -67,7 +67,7 @@ export default BaseRouter.extend({
       let user = new User().getValue(this.controller.get('user'));
       if (this.checkBtnSaveDisabled(event)) {
         this.doSave("user", user).then(function (response) {
-          context.transitionToRoute('login');
+          context.transitionTo('login');
         });
       }
     }

@@ -13,6 +13,7 @@ export default BaseRouter.extend({
     let id = this.modelFor('dashboard').id;
     let status = new Status().getInitializeValue();
     status.status.user_id = id;
+    delete status.status.imagestatuses_attributes;
     status = new Status().getChildValue(status);
     for (let key in offsetlimit()) {
       status[key] = offsetlimit()[key];
@@ -63,7 +64,9 @@ export default BaseRouter.extend({
       let id = this.controller.get("id");
       let status = new Status().getInitializeValue();
       status.status.user_id = id;
+      delete status.status.imagestatuses_attributes;
       status = new Status().getChildValue(status);
+
       for (let key in offsetlimit(this.offset)) {
         status[key] = offsetlimit(this.offset)[key];
       }

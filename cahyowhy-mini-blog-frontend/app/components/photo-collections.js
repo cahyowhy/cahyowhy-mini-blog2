@@ -16,12 +16,12 @@ export default Ember.Component.extend(mainService, {
   },
   didInsertElement(){
     this._super(...arguments);
-    let image = Image.create();
-    const context = this;
-    this.clearAny();
     this.set('userId', this.commonService.getId());
-    image.set('image.user_id', this.get('userId'));
-    image = image.getChildWithSelection(['user_id']);
+    this.clearAny();
+    const context = this;
+    let image = new Image().getInitializeValue();
+    image.image.user_id = this.get('userId');
+    image = new Image().getChildValue(image);
 
     this.doFind('image', image).then(function (results) {
       results.forEach(function (item) {

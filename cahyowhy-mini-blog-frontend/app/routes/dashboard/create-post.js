@@ -115,7 +115,7 @@ export default BaseRouter.extend({
 
         this.doSave("post", post).then(function (response) {
           context.emptyField();
-          context.transitionToRoute('post-detail', response.id);
+          context.transitionTo('post-detail', response.id);
         });
       }
     }

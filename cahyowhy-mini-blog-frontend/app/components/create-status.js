@@ -7,8 +7,8 @@ import Statuses from '../entity/statuses';
 export default Ember.Component.extend(mainService, {
   images: [],
   imagestatuses: [],
-  status: Status.create(),
-  imagestatus: ImageStatus.create(),
+  status: new Status().getInitializeValue(),
+  imagestatus: new ImageStatus().getInitializeValue(),
   currentProfile: false,
   isBtnDisable: Ember.computed.empty('status.status.statushtml'),
   isPropertyEmpty: Ember.computed('isBtnDisable', function () {
@@ -17,8 +17,8 @@ export default Ember.Component.extend(mainService, {
      */
     return this.get('isBtnDisable');
   }),
-  isLogedIn: Ember.computed('authentication', function () {
-    return this.get("authentication");
+  isLogedIn: Ember.computed('auth.authentication', function () {
+    return this.get("auth.authentication");
   }),
   didInsertElement(){
     this._super(...arguments);
@@ -117,8 +117,8 @@ export default Ember.Component.extend(mainService, {
         status.set('status.statustext', statustEl.text());
         status.set('status.imagestatuses_attributes', this.get('imagestatuses'));
         status.set('status.user_id', this.commonService.getId());
+        status = new Status().getValue(status);
 
-        context.debug(JSON.stringify(status));
         this.doSave("status", status).then(function (result) {
           context.doEmptyField();
           context.get("statuses").unshiftObject(result);

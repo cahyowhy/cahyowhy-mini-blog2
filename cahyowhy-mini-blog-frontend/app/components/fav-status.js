@@ -58,7 +58,7 @@ export default Ember.Component.extend(mainService, {
   actions: {
     onSelectEmoticon(value){
       if (this.get('isLogedIn')) {
-        let likestatus = Likestatus.create();
+        let likestatus = new Likestatus().getInitializeValue();
         const statusId = this.get('statusId');
         const context = this;
         const userId = parseInt(this.commonService.getId());
@@ -68,11 +68,10 @@ export default Ember.Component.extend(mainService, {
           emoticons: this.get('emoticons')[value].name
         };
 
-        likestatus.set('likestatus.status_id', statusId);
-        likestatus.set('likestatus.user_id', userId);
-        likestatus.set('likestatus.emoticons', value);
-        likestatus = likestatus.select(['status_id', 'user_id', 'emoticons']);
-
+        likestatus.likestatus.status_id = statusId;
+        likestatus.likestatus.user_id = userId;
+        likestatus.likestatus.emoticons = value;
+        likestatus = new Likestatus().getValue(likestatus);
         this.doSave("likestatus", likestatus).then(function (result) {
           if (result.userlike) {
             Ember.$(`#likestatus-${context.get('statusId')}`).collapse('hide');

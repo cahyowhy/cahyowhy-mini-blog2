@@ -1,10 +1,10 @@
 import Ember from 'ember';
 import offsetlimit from '../entity/offsetlimit';
 import Statuses from '../entity/statuses';
-import BaseController from '../controllers/base-controller';
+import BaseRouter from '../routes/base';
 import ENV from '../config/environment';
 
-export default BaseController.extend({
+export default BaseRouter.extend({
   offset: ENV.APP.DEFAULT_OFFSET,
   controller: null,
   token: '',

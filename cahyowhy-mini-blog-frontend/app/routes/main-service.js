@@ -1,12 +1,8 @@
 import Ember from 'ember';
-const {set} = Ember;
+const {set, get} = Ember;
 export default Ember.Mixin.create({
-  authentication: false,
   init(){
     this._super(...arguments);
-  },
-  setAuthentication(param){
-    set(this, 'authentication', param);
   },
   showAlertLogin(){
     Ember.$("#modal-not-login").modal('show');
@@ -142,7 +138,7 @@ export default Ember.Mixin.create({
         post = this.relationshipService.save(obj);
         break;
       case "login":
-        post = this.loginService.save(obj, null, param);
+        post = this.loginService.save(obj, param);
         break;
       case "post":
         post = this.postService.save(obj);

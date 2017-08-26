@@ -49,12 +49,11 @@ export default BaseRouter.extend({
         this.debug(this.get('isFollowing'));
         return this.get('isFollowing') ? "unfollow" : "follow";
       }));
-
-      this.controller.set('navigationClass', computed('isCurrentUser', function () {
-        this.debug(this.get('isCurrentUser'));
-        return this.get('isCurrentUser') ? "col-sm-5ths" : "col-sm-4";
-      }));
     }
+
+    this.controller.set('navigationClass', computed('isCurrentUser', function () {
+      return this.get('isCurrentUser') ? "col-sm-5ths" : "col-sm-4";
+    }));
   },
   setupController(controller, model){
     this.controller = controller;
