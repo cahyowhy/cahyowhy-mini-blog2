@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   get 'likestatuses/emoticons/all', to: 'likestatuses#print_emoticon'
   get 'posts/prev/:id', to: 'posts#show_post_prev'
   get 'auth', to: 'authtoken#auth_token'
-  get 'timelines', to: 'timeline#index' #iseh ngebug jancuk
+  get 'timelines', to: 'timeline#index' 
+  get 'relationships/show_id_by_userfollow', to: 'relationships#show_id_by_userfollow' 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

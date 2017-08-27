@@ -1,6 +1,6 @@
 export default {
   name: 'injection',
-  initialize: function (application) {
+  initialize: function(application) {
     application.inject('service:commonService', 'notificationService', 'service:notification-messages');
     application.inject('controller', 'cableService', 'service:cable');
 
@@ -11,6 +11,10 @@ export default {
     application.inject('route', 'auth', 'service:authChecker');
     application.inject('controller', 'auth', 'service:authChecker');
     application.inject('component', 'auth', 'service:authChecker');
+
+    application.inject('controller', 'userService', 'service:userService');
+    application.inject('controller', 'postService', 'service:postService');
+    application.inject('controller', 'statusService', 'service:statusService');
 
     application.inject('route', 'userService', 'service:userService');
     application.inject('route', 'postService', 'service:postService');

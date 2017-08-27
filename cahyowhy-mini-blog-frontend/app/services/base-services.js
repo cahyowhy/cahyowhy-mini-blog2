@@ -13,7 +13,11 @@ export default Ember.Mixin.create({
   },
   delete(param = "", obj){
     let api = this.api + param;
-    return this.service(this.method.delete, api, this.convertJSON(obj));
+    const condition = obj === null || obj === "";
+    const service = condition ? this.service(this.method.delete, api)
+      : this.service(this.method.delete, api, this.convertJSON(obj));
+    
+    return service;
   },
   find(param = "") {
     let api = "?";

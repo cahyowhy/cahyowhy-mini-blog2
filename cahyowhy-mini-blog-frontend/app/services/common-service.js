@@ -2,18 +2,18 @@ import Ember from 'ember';
 
 export default Ember.Service.extend({
   cookies: Ember.inject.service(),
-  init(){
+  init() {
     this._super(...arguments);
     this.notificationService.setDefaultAutoClear(true);
     this.notificationService.setDefaultClearDuration(1200);
   },
-  setCookies(params){
+  setCookies(params) {
     this.get("cookies").write('user', JSON.stringify(params));
   },
-  clearCookies(){
+  clearCookies() {
     this.get('cookies').clear('user');
   },
-  getToken(){
+  getToken() {
     let token;
     try {
       token = JSON.parse(this.get('cookies').read('user')).auth_token.toString();
@@ -24,7 +24,7 @@ export default Ember.Service.extend({
 
     return token;
   },
-  getId(){
+  getId() {
     let id;
     try {
       id = JSON.parse(this.get('cookies').read('user')).user.id.toString();
@@ -35,7 +35,7 @@ export default Ember.Service.extend({
 
     return id;
   },
-  getImageProfile(){
+  getImageProfile() {
     let imageProfile;
     try {
       imageProfile = JSON.parse(this.get('cookies').read('user')).user.imageurl.toString();
@@ -46,7 +46,7 @@ export default Ember.Service.extend({
 
     return imageProfile;
   },
-  getUsername(){
+  getUsername() {
     let username;
     try {
       username = JSON.parse(this.get('cookies').read('user')).user.username.toString();
@@ -57,7 +57,7 @@ export default Ember.Service.extend({
 
     return username;
   },
-  showNotification(param){
+  showNotification(param) {
     let message;
     if (param !== undefined) {
       switch (param) {
@@ -76,6 +76,12 @@ export default Ember.Service.extend({
         case 204:
           message = "Login berhasil";
           break;
+        case 205:
+          message = "Follow berhasil";
+          break;
+        case 206:
+          message = "Unfollow berhasil";
+          break;
         case 400:
           message = "Gagal mendapatkan data";
           break;
@@ -91,6 +97,12 @@ export default Ember.Service.extend({
         case 404:
           message = "Login gagal";
           break;
+        case 405:
+          message = "Follow gagal";
+          break;
+        case 406:
+          message = "Unfollow gagal";
+          break;
       }
 
       if (param > 204) {
@@ -102,12 +114,12 @@ export default Ember.Service.extend({
       this.notificationService.error(param);
     }
   },
-  showCustomNotification(param, param2 = null){
+  showCustomNotification(param, param2 = null) {
     this.notificationService.info(param, param2 !== null ? {
-        onClick: function () {
-          window.open(param2);
-        },
-        clearDuration: 3000
-      } : null);
+      onClick: function() {
+        window.open(param2);
+      },
+      clearDuration: 3000
+    } : null);
   },
 });
