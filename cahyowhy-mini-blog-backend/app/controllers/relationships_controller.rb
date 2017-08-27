@@ -10,13 +10,13 @@ class RelationshipsController < BaseController
       render json: {message: "you allready following her / him", httpstatus: followfailed}
     else
       curent_user.follow(user)
-      render json:  {id: Relationship.last.id, message: "unfollow success", httpstatus: unfollowsucces}, status: :created
+      render json:  {id: Relationship.last.id, message: "follow success", httpstatus: followsucces}, status: :created
     end
   end
 
   # unfollow user DELETE /relationships/:id
   def destroy
-    user = Relationship.find(params[:id]).follower
+    user = Relationship.find(params[:id]).followed
     curent_user.unfollow(user)
     render json: {message: "unfollow success", httpstatus: unfollowsucces}
   end

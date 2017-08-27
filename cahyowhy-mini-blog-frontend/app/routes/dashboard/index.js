@@ -8,6 +8,9 @@ export default BaseRouter.extend({
   offset: ENV.APP.DEFAULT_OFFSET,
   controller: null,
   statuses: null,
+  beforeModel(){
+    this.controller = null;
+  },
   model(){
     this.offset = ENV.APP.DEFAULT_OFFSET;
     let id = this.modelFor('dashboard').id;
