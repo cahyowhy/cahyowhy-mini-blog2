@@ -29,10 +29,11 @@ export default Ember.Component.extend(mainService, {
   },
   actions: {
     onFavouritePost(id){
-      let likepost = Likepost.create();
-      likepost.set('likepost.user_id', this.commonService.getId());
-      likepost.set('likepost.post_id', id);
-      this.doSave("likepost", likepost.getChildWithSelection(['user_id', 'post_id'])).then();
+      let likepost = new Likepost().getInitializeValue();
+      likepost.likepost.user_id = this.commonService.getId();
+      likepost.likepost.post_id = id;
+      likepost = new Likepost().getChildValue(likepost);
+      this.doSave("likepost", likepost).then();
     }
   }
 });

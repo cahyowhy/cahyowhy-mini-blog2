@@ -2,11 +2,14 @@ import Ember from 'ember';
 import Image from '../../entity/image';
 import offsetlimit from '../../entity/offsetlimit';
 import BaseRouter from '../base';
+import ENV from '../../config/environment';
 
 export default BaseRouter.extend({
   controller: null,
   images: null,
+  offset: ENV.APP.DEFAULT_OFFSET,
   model(){
+    this.offset = ENV.APP.DEFAULT_OFFSET;
     let image = new Image().getInitializeValue();
     image.image.user_id = this.modelFor('dashboard').id;
     image = new Image().getChildValue(image);

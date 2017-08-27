@@ -68,16 +68,16 @@ export default BaseRouter.extend({
     }
   },
   actions: {
-    onSelectCategory(value){
-      this.controller.set("post.post.category", parseInt(value));
+    onSelectCategory(event){
+      this.debug('shit iam here'+ event.target.value);
+      this.controller.set("post.post.category", parseInt(event.target.value));
     },
     onAddImageToPost(index, id, url){
       this.debug(index + " ", url);
       let img = `<img id="${index}" class="imgPost" src="${url}" style="width: 100%; height: auto"> `;
-      let imagepost = this.controller.get('imagepost');
-      imagepost.set('imageposts_attributes.imageurl', url);
-      imagepost.set('imageposts_attributes.user_id', this.commonService.getId());
-      this.imageposts.push(JSON.parse(JSON.stringify(imagepost.getChildWithSelection(['imageurl', 'user_id']))));
+      this.controller.set('imagepost.imageposts_attributes.imageurl', url);
+      this.controller.set('imagepost.imageposts_attributes.user_id', this.commonService.getId());
+      this.imageposts.push(JSON.parse(JSON.stringify(new Imagepost().getChildValue(this.controller.get('imagepost')))));
 
       this.controller.set("post.post.description", this.controller.get("post.post.description") + img);
     },
@@ -100,19 +100,18 @@ export default BaseRouter.extend({
       this.controller.set("post.post.description", newDescriptionHtml);
     },
     onTypeSomething(value){
-      let post = this.controller.get('post');
-      post.set('post.description', value);
+      this.controller.set('post.post.description', value);
     },
     doSave(event){
       const context = this;
       if (this.checkBtnSaveDisabled(event)) {
-        let post = this.controller.get('post');
-        let postEl = Ember.$("<p>").append(Ember.$(post.get('post.description')));
-        post.set('post.descriptiontext', postEl.text());
-        post.set('post.user_id', this.commonService.getId());
-        post.set('post.imageposts_attributes', this.imageposts);
-        post.set('post.review', postEl.text().replace(/\s+/g, ' ').trim().substring(0, 150));
+        let postEl = Ember.$("<p>").append(Ember.$(this.controller.get('post.post.description')));
+        this.controller.set('post.post.descriptiontext', postEl.text());
+        this.controller.set('post.post.user_id', this.commonService.getId());
+        this.controller.set('post.post.imageposts_attributes', this.imageposts);
+        this.controller.set('post.post.review', postEl.text().replace(/\s+/g, ' ').trim().substring(0, 150));
 
+        const post = new Post().getValue(this.controller.get('post'));
         this.doSave("post", post).then(function (response) {
           context.emptyField();
           context.transitionTo('post-detail', response.id);

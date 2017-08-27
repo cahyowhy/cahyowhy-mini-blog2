@@ -23,7 +23,7 @@ export default Ember.Component.extend(mainService, {
   didInsertElement(){
     this._super(...arguments);
     this.debug(this.get('routeUserId'));
-    const condition = !this.get("isTimeline") && this.commonService.getId() === this.get('routeUserId').toString();
+    const condition = !this.get("isTimeline") && this.commonService.getId().toString() === this.get('routeUserId').toString();
     condition ? this.set("currentProfile", true) : this.set("currentProfile", false);
 
     if (this.get("isTimeline")) {
@@ -42,6 +42,7 @@ export default Ember.Component.extend(mainService, {
     this.set('imagestatus.imagestatuses_attributes.imageurl', []);
     this.set('images', []);
     this.set('imagestatuses', []);
+    window.tinyMCE.activeEditor.setContent('');
   },
   options: {
     selector: 'textarea',
@@ -63,11 +64,9 @@ export default Ember.Component.extend(mainService, {
   },
   actions: {
     onTypeSomething(value){
-      let status = this.get('status');
       const valueText = Ember.$(`${value}`).text().replace(/\s+/g, '').trim().match("^[a-zA-Z]+$");
       const isStatusContainLeter = valueText !== null && Array.isArray(valueText) && valueText[0].lenght !== 0;
-      isStatusContainLeter ? status.set('status.statushtml', value) : status.set('status.statushtml', '');
-      this.debug(valueText);
+      this.set('status.status.statushtml', isStatusContainLeter ? value : "");
       this.sendAction("action", this.get('isPropertyEmpty'));
     },
     onDeleteStatusPhoto(id){
@@ -85,10 +84,10 @@ export default Ember.Component.extend(mainService, {
       let imagestatus = this.get('imagestatus');
       let images = this.get('images');
       if (images.length === 0) {
-        imagestatus.set('imagestatuses_attributes.imageurl', src);
-        imagestatus.set('imagestatuses_attributes.user_id', this.commonService.getId());
+        imagestatus.imagestatuses_attributes.imageurl = src;
+        imagestatus.imagestatuses_attributes.user_id = this.commonService.getId();
         this.get('images').pushObject({id: id, src: src, index: index});
-        this.get('imagestatuses').pushObject(JSON.parse(JSON.stringify(imagestatus.getChildWithSelection(['imageurl', 'user_id']))));
+        this.get('imagestatuses').pushObject(JSON.parse(JSON.stringify(new ImageStatus().getChildValue(imagestatus))));
         this.sendAction("action", this.get('isPropertyEmpty'));
       } else {
         const isHasImage = images.any((item) => {
@@ -98,10 +97,10 @@ export default Ember.Component.extend(mainService, {
         if (isHasImage) {
           this.commonService.showCustomNotification("foto ini sudah ditambahkan ke status anda");
         } else {
-          imagestatus.set('imagestatuses_attributes.imageurl', src);
-          imagestatus.set('imagestatuses_attributes.user_id', this.commonService.getId());
+          imagestatus.imagestatuses_attributes.imageurl = src;
+          imagestatus.imagestatuses_attributes.user_id = this.commonService.getId();
           this.get('images').pushObject({id: id, src: src, index: index});
-          this.get('imagestatuses').pushObject(JSON.parse(JSON.stringify(imagestatus.getChildWithSelection(['imageurl', 'user_id']))));
+          this.get('imagestatuses').pushObject(JSON.parse(JSON.stringify(new ImageStatus().getChildValue(imagestatus))));
         }
         this.sendAction("action", this.get('isPropertyEmpty'));
       }
@@ -112,14 +111,13 @@ export default Ember.Component.extend(mainService, {
     doSave(event){
       if (this.checkBtnSaveDisabled(event)) {
         const context = this;
-        let status = this.get('status');
-        let statustEl = Ember.$("<p>").append(Ember.$(status.get('status.statushtml')));
-        status.set('status.statustext', statustEl.text());
-        status.set('status.imagestatuses_attributes', this.get('imagestatuses'));
-        status.set('status.user_id', this.commonService.getId());
-        status = new Status().getValue(status);
+        let statustEl = Ember.$("<p>").append(Ember.$(this.get('status.status.statushtml')));
+        this.set('status.status.statustext', statustEl.text());
+        this.set('status.status.imagestatuses_attributes', this.get('imagestatuses'));
+        this.set('status.status.user_id', this.commonService.getId());
+        this.set('status', new Status().getValue(this.get('status')));
 
-        this.doSave("status", status).then(function (result) {
+        this.doSave("status", this.get('status')).then(function (result) {
           context.doEmptyField();
           context.get("statuses").unshiftObject(result);
         });

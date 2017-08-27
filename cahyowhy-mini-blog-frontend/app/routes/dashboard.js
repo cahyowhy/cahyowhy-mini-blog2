@@ -10,7 +10,6 @@ export default BaseRouter.extend({
   isCurrentUser: false,
   isLogedIn: false,
   isFollowing: false,
-  userEntity: new User().getInitializeValue(),
   dataURLtoBlob(dataurl) {
     let data = dataurl.split(','),
       mimetypeFile = data[0].match(/:(.*?);/)[1],
@@ -62,8 +61,6 @@ export default BaseRouter.extend({
     this.controller.set('user', model.user);
     this.controller.set('id', model.id);
     this.controller.set('subscription', '');
-    this.controller.set('userEntity', get(this,'userEntity'));
-
     if (!this.isCurrentUser && this.isLogedIn) {
       this.isFollowing = model.isFollowing.isfollowing;
       this.controller.set('isFollowing', this.isFollowing);
@@ -115,14 +112,15 @@ export default BaseRouter.extend({
         context.debug(textStatus);
       });
 
-      let user = this.controller.get('userEntity');
+      let user = new User().getInitializeValue();
       uploader.upload([params]).then(response => {
         /**
          * response return an array
          */
-        user.set("user.imageurl", filename + ".jpg");
-        const userUpdate = new User().getValue(user);
-        context.doUpdate('user', userUpdate).then(function () {
+        user.user.imageurl = filename + ".jpg";
+        user = new User().getValue(user);
+        context.debug(user);
+        context.doUpdate('user', user).then(function () {
           context.commonService.showCustomNotification("Berhasil Menmperbarui foto profile");
           location.reload();
         });
