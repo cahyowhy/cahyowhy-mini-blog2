@@ -3,7 +3,6 @@ import mainService from '../routes/main-service';
 
 export default Ember.Component.extend(mainService, {
   id: '',
-  token: '',
   search: '',
   isLinkProfileVisible: Ember.computed('auth.authentication', function () {
     this.debug(this.get("auth.authentication"));
@@ -17,7 +16,6 @@ export default Ember.Component.extend(mainService, {
   didInsertElement(){
     this._super(...arguments);
     this.debug(this);
-    this.set("token", this.commonService.getToken());
   },
   toggleNav(){
     this.debug("nav change!");

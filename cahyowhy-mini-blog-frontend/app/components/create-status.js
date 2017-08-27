@@ -111,7 +111,7 @@ export default Ember.Component.extend(mainService, {
     doSave(event){
       if (this.checkBtnSaveDisabled(event)) {
         const context = this;
-        let statustEl = Ember.$("<p>").append(Ember.$(this.get('status.status.statushtml')));
+        let statustEl = Ember.$("<p>").append(Ember.$(window.tinyMCE.activeEditor.getContent()));
         this.set('status.status.statustext', statustEl.text());
         this.set('status.status.imagestatuses_attributes', this.get('imagestatuses'));
         this.set('status.status.user_id', this.commonService.getId());

@@ -7,16 +7,6 @@ import ENV from '../config/environment';
 export default BaseRouter.extend({
   offset: ENV.APP.DEFAULT_OFFSET,
   controller: null,
-  token: '',
-  beforeModel(transition){
-    const token = transition.queryParams.token;
-
-    if (token === null || token === undefined) {
-      this.transitionTo('not-found');
-    } else {
-      this.token = token;
-    }
-  },
   model(){
     this.offset = ENV.APP.DEFAULT_OFFSET;
     return Ember.RSVP.hash({

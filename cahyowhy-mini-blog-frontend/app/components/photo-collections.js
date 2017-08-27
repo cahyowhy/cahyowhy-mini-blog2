@@ -17,7 +17,7 @@ export default Ember.Component.extend(mainService, {
     this.clearAny();
     const context = this;
     let image = new Image().getInitializeValue();
-    image.image.user_id = this.get('userId');
+    image.image.user_id = this.commonService.getId();
     image = new Image().getChildValue(image);
 
     this.doFind('image', image).then(function (results) {

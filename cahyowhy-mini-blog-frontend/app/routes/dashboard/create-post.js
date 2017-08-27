@@ -7,24 +7,13 @@ const {computed} = Ember;
 export default BaseRouter.extend({
   controller: null,
   imageposts: [],
-  token: '',
   post: new Post().getInitializeValue(),
   model(){
     this.imageposts = [];
     return Ember.RSVP.hash({
       postCategories: this.doFind("post", "categories/all"),
-      authentication: this.doAuth(this.token)
+      authentication: this.doAuth()
     });
-  },
-  beforeModel(transition){
-    const token = transition.queryParams.token;
-    const userId = transition.queryParams.userId;
-
-    if ((token === null || token === undefined) || (userId === null || userId === undefined)) {
-      this.transitionTo('not-found');
-    } else {
-      this.token = token;
-    }
   },
   emptyField(){
     this.controller.set("post.post.description", "");
@@ -32,6 +21,7 @@ export default BaseRouter.extend({
     this.controller.set("post.post.category", "");
     this.controller.set("imagepost.imageposts_attributes.imageurl", "");
     this.imageposts = [];
+    window.tinyMCE.activeEditor.setContent('');
   },
   afterRender(){
     this._super(...arguments);
@@ -69,7 +59,7 @@ export default BaseRouter.extend({
   },
   actions: {
     onSelectCategory(event){
-      this.debug('shit iam here'+ event.target.value);
+      this.debug('shit iam here' + event.target.value);
       this.controller.set("post.post.category", parseInt(event.target.value));
     },
     onAddImageToPost(index, id, url){

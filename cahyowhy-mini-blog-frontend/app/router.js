@@ -20,15 +20,15 @@ Router.map(function () {
   });
   this.route('post-detail', {path: '/post-detail/:id'});
   this.route('dashboard', {path: '/dashboard/:id'}, function () {
-    this.route('create-post', {queryParams: ['token']});
+    this.route('create-post');
     this.route('images');
     this.route('setting');
     this.route('post');
     this.route('notification');
   });
   this.route('not-found', {path: '/*path'});
-  this.route('timeline', {queryParams: ['search', 'type']});
-  this.route('search');
+  this.route('timeline');
+  this.route('search', {queryParams: ['search', 'type']});
 });
 
 export default Router;
