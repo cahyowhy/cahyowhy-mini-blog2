@@ -1,3 +1,6 @@
 <template>
-    <h1>adawdaw</h1>
+
 </template>
+<scripts>
+
+</scripts>
