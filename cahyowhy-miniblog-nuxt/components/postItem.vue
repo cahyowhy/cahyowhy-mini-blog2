@@ -32,20 +32,19 @@
                         <div class="wow zoomIn pos-relative">
                             <div class="category-post">
                                 <h5>{{category}}</h5></div>
-                            <nuxt-link :to="{path: 'post-detail', params:{id: idPost}}">
+                            <nuxt-link :to="{path: '/post-detail', params:{id: idPost}}">
                                 <!--{{background-image-container src=img class="bgpost"}}-->
                             </nuxt-link>
                         </div>
                     </div>
                     <h4>
-                        <h1>{{idPost}}</h1>
-                        <nuxt-link :to="{path: 'post-detail', params: {id:idPost } }">
+                        <nuxt-link :to="{path: '/post-detail', params: { id:idPost } }">
                             {{title}}
                         </nuxt-link>
                     </h4>
                     <p class="names">{{username}}, {{createdAt}}</p>
                     <p>{{review}}</p>
-                    <nuxt-link :to="{path: 'post-detail', params:{id: idPost}}" class="link">
+                    <nuxt-link :to="{name: 'post-detail-id', params:{id: idPost}}" class="link">
                         Read More
                     </nuxt-link>
                 </div>

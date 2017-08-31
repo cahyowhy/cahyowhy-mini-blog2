@@ -68,10 +68,6 @@
         async fetch({store}){
             const {data} = await new postService().get();
             store.commit('setPost', data);
-            console.log(this);
-        },
-        mounted(){
-            console.log(this);
         }
     }
 </script>
