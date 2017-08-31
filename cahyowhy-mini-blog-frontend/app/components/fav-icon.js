@@ -4,8 +4,8 @@ import mainService from '../routes/main-service';
 export default Ember.Component.extend(mainService, {
   isIconHide: true,
   currentUsserLikes: false,
-  isLogedIn: Ember.computed('authentication', function () {
-    return this.get("authentication");
+  isLogedIn: Ember.computed('auth.authentication', function () {
+    return this.get("auth.authentication");
   }),
   didInsertElement(){
     this._super(...arguments);

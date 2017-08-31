@@ -4,9 +4,9 @@
       <div class="col-sm-12 sm-margin-b-50 margin-top30 dashboard-index">
         <div class="header-profile">
           <div class="pull-left">
-            {{#if navigationClass}}
+            {{#if isCurrentUser}}
               <i class="ion ion-android-camera">
-                {{photocropper-uploader-galleries id="photos" route-action="doUpload"}}
+                {{photocropper-uploader-galleries id="photos" action=(route-action "doUpload")}}
               </i>
             {{/if}}
             {{background-image-container src=(image-url-helper user.imageurl) class="img-profile-dashboard"}}

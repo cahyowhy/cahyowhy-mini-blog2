@@ -1,5 +1,22 @@
-<ul class="list-group">
-  <li class="list-group-item">First item</li>
-  <li class="list-group-item">Second item</li>
-  <li class="list-group-item">Third item</li>
+<ul class="list-group notif">
+  {{#each notifications as |notification|}}
+    <li class="list-group-item">
+      {{#link-to notification.link notification.linkId}}
+        <div class="pull-left">
+          {{background-image-container class="bg" src=(image-url-helper notification.userhasresponse.imageurl)}}
+        </div>
+        <div class="media-body">
+          <p>{{notification.message}}</p>
+          <p>{{notification.created_at}}</p>
+        </div>
+      {{/link-to}}
+    </li>
+  {{/each}}
+  {{#if isContentEmpty}}
+    {{content-is-empty}}
+  {{else}}
+    <div class="btn-wrapper-post margin-top15"><a onclick={{route-action "onLoadNotification"}} class="btn-primary btn-medium btn">Load
+      more</a>
+    </div>
+  {{/if}}
 </ul>

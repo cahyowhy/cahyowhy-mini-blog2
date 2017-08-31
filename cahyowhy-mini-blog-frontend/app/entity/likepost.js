@@ -2,8 +2,8 @@ import Base from './base';
 export default class LikePost extends Base {
   constructor() {
     const likepost = {
-      post_id: {
-        status_id: "",
+      likepost: {
+        post_id: "",
         user_id: ""
       }
     };

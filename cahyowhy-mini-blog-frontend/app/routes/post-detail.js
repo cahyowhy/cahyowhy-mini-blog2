@@ -10,10 +10,6 @@ export default BaseRouter.extend({
   controller: null,
   commentpost: new Commentpost().getInitializeValue(),
   offset: ENV.APP.DEFAULT_OFFSET,
-  /**
-   * need for computed property
-   */
-  comments: null,
   model(param){
     let commentpost = new Commentpost().getInitializeValue();
     commentpost.commentpost.post_id = param.id;
@@ -46,11 +42,8 @@ export default BaseRouter.extend({
      * sesuk jajal iso po ura
      * authentication seko base router
      */
-    this.controller.set("commentDisabled", computed('authentication', () => {
-      return !get(this, 'authentication');
-    }));
-    this.controller.set("isCommentEmpty", computed('comments', () => {
-      return get(this, 'comments');
+    this.controller.set("commentDisabled", computed('auth.authentication', () => {
+      return !get(this, 'auth.authentication');
     }));
     this.controller.set("isBtnDisabled", computed.empty('commentpost.commentpost.comment'));
     this.controller.set("isLoadCommentBtnDisplayed", computed.gt('comments', 0));
@@ -67,8 +60,8 @@ export default BaseRouter.extend({
     const imageProfile = this.commonService.getImageProfile();
     const username = this.commonService.getUsername();
     this.controller = controller;
-    this.comments = model.comments;
-    this.controller.set('comments', this.comments);
+    this.controller.set("isCommentEmpty", model.comments.length===0);
+    this.controller.set('comments', model.comments);
     this.controller.set('post', model.post);
     this.controller.set('nextPost', model.nextPost);
     this.controller.set('prevPost', model.prevPost);
@@ -80,9 +73,9 @@ export default BaseRouter.extend({
   actions: {
     onFavouriteComment(id){
       let likecommentpost = new Likecommentpost().getInitializeValue();
-      likecommentpost.user_id = this.commonService.getId();
-      likecommentpost.commentpost_id = id;
-      likecommentpost.post_id = this.controller.get("post").id;
+      likecommentpost.likecommentpost.user_id = this.commonService.getId();
+      likecommentpost.likecommentpost.commentpost_id = id;
+      likecommentpost.likecommentpost.post_id = this.controller.get("post").id;
       likecommentpost = new Likecommentpost().getValue(likecommentpost);
       this.doSave("likecommentpost", likecommentpost).then();
     },
@@ -112,17 +105,17 @@ export default BaseRouter.extend({
     doSave(event){
       const context = this;
       if (this.checkBtnSaveDisabled(event)) {
-        let commentpost = this.controller.get('commentpost');
-        commentpost.set('commentpost.post_id', this.controller.get("post").id);
-        commentpost.set('commentpost.user_id', this.commonService.getId());
+        this.controller.set('commentpost.commentpost.post_id', this.controller.get("post").id);
+        this.controller.set('commentpost.commentpost.user_id', this.commonService.getId());
 
         /**
          *
          * also checked this
          */
-        commentpost = new Commentpost().getValue(this.normalize(commentpost));
+        const commentpost = new Commentpost().getValue(this.controller.get("commentpost"));
         this.doSave("comment", commentpost).then(function (response) {
           context.controller.get("comments").unshiftObject(response);
+          context.controller.set('isCommentEmpty', false);
           context.controller.set("commentpost.commentpost.comment", "");
         });
       }

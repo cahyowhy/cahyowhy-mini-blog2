@@ -1,5 +1,5 @@
 <!-- routeUserId => is the current route dashboard id -->
-{{#create-status statuses=statuses routeUserId=routeUserId action="checkStatusEmpty" imageProfile=imageProfile}}
+{{#create-status statuses=statuses routeUserId=routeUserId action=(route-action "checkStatusEmpty") imageProfile=imageProfile}}
   {{#if ifPostIsEmpty}}
     {{content-is-empty}}
   {{else}}

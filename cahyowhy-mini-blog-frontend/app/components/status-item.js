@@ -11,8 +11,8 @@ export default Ember.Component.extend(mainService, {
   doEmptyField(){
     this.set("comment", "");
   },
-  isLogedIn: Ember.computed('authentication', function () {
-    return this.get("authentication");
+  isLogedIn: Ember.computed('auth.authentication', function () {
+    return this.get("auth.authentication");
   }),
   statusImagesSize: Ember.computed('statusImages', function () {
     return this.get('statusImages').length;

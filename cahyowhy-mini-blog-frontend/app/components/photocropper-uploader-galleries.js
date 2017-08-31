@@ -189,6 +189,7 @@ export default Ember.Component.extend({
       }
     },
     doUpload(){
+      this.debug("from component "+filename);
       this.sendAction("action", file, '#uploadphoto-' + this.get("id"), filename);
       filename = generateRandomId();
     }

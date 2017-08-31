@@ -4,7 +4,10 @@
       {{background-image-container src=(image-url-helper imageurl)}}
     </div>
     <div class="media-body">
-      <p><a href="/dashboard/{{userId}}" target="_blank">{{username}}</a></p>
+      <p>
+      {{#link-to 'dashboard' userId}} {{username}} {{/link-to}}
+      {{!-- <a href="/dashboard/{{userId}}" target="_blank">{{username}}</a> --}}
+      </p>
       <p>{{name}}</p>
       <p>Bergabung pada {{createdAt}}</p></div>
   </div>

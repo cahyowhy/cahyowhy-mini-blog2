@@ -37,7 +37,11 @@ export default class Base {
    */
   getValue(value) {
     this.value = value;
-    return lodash.pickBy(this.value, lodash.identity);
+    const objchild = lodash.pickBy(this.value[this.type], lodash.identity);
+    let obj = {};
+    obj[this.type] = objchild;
+
+    return obj;
   }
 
   /**

@@ -30,10 +30,10 @@ export default Ember.Route.extend(mainService, {
     window.scrollTo(0, 0);
 
     if (token === null || token === undefined) {
-      this.setAuthentication(false);
+      this.auth.setAuth(false);
     } else {
       this.authService.auth(token).then(function (response) {
-        context.setAuthentication(response.status === 204);
+        context.auth.setAuth(response.status === 204);
       });
     }
   }

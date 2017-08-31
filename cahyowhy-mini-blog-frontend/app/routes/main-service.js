@@ -1,20 +1,16 @@
 import Ember from 'ember';
-const {set} = Ember;
+const { set, get } = Ember;
 export default Ember.Mixin.create({
-  authentication: false,
-  init(){
+  init() {
     this._super(...arguments);
   },
-  setAuthentication(param){
-    set(this, 'authentication', param);
-  },
-  showAlertLogin(){
+  showAlertLogin() {
     Ember.$("#modal-not-login").modal('show');
   },
-  checkBtnSaveDisabled(event){
+  checkBtnSaveDisabled(event) {
     return !(Ember.$(event.target).attr("disabled"));
   },
-  doRemove(type = "", param = "", obj = {}){
+  doRemove(type = "", param = "", obj = {}) {
     let del;
     const context = this;
     switch (type) {
@@ -22,54 +18,54 @@ export default Ember.Mixin.create({
         del = this.imageService.delete(param);
         break;
       case "relation":
-        del = this.relationshipService.delete(null, obj);
+        del = this.relationshipService.delete(param, obj);
         break;
       default:
         break;
     }
 
-    return new Ember.RSVP.Promise(function (resolve, reject) {
-      del.then(function (response) {
+    return new Ember.RSVP.Promise(function(resolve, reject) {
+      del.then(function(response) {
         context.commonService.showNotification(response.httpstatus);
-        Ember.run.later(function () {
+        Ember.run.later(function() {
           resolve(response);
         }, 1200);
-      }).catch(function (err) {
+      }).catch(function(err) {
         reject(err);
       });
     });
   },
-  doFindPostNextById(id){
+  doFindPostNextById(id) {
     const nextPost = this.postService.findPostNextById(id);
-    return new Ember.RSVP.Promise(function (resolve, reject) {
-      nextPost.then(function (response) {
+    return new Ember.RSVP.Promise(function(resolve, reject) {
+      nextPost.then(function(response) {
         resolve(response);
-      }).catch(function (err) {
+      }).catch(function(err) {
         reject(err);
       });
     })
   },
-  doFindPostPrevById(id){
+  doFindPostPrevById(id) {
     const nextPost = this.postService.findPostPrevById(id);
-    return new Ember.RSVP.Promise(function (resolve, reject) {
-      nextPost.then(function (response) {
+    return new Ember.RSVP.Promise(function(resolve, reject) {
+      nextPost.then(function(response) {
         resolve(response);
-      }).catch(function (err) {
+      }).catch(function(err) {
         reject(err);
       });
     })
   },
-  doAuth(){
+  doAuth() {
     const auth = this.authService.auth();
-    return new Ember.RSVP.Promise(function (resolve, reject) {
-      auth.then(function (response) {
+    return new Ember.RSVP.Promise(function(resolve, reject) {
+      auth.then(function(response) {
         resolve(response)
-      }).catch(function (err) {
+      }).catch(function(err) {
         reject(err);
       });
     })
   },
-  doFind(type = "", param){
+  doFind(type = "", param) {
     let find;
     const context = this;
     switch (type) {
@@ -91,8 +87,14 @@ export default Ember.Mixin.create({
       case "comment":
         find = this.commentpostService.find(param);
         break;
+      case "relation":
+        find = this.relationshipService.find(param);
+        break;
       case "commentstatus":
         find = this.commentstatusService.find(param);
+        break;
+      case "notification":
+        find = this.notificationService.find(param);
         break;
       case "status":
         find = this.statusService.find(param);
@@ -101,15 +103,15 @@ export default Ember.Mixin.create({
         break;
     }
 
-    return new Ember.RSVP.Promise(function (resolve, reject) {
-      find.then(function (response) {
+    return new Ember.RSVP.Promise(function(resolve, reject) {
+      find.then(function(response) {
         resolve(response);
-      }).catch(function (err) {
+      }).catch(function(err) {
         reject(err);
       });
     });
   },
-  doUpdate(type = "", obj = null){
+  doUpdate(type = "", obj = null) {
     let update;
     const context = this;
     switch (type) {
@@ -120,18 +122,18 @@ export default Ember.Mixin.create({
         break;
     }
 
-    return new Ember.RSVP.Promise(function (resolve, reject) {
-      update.then(function (response) {
+    return new Ember.RSVP.Promise(function(resolve, reject) {
+      update.then(function(response) {
         context.commonService.showNotification(response.httpstatus);
-        Ember.run.later(function () {
+        Ember.run.later(function() {
           resolve(response);
         }, 1200);
-      }).catch(function (err) {
+      }).catch(function(err) {
         reject(err);
       });
     });
   },
-  doSave(type = "", obj = null, param = ""){
+  doSave(type = "", obj = null, param = "") {
     let post;
     const context = this;
     switch (type) {
@@ -142,7 +144,7 @@ export default Ember.Mixin.create({
         post = this.relationshipService.save(obj);
         break;
       case "login":
-        post = this.loginService.save(obj, null, param);
+        post = this.loginService.save(obj, param);
         break;
       case "post":
         post = this.postService.save(obj);
@@ -165,17 +167,17 @@ export default Ember.Mixin.create({
       case "commentstatus":
         post = this.commentstatusService.save(obj);
         break;
-      default :
+      default:
         break;
     }
 
-    return new Ember.RSVP.Promise(function (resolve, reject) {
-      post.then(function (response) {
+    return new Ember.RSVP.Promise(function(resolve, reject) {
+      post.then(function(response) {
         context.commonService.showNotification(response.httpstatus);
-        Ember.run.later(function () {
+        Ember.run.later(function() {
           resolve(response);
         }, 1200);
-      }).catch(function (err) {
+      }).catch(function(err) {
         context.commonService.showCustomNotification(err.statusText);
         context.debug(err);
         reject(err);

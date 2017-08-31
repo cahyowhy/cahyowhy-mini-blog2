@@ -7,8 +7,8 @@ export default Ember.Controller.extend(mainService, {
   currentRouteName: Ember.computed('router', function () {
     return this.get('router.router.currentRouteName');
   }),
-  authentication: Ember.observer('authentication', function () { //executed after dom loaded
-    if (this.get("authentication")) {
+  authentication: Ember.observer('auth.authentication', function () { //executed after dom loaded
+    if (this.get("auth.authentication")) {
       this.handleActionCable();
     } else {
       this.removeSubscription();

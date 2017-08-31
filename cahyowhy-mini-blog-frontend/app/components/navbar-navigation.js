@@ -3,23 +3,24 @@ import mainService from '../routes/main-service';
 
 export default Ember.Component.extend(mainService, {
   id: '',
-  token: '',
   search: '',
-  isLinkProfileVisible: false,
-  authenticate: Ember.observer("authentication", function () {
-    if (this.get("authentication")) {
+  isLinkProfileVisible: Ember.computed('auth.authentication', function () {
+    this.debug(this.get("auth.authentication"));
+    return this.get("auth.authentication");
+  }),
+  authenticate: Ember.observer("auth.authentication", function () {
+    if (this.get("auth.authentication")) {
       this.toggleNav();
     }
   }),
   didInsertElement(){
     this._super(...arguments);
-    this.set("token", this.commonService.getToken());
+    this.debug(this);
   },
   toggleNav(){
     this.debug("nav change!");
     let id = this.commonService.getId();
     this.set('id', id);
-    this.set('isLinkProfileVisible', true);
   },
   actions: {
     onLogOut(){

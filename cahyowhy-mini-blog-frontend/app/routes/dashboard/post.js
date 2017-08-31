@@ -12,6 +12,7 @@ export default BaseRouter.extend({
     this.offset = ENV.APP.DEFAULT_OFFSET;
     let post = new Post().getInitializeValue();
     post.post.user_id = this.modelFor('dashboard').id;
+    delete post.post.imageposts_attributes;
     post = new Post().getChildValue(post);
     for (let key in offsetlimit()) {
       post[key] = offsetlimit()[key];
@@ -41,6 +42,7 @@ export default BaseRouter.extend({
 
       let post = new Post().getInitializeValue();
       post.post.user_id = this.commonService.getId();
+      delete post.post.imageposts_attributes;
       post = new Post().getChildValue(post);
       for (let key in offsetlimit(this.offset)) {
         post[key] = offsetlimit(this.offset)[key];
