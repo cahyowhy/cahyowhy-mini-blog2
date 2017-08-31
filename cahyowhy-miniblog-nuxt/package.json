@@ -1,0 +1,42 @@
+{
+  "name": "jajalen",
+  "version": "1.0.0",
+  "description": "Nuxt.js project",
+  "author": "cahyowhy <cahyowhy01@gmail.com>",
+  "private": true,
+  "config": {
+    "nuxt": {
+      "port": 1200
+    }
+  },
+  "scripts": {
+    "dev": "gulp default && nuxt",
+    "build": "gulp default && nuxt build",
+    "start": "gulp default && nuxt start",
+    "generate": "gulp default && nuxt generate",
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
+    "precommit": "npm run lint"
+  },
+  "dependencies": {
+    "nuxt": "^1.0.0-rc3",
+    "axios": "^0.16.2"
+  },
+  "devDependencies": {
+    "babel-eslint": "^7.2.3",
+    "eslint": "^4.3.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-loader": "^1.9.0",
+    "eslint-plugin-html": "^3.1.1",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.1.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "node-sass": "^4.5.3",
+    "sass-loader": "^6.0.6",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-order": "^1.1.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^3.0.0"
+  }
+}
