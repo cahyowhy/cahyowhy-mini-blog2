@@ -3,9 +3,6 @@
     <div class="promo-block">
       <div class="container">
         <div class="row">
-        <nuxt-link :to="{name: 'post-detail-id', params:{id: 156}}">
-          HAHAHAH CEK
-        </nuxt-link>       
           <div class="col-sm-4 sm-margin-b-60">
             <div class="margin-b-30">
               <h1 class="promo-block-title">Mini <br/> Blog</h1>

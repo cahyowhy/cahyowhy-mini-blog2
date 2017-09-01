@@ -13,17 +13,14 @@
                 classNames: `${this.className} bg-image-container`
             }
         },
-        some(){
-        },
         mounted(){
-            console.log(this);
             const context = this;
             if (this.src === undefined || this.src === null || this.src.length === 0) {
                 this.image = {
                     "background-image": `url(${"/no-image.png"})`
                 };
             } else {
-                $('<img/>').attr('src', this.image).on('load', function () {
+                $('<img/>').attr('src', this.src).on('load', function () {
                    $(this).remove();
                     context.image = {
                         'background-image': "url(" + context.src + ")"

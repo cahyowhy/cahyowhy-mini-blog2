@@ -22,18 +22,18 @@
                     <div class="menu-container">
                         <ul class="nav navbar-nav navbar-nav-right">
                             <li class="js_nav-item nav-item">
-                                <nuxt-link class="nav-item-child nav-item-hover" to="post">
+                                <nuxt-link class="nav-item-child nav-item-hover" to="/post">
                                     Post
                                 </nuxt-link>
                             </li>
 
                             <li class="js_nav-item nav-item login">
-                                <nuxt-link class="nav-item-child nav-item-hover" to="timeline">
+                                <nuxt-link class="nav-item-child nav-item-hover" to="/timeline">
                                     Linimasa
                                 </nuxt-link>
                             </li>
                             <li class="js_nav-item nav-item user">
-                                <nuxt-link class="nav-item-child nav-item-hover" to="dashboard">
+                                <nuxt-link class="nav-item-child nav-item-hover" to="/dashboard">
                                     Profile
                                 </nuxt-link>
                             </li>
@@ -42,12 +42,12 @@
                             </li>
 
                             <li class="js_nav-item nav-item login">
-                                <nuxt-link class="nav-item-child nav-item-hover" to="login">
+                                <nuxt-link class="nav-item-child nav-item-hover" to="/login">
                                     Masuk
                                 </nuxt-link>
                             </li>
                             <li class="js_nav-item nav-item login">
-                                <nuxt-link class="nav-item-child nav-item-hover" to="sign-up">
+                                <nuxt-link class="nav-item-child nav-item-hover" to="/sign-up">
                                     Registrasi
                                 </nuxt-link>
                             </li>

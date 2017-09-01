@@ -1,15 +1,16 @@
-import axios from 'axios';
 import postService from '~/service/postService';
 
 const state = () => {
-  return { postItems: [], postDetail: null, postId: null }
+  return {postItems: [], postDetail: null, postId: null}
 };
 const actions = {
-  async fetchPost({ commit }, {param, type}) {
-    const { data } = await new postService().get(param);
-    type === "POST_ITEMS" ? commit('updatePostItems', data) : commit('updatePostDetail', data);
-    console.log(data);
-    console.log("data");
+  async fetchPost({commit}, {param, type}) {
+    const {data} = await new postService().get(param);
+    if (type === "POST_ITEMS") {
+      commit('updatePostItems', data);
+    } else if (type === "POST_DETAIL") {
+      commit('updatePostDetail', data);
+    }
   }
 };
 const mutations = {
@@ -20,7 +21,7 @@ const mutations = {
     state.postDetail = payloads;
   },
   setPostId(state, payload){
-  	state.postId = payload;
+    state.postId = payload;
   }
 };
 export default {

@@ -6,6 +6,7 @@ class AuthenticationController < ApplicationController
 
     if command.success?
       @user = User.find_by_username(params[:username])
+      puts @user.username
 
       if @user.confirmed
         render json: {auth_token: command.result, user: @user, httpstatus: authsucces}

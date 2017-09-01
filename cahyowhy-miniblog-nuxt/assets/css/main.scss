@@ -864,6 +864,10 @@ nav {
   padding-bottom: 15px !important;
 }
 
+.padding-bot30{
+  padding-bottom: 30px !important;
+}
+
 .padding0px {
   padding: 0px;
 }
@@ -970,7 +974,8 @@ nav {
 .btn-wrapper-post {
   text-align: center;
   a {
-    width: 150px;
+    min-width: 150px;
+    width: auto;
   }
 }
 
@@ -1378,4 +1383,8 @@ ul.list-group {
     width: 20%;
     float: left;
   }
+}
+
+.bg-greyYoung{
+  background: $greyYoung !important;
 }

@@ -18,8 +18,9 @@
     "precommit": "npm run lint"
   },
   "dependencies": {
-    "nuxt": "^1.0.0-rc3",
-    "axios": "^0.16.2"
+    "axios": "^0.16.2",
+    "js-cookie": "^2.1.4",
+    "nuxt": "^1.0.0-rc3"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",
