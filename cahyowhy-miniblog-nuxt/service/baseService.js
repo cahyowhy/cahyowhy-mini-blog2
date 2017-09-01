@@ -47,6 +47,8 @@ export default class baseService {
       method: this.method,
       url: api,
       data: JSON.stringify(body),
+    }).catch(function(err){
+      console.log(err);
     });
   }
 }

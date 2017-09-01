@@ -43,7 +43,7 @@
                 </div>
             </div>
             <post-item
-                    v-for="post in $store.state.posts"
+                    v-for="post in $store.state.posts.postItems"
                     :key="post.id"
                     :idPost="post.id"
                     :username="post.user.username"
@@ -66,8 +66,10 @@
             'post-item': postItem
         },
         async fetch({store}){
-            const {data} = await new postService().get();
-            store.commit('setPost', data);
+            await store.dispatch('posts/fetchPost', {
+                param: "",
+                type: "POST_ITEMS"
+            });
         }
     }
 </script>

@@ -23,8 +23,8 @@
                     "background-image": `url(${"/no-image.png"})`
                 };
             } else {
-                Ember.$('<img/>').attr('src', this.image).on('load', function () {
-                    Ember.$(this).remove();
+                $('<img/>').attr('src', this.image).on('load', function () {
+                   $(this).remove();
                     context.image = {
                         'background-image': "url(" + context.src + ")"
                     };
