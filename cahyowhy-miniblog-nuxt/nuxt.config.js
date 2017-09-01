@@ -27,7 +27,7 @@ const configuration = {
    ** Build configuration
    */
   build: {
-    vendor: ['axios'],
+    vendor: ['axios', 'lodash'],
     /*
      ** Run ESLINT on save
      */
