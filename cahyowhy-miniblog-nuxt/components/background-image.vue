@@ -1,5 +1,6 @@
 <template xmlns:v-bind="http://www.w3.org/1999/xhtml">
     <div v-bind:class="classNames" v-bind:style="image">
+      <slot/>
     </div>
 </template>
 <script>

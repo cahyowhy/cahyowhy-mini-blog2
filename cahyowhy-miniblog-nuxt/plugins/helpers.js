@@ -8,7 +8,7 @@ const lodash = require('lodash');
 Vue.mixin({
   methods: {
     capitalizeFirstLetter: str => str.charAt(0).toUpperCase() + str.slice(1),
-    imageUrl: function(imageurl) {
+    imageUrl: function (imageurl) {
       const condition = imageurl.includes("scontent.xx.fbcdn") || imageurl.includes("facebook");
       if (condition) {
         return imageurl
@@ -16,7 +16,22 @@ Vue.mixin({
         return `${process.env.APP.IMAGE_RESOURCES}${imageurl}`;
       }
     },
-    compactEntity: function(value) {
+    eq: function (value1, value2) {
+      return value1 === value2;
+    },
+    lte: function (value1, value2) {
+      return value1 <= value2;
+    },
+    lt: function (value1, value2) {
+      return value1 < value2;
+    },
+    gte: function (value1, value2) {
+      return value1 >= value2;
+    },
+    or: function (value1, value2) {
+      return value1 || value2;
+    },
+    compactEntity: function (value) {
       const content = value[Object.keys(value)[0]];
       const contentFilter = lodash.pickBy(content, lodash.identity);
       let obj = {};
@@ -24,18 +39,18 @@ Vue.mixin({
 
       return obj;
     },
-    compactChildEntity: function(value) {
+    compactChildEntity: function (value) {
       const content = value[Object.keys(value)[0]];
       return lodash.pickBy(content, lodash.identity);
     },
     /*
-      return true if obj empty
-    */
-    isObjectEmpty: function(value) {
+     return true if obj empty
+     */
+    isObjectEmpty: function (value) {
       if (typeof value === "object") {
         for (let key in value) {
-          const condition = value[key] === "" || value[key].length < 1 || value[key]===null;
-          if(condition) return true;
+          const condition = value[key] === "" || value[key].length < 1 || value[key] === null;
+          if (condition) return true;
         }
 
         return false;
