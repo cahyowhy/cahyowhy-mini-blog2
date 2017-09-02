@@ -8,7 +8,7 @@ export const state = () => ({
 
 export const mutations = {
   SET_USER: function (state, user) {
-    state.user = user
+    state.user = JSON.parse(user);
   },
   SET_ACCESS_TOKEN: function (state, token) {
     state.access_token = token

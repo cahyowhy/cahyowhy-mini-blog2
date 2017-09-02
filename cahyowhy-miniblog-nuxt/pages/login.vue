@@ -33,10 +33,6 @@
   import loginServive from '~/service/loginServive';
 
   export default {
-    mounted(){
-      const store = this.$store;
-      console.log(store.state.auth);
-    },
     computed: {
       isBtnDisabled: {
         get(){
@@ -54,7 +50,6 @@
           store.dispatch('auth/setToken', result.data.auth_token);
           store.dispatch('auth/setUser', result.data.user);
           store.commit('auth/SET_IS_LOGGED_IN', true);
-          console.log(store.state.auth);
         });
       },
       onLoginFacebook(){

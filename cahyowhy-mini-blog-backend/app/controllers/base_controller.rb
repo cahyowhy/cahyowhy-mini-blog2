@@ -76,7 +76,7 @@ class BaseController < ApplicationController
       # you can search through the url params with this method. example GET http://localhost:3000/statuses?limit=21&offset=0&user_id=2
       # will add user_id=2 hash object through the paramshash and search the status where limit=VALUE, offset=VALUE and where id user = 2
       # be sure to enclose the offset limit to url params hash to make this work
-      unless key.to_s=="offset" || key.to_s=="limit" || key.to_s=="controller" || key.to_s=="action" || key.to_s==@current_entity
+      unless key.to_s=="offset" || key.to_s=="_json" || key.to_s=="limit" || key.to_s=="controller" || key.to_s=="action" || key.to_s==@current_entity
         paramshash[key] = value.to_i
       end
     end
