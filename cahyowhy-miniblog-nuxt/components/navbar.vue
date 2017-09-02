@@ -33,7 +33,7 @@
                                 </nuxt-link>
                             </li>
                             <li class="js_nav-item nav-item user">
-                                <nuxt-link class="nav-item-child nav-item-hover" to="/dashboard">
+                                <nuxt-link class="nav-item-child nav-item-hover" to="/profile">
                                     Profile
                                 </nuxt-link>
                             </li>

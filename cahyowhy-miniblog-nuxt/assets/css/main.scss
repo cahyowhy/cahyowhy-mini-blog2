@@ -11,6 +11,9 @@
 @import "contextMenu";
 @import "lightbox";
 @import "cropper.min";
+@import "tinymce/content.inline.min";
+@import "tinymce/content.min";
+@import "tinymce/skin.min";
 
 $blueInstagram: #3897F0;
 $greyDark: #eaeaea;
@@ -262,6 +265,10 @@ body {
   border-right: 0px !important;
 }
 
+.margin-bot-min15px {
+  margin-bottom: -15px;
+}
+
 .margin-bot0 {
   margin-bottom: 0px !important;
 }
@@ -425,7 +432,7 @@ nav {
       z-index: 10000;
       top: 50%;
       transform: translate(0,
-              -50%);
+        -50%);
       height: auto;
       width: 100%;
       left: 0px;
@@ -844,7 +851,7 @@ nav {
         top: 50%;
         left: 0px;
         transform: translate(0px,
-                -50%);
+          -50%);
       }
     }
   }
@@ -855,7 +862,7 @@ nav {
   }
 }
 
-.overflow-auto{
+.overflow-auto {
   overflow: auto !important;
 }
 
@@ -868,7 +875,7 @@ nav {
   padding-bottom: 15px !important;
 }
 
-.padding-bot30{
+.padding-bot30 {
   padding-bottom: 30px !important;
 }
 
@@ -1389,10 +1396,28 @@ ul.list-group {
   }
 }
 
-.bg-greyYoung{
+.bg-greyYoung {
   background: $greyYoung !important;
 }
 
 .opacity-0 {
   opacity: 0 !important;
+}
+
+.container-success-info {
+  max-width: 1024px;
+  margin: 0 auto;
+  height: 100vh;
+  .custom-success-info {
+    position: relative;
+    top: 50%;
+    transform: translate(0, -50%);
+    text-align: center;
+  }
+}
+
+.custom-23 {
+  font-weight: 500;
+  width: auto;
+  min-width: 150px;
 }

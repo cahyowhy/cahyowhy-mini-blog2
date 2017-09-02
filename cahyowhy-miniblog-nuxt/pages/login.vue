@@ -46,10 +46,12 @@
       onLogin(){
         const store = this.$store;
         const user = this.compactChildEntity(store.state.user);
+        const context = this;
         new loginServive().store(user).then(function (result) {
           store.dispatch('auth/setToken', result.data.auth_token);
           store.dispatch('auth/setUser', result.data.user);
           store.commit('auth/SET_IS_LOGGED_IN', true);
+          context.$router.push({name: 'post'});
         });
       },
       onLoginFacebook(){

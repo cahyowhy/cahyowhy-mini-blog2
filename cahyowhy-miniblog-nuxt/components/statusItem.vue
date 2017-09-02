@@ -1,0 +1,94 @@
+<template>
+  <div class="status-item" id="status-{{statusId}}">
+    <div class="status-detail">
+      <div class="pull-left">
+        {{background-image-container src=(image-url-helper imageProfile) class="cust21"}}
+      </div>
+      <div class="media-body">
+        <p>{{username}}</p>
+        {{{status}}}
+        <div class="imagestatuses-wrapper">
+          {{#each statusImages as |statusImage index|}}
+          {{#if (or (eq statusImagesSize 2)(gte statusImagesSize 4))}}
+          {{#if (lte index 2)}}
+          <a href="{{statusImage.imageurl}}" data-lightbox="status-image-{{statusId}}" data-title="{{statusText}}">
+            <div class="col-sm-6  margin-bot30">{{background-image-container src=statusImage.imageurl
+              class="item"}}</div>
+          </a>
+          {{else if (eq index 3)}}
+          <a href="{{statusImage.imageurl}}" data-lightbox="status-image-{{statusId}}" data-title="{{statusText}}">
+            <div class="col-sm-6  margin-bot30">
+              {{#background-image-container src=statusImage.imageurl class="item"}}
+              <div class="item-morethan">
+                <p>
+                  {{statusImagesSizeIfGT3}} +
+                </p>
+              </div>
+              {{/background-image-container}}
+            </div>
+          </a>
+          {{else}}
+          <a href="{{statusImage.imageurl}}"
+             data-title={{statusText}} data-lightbox="status-image-{{statusId}}"></a>
+          {{/if}}
+          {{!-- if image length == 3 --}}
+          {{else if (eq statusImagesSize 3)}}
+          <a href="{{statusImage.imageurl}}" data-lightbox="status-image-{{statusId}}" data-title="{{statusText}}">
+            {{#if (lt index 2)}}
+            <div class="col-sm-6 margin-bot15">{{background-image-container src=statusImage.imageurl
+              class="item"}}</div>
+            {{else}}
+            <div class="col-sm-12  margin-bot15">{{background-image-container src=statusImage.imageurl
+              class="item margin-top15"}}</div>
+            {{/if}}
+          </a>
+          {{else}}
+          <a href="{{statusImage.imageurl}}" data-lightbox="status-image-{{statusId}}" data-title="{{statusText}}">
+            <div class="col-sm-12  margin-bot15">{{background-image-container src=statusImage.imageurl
+              class="item"}}</div>
+          </a>
+          {{/if}}
+          {{/each}}
+        </div>
+      </div>
+    </div>
+    <div class="comment-statuses">
+      <div class="detailwrapper">
+        <div class="pull-left">
+          <div data-target="#comment-{{statusId}}" data-toggle="collapse" class="pull-left margin-ri15">
+            <i class="ion-chatbubble ion margin-ri5"></i>
+            <h3 class="pull-right">Komentar</h3>
+          </div>
+          {{fav-status isLogedIn=isLogedIn statusId=statusId likestatuses=likestatuses class="margin-ri15 pull-left"}}
+        </div>
+        <a href="javascript:void(0);" data-target="#comment-{{statusId}}" data-toggle="collapse"
+           class="pull-right"><p class="pull-right">lihat komentar</p></a>
+      </div>
+      <div id="comment-{{statusId}}" class="collapse in comment-wrapper">
+        {{#if isCommentMax}}
+        <div onclick={{action "onloadcomment" statusId}} class="more-comment">
+        <span class="text-muted">
+          lihat komentar sebelumnya
+        </span>
+      </div>
+      {{/if}}
+      {{#each commentstatuses as |comment index|}}
+      <div id="user-status-{{comment.id}}" class="comment-status">
+        <div class="pull-left">
+          {{background-image-container class="cust21" src=(image-url-helper comment.user.imageurl)}}
+        </div>
+        <div class="media-body">
+          <p>{{comment.user.username}}</p>
+          <p>{{comment.comment}}</p>
+        </div>
+      </div>
+      {{/each}}
+      {{#if isLogedIn}}
+      {{textarea value=comment class="form-control" placeholder="tulis komentar"}}
+      <a disabled={{isBtnDisable}} onclick={{action "doSaveComment"}} style="margin-top: 15px;width: 150px;" class="btn btn-primary
+      pull-right">Save</a>
+      {{/if}}
+    </div>
+  </div>
+  </div>
+</template>
