@@ -46,7 +46,8 @@ const configuration = {
     middleware: 'check-auth'
   },
   plugins: [
-    {src: '~/plugins/helpers', ssr: true}
+    {src: '~/plugins/helpers', ssr: true},
+    {src: '~/plugins/debugger', ssr: true},
   ],
   env: {
     APP: {

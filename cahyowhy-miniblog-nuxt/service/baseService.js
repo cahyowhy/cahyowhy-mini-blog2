@@ -46,11 +46,11 @@ export default class baseService {
     return axios({
       method: this.method,
       url: api,
-      headers:{
-        'Content-Type':'applictaion/json'
+      headers: {
+        'Content-Type': 'application/json'
       },
       data: JSON.stringify(body),
-    }).catch(function(err){
+    }).catch(function (err) {
       console.log(err);
     });
   }

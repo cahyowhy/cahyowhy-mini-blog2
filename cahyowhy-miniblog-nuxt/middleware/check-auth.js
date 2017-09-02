@@ -1,6 +1,8 @@
 import {getTokenFromCookie, getTokenFromLocalStorage, getUserFromCookie, getUserFromLocalStorage} from '~/utils/auth'
 
 export default function ({store, redirect, isServer, error, req}) {
+  console.log(getTokenFromCookie(req));
+  console.log(getUserFromCookie(req));
   if (isServer && !req) {
     return
   }

@@ -31,24 +31,30 @@
 </template>
 <script>
   import loginServive from '~/service/loginServive';
-  
+
   export default {
-    computed:{
-      isBtnDisabled:{
+    mounted(){
+      const store = this.$store;
+      console.log(store.state.auth);
+    },
+    computed: {
+      isBtnDisabled: {
         get(){
-          const isUsernameEmpty = this.$store.state.user.user.username.length>0;
-          const isPasswordEmpty = this.$store.state.user.user.password.length>0;
+          const isUsernameEmpty = this.$store.state.user.user.username.length > 0;
+          const isPasswordEmpty = this.$store.state.user.user.password.length > 0;
           return isUsernameEmpty && isPasswordEmpty;
         }
       }
     },
     methods: {
       onLogin(){
-        const user = this.compactChildEntity(this.$store.state.user);
-        console.log(user);
-        console.log(JSON.stringify(user));
-        new loginServive().store(user).then((result)=>{
-          console.log("user");
+        const store = this.$store;
+        const user = this.compactChildEntity(store.state.user);
+        new loginServive().store(user).then(function (result) {
+          store.dispatch('auth/setToken', result.data.auth_token);
+          store.dispatch('auth/setUser', result.data.user);
+          store.commit('auth/SET_IS_LOGGED_IN', true);
+          console.log(store.state.auth);
         });
       },
       onLoginFacebook(){
