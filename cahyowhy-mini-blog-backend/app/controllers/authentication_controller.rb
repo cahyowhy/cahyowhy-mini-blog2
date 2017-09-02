@@ -3,11 +3,11 @@ class AuthenticationController < ApplicationController
 
   def authenticate
     command = AuthenticateUser.call(params[:username], params[:password])
+    puts params[:password]
 
     if command.success?
       @user = User.find_by_username(params[:username])
-      puts @user.username
-
+      
       if @user.confirmed
         render json: {auth_token: command.result, user: @user, httpstatus: authsucces}
       else

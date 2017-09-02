@@ -46,6 +46,9 @@ export default class baseService {
     return axios({
       method: this.method,
       url: api,
+      headers:{
+        'Content-Type':'applictaion/json'
+      },
       data: JSON.stringify(body),
     }).catch(function(err){
       console.log(err);

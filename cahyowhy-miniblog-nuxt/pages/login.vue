@@ -6,14 +6,11 @@
           <img src="~assets/img/logo.png"/>
         </div>
         <div class="l-part">
-          <input type="text" class="input-1" placeholder="Username">
-          <!--{{input type="text" value=user.user.username placeholder="Username" class="input-1"}}-->
+          <input v-model="$store.state.user.user.username" type="text" class="input-1" placeholder="Username">
           <div class="overlap-text">
-            <input type="password" class="input-2" placeholder="Pasword">
-            <!--{{input type="password" value=user.user.password placeholder="Pasword" class="input-2"}}-->
+            <input v-model="$store.state.user.user.password" type="password" class="input-2" placeholder="Pasword">
           </div>
-          <!--disabled={{btnDisabled}} -->
-          <a @click="onLogin" class="btn btn-login">Login</a>
+          <a v-bind:disabled="!isBtnDisabled" @click="onLogin" class="btn btn-login">Login</a>
         </div>
       </div>
       <div class="sub-content">
@@ -34,13 +31,25 @@
 </template>
 <script>
   import loginServive from '~/service/loginServive';
+  
   export default {
-    mounted(){
-
+    computed:{
+      isBtnDisabled:{
+        get(){
+          const isUsernameEmpty = this.$store.state.user.user.username.length>0;
+          const isPasswordEmpty = this.$store.state.user.user.password.length>0;
+          return isUsernameEmpty && isPasswordEmpty;
+        }
+      }
     },
     methods: {
       onLogin(){
-
+        const user = this.compactChildEntity(this.$store.state.user);
+        console.log(user);
+        console.log(JSON.stringify(user));
+        new loginServive().store(user).then((result)=>{
+          console.log("user");
+        });
       },
       onLoginFacebook(){
 
