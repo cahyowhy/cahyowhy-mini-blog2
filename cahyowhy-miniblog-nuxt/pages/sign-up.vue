@@ -2,7 +2,7 @@
   <div id="login-wrapper" class="overflow-auto">
     <div v-if="afterRegister" class="container-success-info">
       <div class="alert alert-success custom-success-info">
-        <strong><h3 class="margin-bot-min15px">Selamat</h3> </strong> <br> anda telah berhasil mendaftar di miniblog <br>
+        <strong><h3 class="margin-bot-min15px">Selamat</h3></strong> <br> anda telah berhasil mendaftar di miniblog <br>
         selanjutnya anda dapat mengkonfirmasi email untuk langkah selanjutnya. <br>
         <i>Pastikan untuk cek spam apabila di inbok tidak ditemukkan</i><br>
         <nuxt-link to="/login" class="btn btn-primary margin-top15 custom-23">
@@ -80,6 +80,8 @@
         const register = await new userServive().store(user);
         this.afterRegister = register.data.httpstatus === 201;
         this.registerFailed = register.data.httpstatus === 401;
+        this.$store.commit('user/cleanUser');
+        this.$router.push({name: 'login'});
       }
     }
   }

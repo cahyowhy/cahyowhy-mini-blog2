@@ -49,7 +49,7 @@
     methods: {
       async onLoadNotification(){
         this.query.offset = this.query.offset + this.query.limit;
-        await this.$store.dispatch('images/fetchImages', {param: this.query, method: 'PUSH'})
+        await this.$store.dispatch('notifications/fetchNotifications', {param: this.query, method: 'PUSH'})
       },
       link(param){
         return `/${param.replace("dashboard", "profile")}`;

@@ -17,6 +17,7 @@ const actions = {
        * for push data
        */
       commit('pushNotification', data);
+      console.log(data.length === 0);
       commit('setNotificationIsEmpty', data.length === 0);
     } else {
       /**

@@ -20,7 +20,7 @@ const getters = {
   }
 };
 const mutations = {
-  cleanUser(state, payloads) {
+  cleanUser(state) {
     state.user = {};
   }
 };

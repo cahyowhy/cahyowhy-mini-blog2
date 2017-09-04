@@ -75,7 +75,7 @@
         methods: {
             onLogOut(){
                 this.$store.dispatch('auth/setLogOut');
-                this.$router.push({name: '/'});
+                this.$router.push({name: 'index'});
             }
         }
     }
