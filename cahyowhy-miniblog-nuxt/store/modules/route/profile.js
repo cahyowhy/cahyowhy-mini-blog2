@@ -8,6 +8,7 @@ const state = () => {
 const actions = {
   async fetchProfile({commit}, param){
     const {data} = await new userService().get(param);
+    console.log(data);
     commit('setUser', data);
     commit('setId', data.id);
   }

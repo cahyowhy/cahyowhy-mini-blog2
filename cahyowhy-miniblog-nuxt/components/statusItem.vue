@@ -2,24 +2,20 @@
   <div class="status-item" v-bind:id="'status-'+statusId">
     <div class="status-detail">
       <div class="pull-left">
-        <background className="cust21" :src="imageUrl(imageProfile)"/>
+        <background className="cust21" :src="imageUrl(imageProfile)" />
       </div>
       <div class="media-body">
         <p>{{username}}</p>
-        {{{status}}}
+        <div class="cust-225" v-html="statushtml">
+        </div>
         <div v-for="(statusImage, index) in statusImages" class="imagestatuses-wrapper">
           <div v-if="or(eq(statusImagesSize, 2), gte(statusImagesSize, 4))">
-            <a v-if="lte(index, 2)"
-               v-bind:href="statusImage.imageurl"
-               v-bind:data-lightbox="'status-image-'+statusId"
-               v-bind:data-title="statusText">
+            <a v-if="lte(index, 2)" v-bind:href="statusImage.imageurl" v-bind:data-lightbox="'status-image-'+statusId" v-bind:data-title="statusText">
               <div class="col-sm-6  margin-bot30">
-                <background :src="statusImage.imageurl" class="item"/>
+                <background :src="statusImage.imageurl" class="item" />
               </div>
             </a>
-            <a v-else-if="eq(index, 3)"
-               v-bind:href="statusImage.imageurl" v-bind:data-lightbox="'status-image-'+statusId"
-               v-bind:data-title="statusText">
+            <a v-else-if="eq(index, 3)" v-bind:href="statusImage.imageurl" v-bind:data-lightbox="'status-image-'+statusId" v-bind:data-title="statusText">
               <div class="col-sm-6  margin-bot30">
                 <background :src="statusImage.imageurl" class="item">
                   <div class="item-morethan">
@@ -30,26 +26,22 @@
                 </background>
               </div>
             </a>
-            <a v-else
-               v-bind:href="statusImage.imageurl"
-               v-bind:data-title="statusText" v-bind:data-lightbox="'status-image-'+statusId"></a>
+            <a v-else v-bind:href="statusImage.imageurl" v-bind:data-title="statusText" v-bind:data-lightbox="'status-image-'+statusId"></a>
           </div>
           <!--if image length == 3-->
           <div v-else-if="eq(statusImagesSize, 3)">
-            <a v-bind:href="statusImage.imageurl" v-bind:data-lightbox="'status-image-'+statusId"
-               v-bind:data-title="statusText">
+            <a v-bind:href="statusImage.imageurl" v-bind:data-lightbox="'status-image-'+statusId" v-bind:data-title="statusText">
               <div v-if="lt(index, 2)" class="col-sm-6 margin-bot15">
-                <background :src="statusImage.imageurl" class="item"/>
+                <background :src="statusImage.imageurl" class="item" />
               </div>
               <div v-else class="col-sm-12  margin-bot15">
-                <background :src="statusImage.imageurl" class="item margin-top15"/>
+                <background :src="statusImage.imageurl" class="item margin-top15" />
               </div>
             </a>
           </div>
-          <a v-else v-bind:href="statusImage.imageurl" v-bind:data-lightbox="'status-image-'+statusId"
-             v-bind:data-title="statusText">
+          <a v-else v-bind:href="statusImage.imageurl" v-bind:data-lightbox="'status-image-'+statusId" v-bind:data-title="statusText">
             <div class="col-sm-12  margin-bot15">
-              <background :src="statusImage.imageurl" class="item"/>
+              <background :src="statusImage.imageurl" class="item" />
             </div>
           </a>
         </div>
@@ -64,28 +56,27 @@
           </div>
           <!--{{fav-status isLogedIn=isLogedIn statusId=statusId likestatuses=likestatuses class="margin-ri15 pull-left"}}-->
         </div>
-        <a href="javascript:void(0);" v-bind:data-target="'#comment-'+statusId" data-toggle="collapse"
-           class="pull-right"><p class="pull-right">lihat komentar</p></a>
+        <a href="javascript:void(0);" v-bind:data-target="'#comment-'+statusId" data-toggle="collapse" class="pull-right">
+          <p class="pull-right">lihat komentar</p>
+        </a>
       </div>
       <div v-bind:id="'comment-'+statusId" class="collapse in comment-wrapper">
-        <div v-if="isCommentMax" @click="onloadcomment(statusId)" class="more-comment">
+        <div v-if="!isCommentMax" @click="onloadcomment(statusId)" class="more-comment">
           <span class="text-muted">
             lihat komentar sebelumnya
           </span>
         </div>
         <div v-for="comment in commentstatuses" v-bind:id="'user-status-'+comment.id" class="comment-status">
           <div class="pull-left">
-            <background className="cust21" :src="imageUrl(comment.user.imageurl)"/>
+            <background className="cust21" :src="imageUrl(comment.user.imageurl)" />
           </div>
           <div class="media-body">
             <p>{{comment.user.username}}</p>
             <p>{{comment.comment}}</p>
           </div>
         </div>
-
         <div v-if="$store.state.auth.isLogedIn">
-          <!--{{textarea value=comment }}-->
-          <textarea class="form-control" placeholder="tulis komentar"></textarea>
+          <textarea v-model="comment" class="form-control" placeholder="tulis komentar"></textarea>
           <a v-bind:disabled="isBtnDisable" @click="doSaveComment" class="btn btn-primary pull-right cust-24">Save</a>
         </div>
       </div>
@@ -93,36 +84,58 @@
   </div>
 </template>
 <script>
-  import background from '~/components/background-image.vue';
-  export default{
-    props: ['id'],
-    computed: {
-      isBtnDisable: {
-        get(){
-          return true;
-        }
-      },
-      statusImagesSizeIfGT3: {
-        get(){
-          return false
-        }
-      },
-      isCommentMax: {
-        get(){
-          return false;
-        }
-      }
-    },
-    components: {
-      'background': background
-    },
-    methods: {
-      doSaveComment(){
-
-      },
-      onloadcomment(param){
-
+import background from '~/components/background-image.vue';
+export default {
+  props: [
+    "username",
+    "imageProfile",
+    "statushtml",
+    "statusText",
+    "statusId",
+    "statusImages",
+    "likestatuses",
+    "commentstatuses",
+  ],
+  data() {
+    return {
+      comment: '',
+      isCommentMax: false,
+      query: {
+        offset: process.env.APP.DEFAULT_OFFSET,
+        limit: process.env.APP.DEFAULT_LIMIT
       }
     }
+  },
+  computed: {
+    isBtnDisable: {
+      get() {
+        return !this.comment;
+      }
+    },
+    statusImagesSizeIfGT3: {
+      get() {
+        return this.statusImagesSize > 4 ? statusImagesSize - 4 : 0;
+      }
+    },
+    statusImagesSize: {
+      get() {
+        return this.statusImages.length;
+      }
+    }
+  },
+  components: {
+    'background': background
+  },
+  methods: {
+    doSaveComment() {
+
+    },
+    async onloadcomment(param) {
+      this.query.offset = this.query.offset + this.query.limit;
+      this.query.status_id = this.statusId;
+      await this.$store.dispatch('statuses/updateCommentStatusItems', { param: this.query, index: param });
+    }
   }
+}
+
 </script>

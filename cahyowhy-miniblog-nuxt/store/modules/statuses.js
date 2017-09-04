@@ -1,4 +1,5 @@
 import statusService from '~/service/statusService';
+import commentstatusService from '~/service/commentstatusService';
 
 const state = () => {
   return {
@@ -26,11 +27,20 @@ const actions = {
       commit('updateStatusItems', data);
       commit('setStatusIsEmpty', data.length === 0);
     }
+  },
+  async fetchComments({commit}, {param, index}){
+    const {data} = await new commentstatusService().get(param);
+    commit('updateCommentStatusItems', {data, index});
   }
 };
 const mutations = {
   updateStatusItems(state, payloads) {
     state.statusItems = payloads;
+  },
+  updateCommentStatusItems(state, {data, index}){
+    if(state.statusItems[index].commentstatuses){
+      state.statusItems[index].commentstatuses = data.concat(state.statusItems[index].commentstatuses);
+    }
   },
   pushStatusItems(state, payloads) {
     state.statusItems = state.statusItems.concat(payloads);

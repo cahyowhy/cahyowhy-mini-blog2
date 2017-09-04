@@ -27,26 +27,27 @@
                                 </nuxt-link>
                             </li>
 
-                            <li class="js_nav-item nav-item login">
+                            <li v-if="$store.state.auth.isLogedIn" class="js_nav-item nav-item login">
                                 <nuxt-link class="nav-item-child nav-item-hover" to="/timeline">
                                     Linimasa
                                 </nuxt-link>
                             </li>
-                            <li class="js_nav-item nav-item user">
-                                <nuxt-link class="nav-item-child nav-item-hover" to="/profile">
+
+                            <li v-if="$store.state.auth.isLogedIn" class="js_nav-item nav-item user">
+                                <nuxt-link class="nav-item-child nav-item-hover" :to="{name:'profile-id', params:{id: $store.state.auth.user.id}}">
                                     Profile
                                 </nuxt-link>
                             </li>
-                            <li class="js_nav-item nav-item">
+                            <li v-if="$store.state.auth.isLogedIn" class="js_nav-item nav-item">
                                 <a @click="onLogOut" class="nav-item-child nav-item-hover">Keluar</a>
                             </li>
 
-                            <li class="js_nav-item nav-item login">
+                            <li v-if="!$store.state.auth.isLogedIn" class="js_nav-item nav-item login">
                                 <nuxt-link class="nav-item-child nav-item-hover" to="/login">
                                     Masuk
                                 </nuxt-link>
                             </li>
-                            <li class="js_nav-item nav-item login">
+                            <li v-if="!$store.state.auth.isLogedIn" class="js_nav-item nav-item login">
                                 <nuxt-link class="nav-item-child nav-item-hover" to="/sign-up">
                                     Registrasi
                                 </nuxt-link>
@@ -73,10 +74,8 @@
     export default {
         methods: {
             onLogOut(){
-                console.log("something great");
-            },
-            onsearch(){
-                console.log("something great");
+                this.$store.dispatch('auth/setLogOut');
+                this.$router.push({name: '/'});
             }
         }
     }

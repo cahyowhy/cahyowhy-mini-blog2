@@ -143,8 +143,7 @@ body {
       }
     }
     overflow: auto;
-    margin-bottom: 20px;
-    //&:last-child {
+    margin-bottom: 20px; //&:last-child {
     //  margin-bottom: 0px;
     //}
   }
@@ -215,14 +214,14 @@ body {
     background-position: center;
     background-repeat: no-repeat;
   }
-
 }
 
 .create-status {
   padding: 15px;
   background: $greyDark;
   overflow: auto;
-  .mce-panel, .mce-edit-area {
+  .mce-panel,
+  .mce-edit-area {
     border: 0px !important;
   }
   margin-top: 15px;
@@ -375,7 +374,7 @@ nav {
       padding-top: 150px;
       p {
         position: relative;
-        > img {
+        >img {
           position: relative;
           top: 50%;
           left: 50%;
@@ -404,7 +403,7 @@ nav {
           width: auto !important;
           text-shadow: 1px 1px 5px $textTittle;
         }
-        > .inner {
+        >.inner {
           p {
             margin: 0px;
             &:first-child {
@@ -432,13 +431,12 @@ nav {
       z-index: 10000;
       top: 50%;
       transform: translate(0,
-        -50%);
+      -50%);
       height: auto;
       width: 100%;
       left: 0px;
     }
-  }
-  //margin-top: 70px;
+  } //margin-top: 70px;
 }
 
 #post-detail-comment {
@@ -469,8 +467,7 @@ nav {
           a {
             width: 100px;
             float: right;
-          }
-          //width: 100%;
+          } //width: 100%;
           margin-top: 30px;
         }
         textarea {
@@ -615,8 +612,7 @@ nav {
       }
     }
   }
-  .pull-right {
-  }
+  .pull-right {}
   .bt-save {
     font-weight: 300;
     width: 100px;
@@ -671,8 +667,7 @@ nav {
 
 .post-detail-inner {
   position: relative;
-  height: auto;
-  //overflow: auto;
+  height: auto; //overflow: auto;
   .bgpost {
     height: 200px;
     width: 100%;
@@ -779,9 +774,7 @@ nav {
   }
 }
 
-.mainsearch-detail {
-
-}
+.mainsearch-detail {}
 
 .dashboard-index {
   .header-profile,
@@ -791,7 +784,8 @@ nav {
     overflow: auto;
     margin: 0px auto 30px;
     cursor: pointer;
-    div[class^="col-sm-"], div[class*=" col-sm-"] {
+    div[class^="col-sm-"],
+    div[class*=" col-sm-"] {
       i {
         font-size: 40px;
       }
@@ -837,7 +831,7 @@ nav {
     .media-body {
       height: 150px;
       position: relative;
-      > .inner {
+      >.inner {
         h1 {
           font-size: 30px;
           margin-bottom: 0px;
@@ -851,7 +845,7 @@ nav {
         top: 50%;
         left: 0px;
         transform: translate(0px,
-          -50%);
+        -50%);
       }
     }
   }
@@ -1066,7 +1060,8 @@ nav {
   }
 }
 
-div[id^="uploadphoto"], div[id*="uploadphoto"] {
+div[id^="uploadphoto"],
+div[id*="uploadphoto"] {
   .modal-dialog {
     min-width: 630px;
   }
@@ -1142,10 +1137,8 @@ div[id^="uploadphoto"], div[id*="uploadphoto"] {
   .img-preset-wrapper {
     margin-top: 15px;
     height: 100px;
-    width: 100%;
-    //overflow-x: scroll;
-    display: flex;
-    //padding: 10px 10px 20px 10px;
+    width: 100%; //overflow-x: scroll;
+    display: flex; //padding: 10px 10px 20px 10px;
     .img-preset-item {
       cursor: pointer;
       width: 100px;
@@ -1174,7 +1167,8 @@ div[id^="uploadphoto"], div[id*="uploadphoto"] {
     left: 0px;
     top: 50%;
     transform: translate(0, -29%);
-    span, input {
+    span,
+    input {
       border-radius: 0px;
     }
   }
@@ -1267,7 +1261,6 @@ ul.list-group {
 .promo-block .promo-block-img {
   top: 50%;
   transform: translate(0, -50%);
-
 }
 
 .header .logo-img {
@@ -1422,6 +1415,12 @@ ul.list-group {
   min-width: 150px;
 }
 
-.cust-24{
-  margin-top: 15px;width: 150px;
+.cust-24 {
+  margin-top: 15px;
+  width: 150px;
+}
+
+.cust-225 {
+  font-weight: 500;
+  font-size: 14px;
 }

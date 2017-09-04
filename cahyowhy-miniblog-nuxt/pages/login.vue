@@ -51,7 +51,7 @@
           store.dispatch('auth/setToken', result.data.auth_token);
           store.dispatch('auth/setUser', result.data.user);
           store.commit('auth/SET_IS_LOGGED_IN', true);
-          context.$router.push({name: 'post'});
+          context.$router.push({name:'profile-id', params:{id: result.id}});
         });
       },
       onLoginFacebook(){
