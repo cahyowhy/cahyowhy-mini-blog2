@@ -9,7 +9,11 @@ export const state = () => ({
 export const mutations = {
   SET_USER: function(state, user) {
     if (user) {
-      state.user = JSON.parse(user);
+      try{
+        state.user = JSON.parse(user);
+      } catch(err) {
+        state.user = user;
+      }
     }
   },
   SET_ACCESS_TOKEN: function(state, token) {

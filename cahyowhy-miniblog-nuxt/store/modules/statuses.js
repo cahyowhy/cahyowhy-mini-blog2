@@ -7,30 +7,38 @@ const state = () => {
     /**
      * if no more ajax loaded set empty to true
      */
-    isStatusItemsEmpty: false
+    isStatusItemsEmpty: false,
+    /**
+     * no more comment to load
+     */
+    isCommentMax: []
   }
 };
 const actions = {
   async fetchStatus({commit}, {param, method}) {
+    const {data} = await new statusService().get(param);
     if (method) {
       /**'
        * for push data
        */
-      const {data} = await new statusService().get(param);
       commit('pushStatusItems', data);
       commit('setStatusIsEmpty', data.length === 0);
     } else {
       /**
        * for set data
        */
-      const {data} = await new statusService().get(param);
       commit('updateStatusItems', data);
       commit('setStatusIsEmpty', data.length === 0);
     }
+
+    data.forEach(function (item, index) {
+      commit('setIsCommentMax', {payload: item.commentstatuses.length === 0, index})
+    });
   },
   async fetchComments({commit}, {param, index}){
     const {data} = await new commentstatusService().get(param);
     commit('updateCommentStatusItems', {data, index});
+    commit('setIsCommentMax', {payload: data.length === 0, index})
   }
 };
 const mutations = {
@@ -38,7 +46,7 @@ const mutations = {
     state.statusItems = payloads;
   },
   updateCommentStatusItems(state, {data, index}){
-    if(state.statusItems[index].commentstatuses){
+    if (state.statusItems[index].commentstatuses) {
       state.statusItems[index].commentstatuses = data.concat(state.statusItems[index].commentstatuses);
     }
   },
@@ -47,6 +55,9 @@ const mutations = {
   },
   setStatusIsEmpty(state, payload){
     state.isStatusItemsEmpty = payload;
+  },
+  setIsCommentMax(state, {payload, index}){
+    state.isCommentMax[index] = payload;
   }
 };
 export default {

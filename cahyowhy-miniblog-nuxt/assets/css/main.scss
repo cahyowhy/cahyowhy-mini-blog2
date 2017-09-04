@@ -374,7 +374,7 @@ nav {
       padding-top: 150px;
       p {
         position: relative;
-        >img {
+        > img {
           position: relative;
           top: 50%;
           left: 50%;
@@ -403,7 +403,7 @@ nav {
           width: auto !important;
           text-shadow: 1px 1px 5px $textTittle;
         }
-        >.inner {
+        > .inner {
           p {
             margin: 0px;
             &:first-child {
@@ -431,12 +431,13 @@ nav {
       z-index: 10000;
       top: 50%;
       transform: translate(0,
-      -50%);
+        -50%);
       height: auto;
       width: 100%;
       left: 0px;
     }
-  } //margin-top: 70px;
+  }
+  //margin-top: 70px;
 }
 
 #post-detail-comment {
@@ -467,7 +468,8 @@ nav {
           a {
             width: 100px;
             float: right;
-          } //width: 100%;
+          }
+          //width: 100%;
           margin-top: 30px;
         }
         textarea {
@@ -612,7 +614,8 @@ nav {
       }
     }
   }
-  .pull-right {}
+  .pull-right {
+  }
   .bt-save {
     font-weight: 300;
     width: 100px;
@@ -725,6 +728,10 @@ nav {
   max-width: 800px !important;
 }
 
+.widthAuto{
+  width: auto !important;
+}
+
 .fb-outer {
   background: $greyYoung;
   padding-bottom: 30px;
@@ -774,7 +781,8 @@ nav {
   }
 }
 
-.mainsearch-detail {}
+.mainsearch-detail {
+}
 
 .dashboard-index {
   .header-profile,
@@ -831,7 +839,7 @@ nav {
     .media-body {
       height: 150px;
       position: relative;
-      >.inner {
+      > .inner {
         h1 {
           font-size: 30px;
           margin-bottom: 0px;
@@ -845,7 +853,7 @@ nav {
         top: 50%;
         left: 0px;
         transform: translate(0px,
-        -50%);
+          -50%);
       }
     }
   }
@@ -862,6 +870,16 @@ nav {
 
 .overflow-hiden {
   overflow: hidden !important;
+}
+
+.cust333 {
+  position: relative;
+  a.close {
+    right: 5px !important;
+    top: 5px !important;
+    position: absolute;
+  }
+  padding: 15px !important;
 }
 
 .padtopbot15px {
@@ -1421,6 +1439,25 @@ ul.list-group {
 }
 
 .cust-225 {
-  font-weight: 500;
-  font-size: 14px;
+  p {
+    font-weight: 500 !important;
+    font-size: 14px !important;
+  }
+}
+
+.notifications {
+  z-index: 55000 !important;
+}
+
+.cust-226 {
+  width: 51px;
+  border-radius: 50%;
+}
+
+.cust-229{
+  width: 50px;
+  height: 50px;
+  float: left;
+  border-radius: 50%;
+  margin-right: 10px;
 }

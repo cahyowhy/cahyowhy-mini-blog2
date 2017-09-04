@@ -13,6 +13,7 @@ export default BaseRouter.extend({
     this.controller.set('newPassword', '');
     this.controller.set('user', this.user);
     this.controller.set('newPasswordConfirmation', '');
+    this.controller.set('isPasswordEdit', false);
     this.controller.set('ifPasswordMatch', computed('newPassword', 'newPasswordConfirmation', function () {
       return !(get(this, 'newPassword') === get(this, 'newPasswordConfirmation') &&
       get(this, 'newPassword').length > 7 && get(this, 'newPasswordConfirmation').length > 7);

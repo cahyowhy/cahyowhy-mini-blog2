@@ -1,3 +1,2 @@
-redis: redis-server
-sidekiq: bundle exec sidekiq
+`sidekiq: bundle exec sidekiq
 rails: bundle exec rails s --port=3000

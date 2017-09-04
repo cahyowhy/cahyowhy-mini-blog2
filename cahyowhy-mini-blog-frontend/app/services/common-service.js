@@ -105,7 +105,7 @@ export default Ember.Service.extend({
           break;
       }
 
-      if (param > 204) {
+      if (param > 206) {
         this.notificationService.error(message);
       } else {
         this.notificationService.success(message);

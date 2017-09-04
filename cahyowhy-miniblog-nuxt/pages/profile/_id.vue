@@ -21,31 +21,37 @@
             </div>
           </div>
           <div class="navigation">
-            <div v-bind:class="'textCenter '+ navigationClass">
-              <nuxt-link :to="{name:'profile-id', params:{id: idUser}}" tag="i" class="ion ion-compose">
+            <nuxt-link :to="{name:'profile-id', params:{id: idUser}}" tag="div"
+                       v-bind:class="'textCenter '+ navigationClass">
+              <i class="ion ion-compose">
                 <p>status</p>
-              </nuxt-link>
-            </div>
-            <div v-if="isCurrentUser" v-bind:class="'textCenter '+ navigationClass">
-              <nuxt-link :to="{name:'profile-id', params:{id: idUser}}" tag="i" class="ion ion-earth">
+              </i>
+            </nuxt-link>
+            <nuxt-link v-if="isCurrentUser" :to="{name:'profile-id-notifications', params:{id: idUser}}" tag="div"
+                       v-bind:class="'textCenter '+ navigationClass">
+              <i class="ion ion-earth">
                 <p>pemberitahuan</p>
-              </nuxt-link>
-            </div>
-            <div v-bind:class="'textCenter '+ navigationClass">
-              <nuxt-link :to="{name:'profile-id', params:{id: idUser}}" tag="i" class="ion ion-ios-bookmarks-outline">
+              </i>
+            </nuxt-link>
+            <nuxt-link :to="{name:'profile-id-posts', params:{id: idUser}}"
+                       v-bind:class="'textCenter '+ navigationClass"
+                       tag="div">
+              <i class="ion ion-ios-bookmarks-outline">
                 <p>post</p>
-              </nuxt-link>
-            </div>
-            <div v-bind:class="'textCenter '+ navigationClass">
-              <nuxt-link :to="{name:'profile-id-images', params:{id: idUser}}" tag="i" class="ion ion-images">
+              </i>
+            </nuxt-link>
+            <nuxt-link :to="{name:'profile-id-images', params:{id: idUser}}"
+                       v-bind:class="'textCenter '+ navigationClass" tag="div">
+              <i class="ion ion-images">
                 <p>gallery</p>
-              </nuxt-link>
-            </div>
-            <div v-if="isCurrentUser" v-bind:class="'textCenter '+ navigationClass">
-              <nuxt-link :to="{name:'profile-id', params:{id: idUser}}" tag="i" class="ion ion-android-settings">
+              </i>
+            </nuxt-link>
+            <nuxt-link :to="{name:'profile-id-settings', params:{id: idUser}}" v-if="isCurrentUser"
+                       v-bind:class="'textCenter '+ navigationClass" tag="div">
+              <i class="ion ion-android-settings">
                 <p>pengaturan</p>
-              </nuxt-link>
-            </div>
+              </i>
+            </nuxt-link>
           </div>
           <div class="content overflow-hiden padtopbot15px">
             <nuxt-child/>

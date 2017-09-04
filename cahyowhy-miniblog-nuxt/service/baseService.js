@@ -1,7 +1,8 @@
 import axios from 'axios';
 export default class baseService {
-  constructor(API) {
+  constructor(API, token = null) {
     this.API = API;
+    this.token = token;
   }
 
   get(param = "") {
@@ -43,12 +44,17 @@ export default class baseService {
   }
 
   build(api, body = null) {
+    const header = this.token === null ? {
+        'Content-Type': 'application/json'
+      } : {
+        'Content-Type': 'application/json',
+        'Authorization': this.token
+      };
+
     return axios({
       method: this.method,
       url: api,
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers: header,
       data: JSON.stringify(body),
     }).catch(function (err) {
       console.log(err);

@@ -49,6 +49,7 @@ const configuration = {
     {src: '~/plugins/helpers', ssr: true},
     {src: '~/plugins/debugger', ssr: true},
     {src: '~/plugins/tinymce', ssr: false},
+    {src: '~/plugins/notification', ssr: false},
   ],
   env: {
     APP: {

@@ -1,5 +1,3 @@
-const Cookie = require('cookie');
-
 export const getTokenFromCookie = (req) => {
   try {
     if (!req.headers.cookie) return;
