@@ -1,8 +1,17 @@
 import axios from 'axios';
+import Vue from 'vue';
+
+let instance = null;
+Vue.mixin({
+  created(){
+    instance = this;
+  }
+})
+
 export default class baseService {
-  constructor(API, token = null) {
+  constructor(API) {
     this.API = API;
-    this.token = token;
+    this.token = instance.$store.state.auth.access_token
   }
 
   get(param = "") {
@@ -57,7 +66,7 @@ export default class baseService {
       headers: header,
       data: JSON.stringify(body),
     }).catch(function (err) {
-      console.log(err);
+      // console.log(err);
     });
   }
 }

@@ -8,7 +8,7 @@
         <div class="l-part">
           <input v-model="$store.state.user.user.username" type="text" class="input-1" placeholder="Username">
           <div class="overlap-text">
-            <input v-model="$store.state.user.user.password" type="password" class="input-2" placeholder="Pasword">
+            <input v-model="$store.state.user.user.password" type="password" class="input-2" placeholder="Pasword" @keyup.enter="onLogin">
           </div>
           <a v-bind:disabled="!isBtnDisabled" @click="onLogin" class="btn btn-login">Login</a>
         </div>
@@ -30,7 +30,7 @@
   </div>
 </template>
 <script>
-  import loginServive from '~/service/loginServive';
+  import loginService from '~/service/loginService';
 
   export default {
     computed: {
@@ -43,22 +43,14 @@
       }
     },
     methods: {
-      onLogin(){
+      async onLogin(){
         const store = this.$store;
-        const user = this.compactChildEntity(store.state.user);
-        const context = this;
-        new loginServive().store(user).then(function (result) {
-          if (result) {
-            store.dispatch('auth/setToken', result.data.auth_token);
-            store.dispatch('auth/setUser', result.data.user);
-            store.commit('auth/SET_IS_LOGGED_IN', true);
-            context.showNotification(result.data.httpstatus);
-          } else {
-            context.showNotification(404);
-          }
-
-          window.location = "/profile/" + result.data.user.id;
-        });
+        const user = store.state.user.user;
+        if(user.username && user.password) {
+          const userEntity = this.compactChildEntity(store.state.user);
+          const context = this;
+          await store.dispatch('auth/doLogin', {param: userEntity, context}); 
+        }
       },
       onLoginFacebook(){
 

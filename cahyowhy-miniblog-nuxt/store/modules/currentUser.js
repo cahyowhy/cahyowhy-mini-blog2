@@ -1,4 +1,5 @@
 import Cookie from 'js-cookie'
+import loginService from '~/service/loginService';
 
 export const state = () => ({
   user: {},
@@ -9,9 +10,9 @@ export const state = () => ({
 export const mutations = {
   SET_USER: function(state, user) {
     if (user) {
-      try{
-        state.user = JSON.parse(user);
-      } catch(err) {
+      try {
+        state.user = JSON.parse(`${user}`);
+      } catch (err) {
         state.user = user;
       }
     }
@@ -39,6 +40,18 @@ export const actions = {
       commit('SET_ACCESS_TOKEN', token);
       window.localStorage.setItem('token', token);
       Cookie.set('token', token);
+    }
+  },
+  async doLogin({ commit, dispatch }, { param, context }) {
+    try {
+      const {data} = await new loginService().store(param);
+      dispatch('setToken', data.auth_token);
+      dispatch('setUser', data.user);
+      commit('SET_IS_LOGGED_IN', true);
+      context.showNotification(data.httpstatus);
+      context.$router.push({name: 'profile-id', params: {id: data.user.id}});
+    } catch(err) {
+      context.showNotification(404);
     }
   },
   setUser({ commit }, user) {

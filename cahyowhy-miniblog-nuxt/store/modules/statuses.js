@@ -17,6 +17,7 @@ const state = () => {
 const actions = {
   async fetchStatus({commit}, {param, method}) {
     const {data} = await new statusService().get(param);
+    console.log(data);
     if (method) {
       /**'
        * for push data

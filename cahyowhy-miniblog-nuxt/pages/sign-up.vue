@@ -45,7 +45,7 @@
   </div>
 </template>
 <script>
-  import userServive from '~/service/userServive';
+  import userServive from '~/service/userService';
   export default {
     data() {
       return {
