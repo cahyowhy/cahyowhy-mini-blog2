@@ -8,7 +8,7 @@ export const state = () => ({
 });
 
 export const mutations = {
-  SET_USER: function(state, user) {
+  SET_USER: function (state, user) {
     if (user) {
       try {
         state.user = JSON.parse(`${user}`);
@@ -17,10 +17,10 @@ export const mutations = {
       }
     }
   },
-  SET_ACCESS_TOKEN: function(state, token) {
+  SET_ACCESS_TOKEN: function (state, token) {
     state.access_token = token
   },
-  SET_IS_LOGGED_IN: function(state, param) {
+  SET_IS_LOGGED_IN: function (state, param) {
     state.isLogedIn = param;
   }
 };
@@ -35,33 +35,46 @@ export const getters = {
 };
 
 export const actions = {
-  setToken({ commit }, token) {
+  setToken({commit}, token) {
     if (token) {
       commit('SET_ACCESS_TOKEN', token);
       window.localStorage.setItem('token', token);
       Cookie.set('token', token);
     }
   },
-  async doLogin({ commit, dispatch }, { param, context }) {
+  async doLogin({commit, dispatch}, {param, context}) {
     try {
       const {data} = await new loginService().store(param);
-      dispatch('setToken', data.auth_token);
-      dispatch('setUser', data.user);
-      commit('SET_IS_LOGGED_IN', true);
+      if (data.httpstatus === 204) {
+        dispatch('setToken', data.auth_token);
+        dispatch('setUser', data.user);
+        commit('SET_IS_LOGGED_IN', true);
+      }
+
       context.showNotification(data.httpstatus);
-      context.$router.push({name: 'profile-id', params: {id: data.user.id}});
-    } catch(err) {
+      setTimeout(function () {
+        context.$router.push({name: 'profile-id', params: {id: data.user.id}});
+      }, 100);
+    } catch (err) {
       context.showNotification(404);
     }
   },
-  setUser({ commit }, user) {
+  async checkPassword(context = null, param){
+    try {
+      const {data} = await new loginService().store(param);
+      return data.httpstatus === 204;
+    } catch (err) {
+      return false;
+    }
+  },
+  setUser({commit}, user) {
     if (user) {
       commit('SET_USER', user);
       window.localStorage.setItem('user', JSON.stringify(user));
       Cookie.set('user', user);
     }
   },
-  setLogOut({ commit }) {
+  setLogOut({commit}) {
     commit('SET_USER', {});
     commit('SET_ACCESS_TOKEN', '');
     commit('SET_IS_LOGGED_IN', false);

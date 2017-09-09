@@ -1,10 +1,12 @@
 <template>
   <div>
     <div class="status-wrapper">
-      <!-- <status-item :key="status.id" v-for="(status, index) in $store.state.statuses.statusItems" :username="status.user.username"
-                   :count="index" :imageProfile="status.user.imageurl" :statushtml="status.statushtml" :statusText="status.statustext"
+      <status-item :key="status.id" v-for="(status, index) in $store.state.statuses.statusItems"
+                   :username="status.user.username"
+                   :count="index" :imageProfile="status.user.imageurl" :statushtml="status.statushtml"
+                   :statusText="status.statustext"
                    :statusId="status.id" :statusImages="status.imagestatuses" :likestatuses="status.likestatuses"
-                   :commentstatuses="status.commentstatuses"/> -->
+                   :commentstatuses="status.commentstatuses"/>
     </div>
     <div v-if="isStatusesEmpty">
       <content-empty/>
@@ -40,12 +42,12 @@
       }
     },
     async asyncData(context) {
-      // const query = {
-      //   user_id: context.params.id,
-      //   offset: process.env.APP.DEFAULT_OFFSET,
-      //   limit: process.env.APP.DEFAULT_LIMIT,
-      // };
-      // await context.store.dispatch('statuses/fetchStatus', {param: query});
+       const query = {
+         user_id: context.params.id,
+         offset: process.env.APP.DEFAULT_OFFSET,
+         limit: process.env.APP.DEFAULT_LIMIT,
+       };
+       await context.store.dispatch('statuses/fetchStatus', {param: query});
     },
     methods: {
       async onLoadStatus() {

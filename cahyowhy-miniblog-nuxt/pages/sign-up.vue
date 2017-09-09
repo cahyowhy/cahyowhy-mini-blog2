@@ -76,7 +76,7 @@
     },
     methods: {
       async doSave() {
-        const user = this.compactEntity(this.$store.state.user);
+        const user = this.$store.getters['user/user'];
         const register = await new userServive().store(user);
         this.afterRegister = register.data.httpstatus === 201;
         this.registerFailed = register.data.httpstatus === 401;

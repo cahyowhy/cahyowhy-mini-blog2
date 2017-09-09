@@ -1,6 +1,11 @@
+=begin
+  use for authentication that send a username and password as a payload
+  use it for login page / if you wanna use it for checking password also
+  can done with this
+=end
+
 class AuthenticationController < ApplicationController
   attr_reader :authenticate_request
-
   def authenticate
     command = AuthenticateUser.call(params[:username], params[:password])
 

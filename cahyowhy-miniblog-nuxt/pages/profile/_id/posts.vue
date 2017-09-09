@@ -4,7 +4,7 @@
       <div id="post-container" class="post">
         <div class="button-fly-wrapper">
           <div v-if="$store.state.auth.isLogedIn" class="btn-wrapper">
-            <nuxt-link to="/" tag="a" class="btn btn-lg btn-primary pull-right cust-226">
+            <nuxt-link to="/create-post" tag="a" class="btn btn-lg btn-primary pull-right cust-226">
               <i class="ion-plus-round ion"></i>
             </nuxt-link>
           </div>

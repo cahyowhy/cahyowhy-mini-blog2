@@ -58,6 +58,48 @@ Vue.mixin({
         return false;
       }
     },
+    /**
+     * Method imageUploader to uploading multipart file
+     * @param url {string} API url
+     * @param params {object} form data file and JSON
+     */
+    imageUploader (url, params) {
+      const context = this
+      // setup header here
+      const config = {
+        headers: {
+          'Authorization': context.$store.state.auth.isLogedIn ? context.$store.state.auth.access_token : '',
+          'Content-Type': 'multipart/form-data'
+        },
+        // add callback progress here if needed
+        onUploadProgress: function (progressEvent) {
+          console.log(Math.round((progressEvent.loaded * 100) / progressEvent.total))
+        }
+      }
+
+      // start upload process return promise
+      return new Promise(function (resolve, reject) {
+        require('axios').post(url, params, config)
+          .then(function (res) {
+            context.showNotification(res.httpstatus)
+            resolve(res.data)
+          })
+          .catch(function (err) {
+            context.showNotification(err.httpstatus)
+            reject(err.message)
+          })
+      })
+    },
+    /**
+     * generate random id for uploading
+     * image to cloudinary
+     */
+    generateId: function () {
+      return Math.random().toString(36).substr(2, 124) + Math.random().toString(36).substr(2, 124) + Math.random().toString(36).substr(2, 124) + ".jpg";
+    },
+    showCustomNotification: function (title, message, type) {
+      this.$notify({text: message, duration: 3000, type, title, group: 'info'})
+    },
     showNotification: function (param) {
       let message;
       if (param) {
@@ -107,13 +149,23 @@ Vue.mixin({
         }
 
         if (param < 206) {
-          this.$notify({text: message, duration: 1500, type: 'success', group:'info'})
+          this.$notify({text: message, duration: 1500, type: 'success', group: 'info'})
         } else {
-          this.$notify({text: message, duration: 1500, type: 'error', group:'info'})
+          this.$notify({text: message, duration: 1500, type: 'error', group: 'info'})
         }
       } else {
-        this.$notify({text: 'Error!, coba lain waktu', duration: 1500, type: 'error', group:'info'});
+        this.$notify({text: 'Error!, coba lain waktu', duration: 1500, type: 'error', group: 'info'});
       }
+    },
+    dataUrlToBlob: function (dataurl) {
+      let data = dataurl.split(','),
+        mimetypeFile = data[0].match(/:(.*?);/)[1],
+        bytestring = atob(data[1]),
+        index = bytestring.length, blobArray = new window.Uint8Array(index);
+      while (index--) {
+        blobArray[index] = bytestring.charCodeAt(index);
+      }
+      return new Blob([blobArray], {type: mimetypeFile});
     }
   }
 });

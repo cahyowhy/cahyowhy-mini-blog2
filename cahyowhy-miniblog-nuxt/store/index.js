@@ -4,13 +4,15 @@ import statuses from './modules/statuses';
 import images from './modules/images';
 import currentUser from './modules/currentUser';
 import user from './modules/entity/user';
+import post from './modules/entity/post';
 import profile from './modules/route/profile';
 import notifications from './modules/notifications';
 
 const {state: postsState, mutations:postsMutations, actions:postsActions} = posts;
 const {state: statusesState, mutations:statusesMutations, actions:statusesActions} = statuses;
 const {state: currentUserState, mutations:currentUserMutations, actions:currentUserActions} = currentUser;
-const {state: userState, mutations:userMutations, getters:userGetters} = user;
+const {state: postState, mutations:postMutations, getters:postGetters, actions:postActions} = post;
+const {state: userState, mutations:userMutations, getters:userGetters, actions:userActions} = user;
 const {state: profileState, mutations: profileMutation, actions: profileAction} = profile;
 const {state: notificationsState, mutations: notificationsMutation, actions: notificationsAction} = notifications;
 const {state: imagesState, mutations: imagesMutation, actions: imagesAction} = images;
@@ -53,7 +55,15 @@ const createStore = () => {
         namespaced: true,
         state: userState,
         mutations: userMutations,
-        getters: userGetters
+        getters: userGetters,
+        actions: userActions
+      },
+      post: {
+        namespaced: true,
+        state: postState,
+        mutations: postMutations,
+        getters: postGetters,
+        actions: postActions
       },
       profile: {
         namespaced: true,

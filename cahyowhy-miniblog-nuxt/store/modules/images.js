@@ -25,6 +25,18 @@ const actions = {
       commit('setImages', data);
       commit('setImageIsEmpty', data.length === 0);
     }
+  },
+  async delete({commit, state}, {param, context}) {
+    const {data} = await new imageService().destroy(param);
+    if (data) {
+      context.showNotification(data.httpstatus);
+      const images = state.imageItems.filter(function (item) {
+        return parseInt(item.id) !== parseInt(param)
+      });
+      commit('setImages', images);
+    } else {
+      context.showNotification(403);
+    }
   }
 };
 const mutations = {

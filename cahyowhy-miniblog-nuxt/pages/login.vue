@@ -8,7 +8,8 @@
         <div class="l-part">
           <input v-model="$store.state.user.user.username" type="text" class="input-1" placeholder="Username">
           <div class="overlap-text">
-            <input v-model="$store.state.user.user.password" type="password" class="input-2" placeholder="Pasword" @keyup.enter="onLogin">
+            <input v-model="$store.state.user.user.password" type="password" class="input-2" placeholder="Pasword"
+                   @keyup.enter="onLogin">
           </div>
           <a v-bind:disabled="!isBtnDisabled" @click="onLogin" class="btn btn-login">Login</a>
         </div>
@@ -46,10 +47,10 @@
       async onLogin(){
         const store = this.$store;
         const user = store.state.user.user;
-        if(user.username && user.password) {
-          const userEntity = this.compactChildEntity(store.state.user);
+        if (user.username && user.password) {
+          const userEntity = this.$store.getters['user/userContent'];
           const context = this;
-          await store.dispatch('auth/doLogin', {param: userEntity, context}); 
+          await store.dispatch('auth/doLogin', {param: userEntity, context});
         }
       },
       onLoginFacebook(){

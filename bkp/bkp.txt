@@ -25,3 +25,41 @@ export default DS.Model.extend({
   name: DS.attr("string"),
   username: DS.attr("string")
 });
+
+<Animated.View style={[Style.DrawerMain, AnimatedStyle]}>
+                    <Content style={Style.DrawerContent}>
+                        <List>
+                            <List>
+                                <ListItem icon style={Style.borderBottomDefault}>
+                                    <Left>
+                                        <Icon name="md-book"/>
+                                    </Left>
+                                    <Body style={Style.noBorderBottom}>
+                                    <Text>Category</Text>
+                                    </Body>
+                                    <Right style={Style.noBorderBottom}>
+                                        <Button transparent
+                                                onPress={this.toggleCategoryItem}
+                                                style={[Style.noPadding, Style.noMargin]}>
+                                            <View><Icon name="md-add"/></View>
+                                        </Button>
+                                    </Right>
+                                </ListItem>
+                                <Animated.View style={AnimatedCategoryStyle}>
+                                    <List dataArray={categories}
+                                          renderRow={(item) =>
+                                              <ListItem style={Style.listItemNavSub}>
+                                                  <Body>
+                                                  <Text style={Style.childListTextNav}>{item}</Text>
+                                                  </Body>
+                                                  <Right>
+                                                      <Icon name="md-list-box"/>
+                                                  </Right>
+                                              </ListItem>
+                                          }>
+                                    </List>
+                                </Animated.View>
+                            </List>
+                        </List>
+                    </Content>
+                </Animated.View>

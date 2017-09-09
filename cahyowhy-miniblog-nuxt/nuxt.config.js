@@ -77,7 +77,7 @@ if (configuration.dev) {
   configuration.env.APP.API_STATUS = `"${configuration.env.APP.API_URL}statuses"`;
   configuration.env.APP.API_STATUS = `"${configuration.env.APP.API_URL}statuses"`;
   configuration.env.APP.API_LOGIN = `"${configuration.env.APP.API_URL}authenticate"`;
-  configuration.env.APP.API_IMAGE_PARAM_NAME = `image[imagepath_data]`;
+  configuration.env.APP.API_IMAGE_PARAM_NAME = `"image[imagepath_data]"`;
   configuration.env.APP.API_STATUS_LIKE = `"${configuration.env.APP.API_URL}likestatuses"`;
 }
 

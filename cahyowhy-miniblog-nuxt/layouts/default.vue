@@ -5,7 +5,7 @@
       <notifications group="info">
         <template slot="body" scope="props">
           <div :class="'cust333 vue-notification '+props.item.type">
-            <a class="title">
+            <a class="title titlenotifinfo">
               {{props.item.title}}
             </a>
             <a class="close" @click="props.close">

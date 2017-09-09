@@ -1,3 +1,6 @@
+import userService from '~/service/userService';
+const lodash = require('lodash');
+
 const state = () => {
   return {
     user: {
@@ -13,10 +16,19 @@ const state = () => {
 
 const getters = {
   user: (state) => {
-    return state.user
+    return {
+      user: lodash.pickBy(state.user, lodash.identity)
+    };
   },
   userContent: (state) => {
-    return state.user.user
+    return lodash.pickBy(state.user, lodash.identity);
+  },
+  userPassword: (state) => {
+    return {
+      user: {
+        password: state.user.password
+      }
+    }
   }
 };
 const mutations = {
@@ -24,8 +36,16 @@ const mutations = {
     state.user = {};
   }
 };
+const actions = {
+  async update(self = null, {body, param, context}){
+    const {data} = await new userService().update(body, param);
+    context.showNotification(data.httpstatus);
+    return data;
+  }
+};
 export default {
   state,
   getters,
-  mutations
+  mutations,
+  actions
 }

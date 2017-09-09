@@ -188,22 +188,28 @@ body {
       opacity: 0.0;
       color: white;
       text-shadow: 1px 1px 3px $textTittle;
-      &:nth-child(2) {
-        font-size: 25px;
-        top: -10px;
-        right: -10px;
-        position: absolute;
-        z-index: 19;
-      }
       cursor: pointer;
-      &:last-child {
-        font-size: 30px;
-        top: 50%;
-        left: 50%;
-        position: absolute;
-        z-index: 19;
-        transform: translate(-50%, -50%);
+    }
+    a.delete-photo {
+      width: 20px;
+      height: 20px;
+    }
+    i.ion-plus-circled {
+      font-size: 30px;
+      top: 50%;
+      left: 50%;
+      position: absolute;
+      z-index: 19;
+      transform: translate(-50%, -50%);
+    }
+    a.delete-photo {
+      i {
+        font-size: 25px;
       }
+      top: -10px;
+      right: -10px;
+      position: absolute;
+      z-index: 19;
     }
     position: relative;
     height: 100px;
@@ -277,11 +283,19 @@ body {
 }
 
 .margin-top15 {
-  margin-top: 30px;
+  margin-top: 15px;
+}
+
+.margin-top100 {
+  margin-top: 100px;
 }
 
 .margin-bot10 {
   margin-bottom: 10px;
+}
+
+.margin-bot5 {
+  margin-bottom: 5px;
 }
 
 .margin-bot15 {
@@ -728,7 +742,7 @@ nav {
   max-width: 800px !important;
 }
 
-.widthAuto{
+.widthAuto {
   width: auto !important;
 }
 
@@ -947,6 +961,10 @@ nav {
   margin-bottom: 0px;
 }
 
+.no-margin {
+  margin: 0px !important;
+}
+
 .no-border {
   border: 0px !important;
 }
@@ -1058,7 +1076,7 @@ nav {
 }
 
 .margin-bottom-30px {
-  margin-top: 130px;
+  margin-bottom: 30px;
 }
 
 .content-empty {
@@ -1454,10 +1472,57 @@ ul.list-group {
   border-radius: 50%;
 }
 
-.cust-229{
+.cust-229 {
   width: 50px;
   height: 50px;
   float: left;
   border-radius: 50%;
   margin-right: 10px;
+}
+
+.titlenotifinfo {
+  color: white !important;
+  font-size: 16px;
+  font-weight: bold !important;
+}
+
+.fontSize16px {
+  font-size: 16px !important;
+}
+
+.custom-setting {
+  overflow: auto;
+  margin-bottom: 30px;
+  .col-sm-4 {
+    height: 150px;
+    i {
+      &:hover {
+        opacity: 1.0;
+      }
+      opacity: 0.0;
+      color: white;
+      position: absolute;
+      z-index: 2;
+      border: 2px solid white;
+      font-size: 20px !important;
+      border-radius: 50%;
+      background: $textTittle;
+      padding: 6px 8px;
+      right: 50px;
+      bottom: 0;
+    }
+  }
+  .custom-pp-setting {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.relative {
+  position: relative;
 }

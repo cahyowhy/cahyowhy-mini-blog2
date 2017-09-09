@@ -39,7 +39,10 @@ export default class baseService {
     return this.build(this.API, body);
   }
 
-  update() {
+  update(body, param) {
+    this.method = "PUT";
+    const api = `${this.API}/${param}`;
+    return this.build(api, body);
   }
 
   /**
