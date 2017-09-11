@@ -62,11 +62,9 @@
     },
     methods: {
       onAddImage(index, id, src) {
-        console.log('iam here');
         this.$emit('onAddImage', index, id, src);
       },
       onDelImage(index, id, src) {
-//        this.$emit('onDelImage', index, id, src);
         console.log('iam here');
         const context = this;
         $(`#modal-delete-photo-${this.id}`).on('shown.bs.modal', function () {
@@ -75,6 +73,7 @@
             const modal = $(this);
             context.$store.dispatch('images/delete', {param: id, context}).then(function () {
               modal.modal('hide');
+              context.$emit('onDelImage', index, id, src);
             });
           });
         });

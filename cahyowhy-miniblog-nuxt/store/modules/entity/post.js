@@ -23,6 +23,9 @@ const getters = {
   },
   postContent: (state) => {
     return lodash.pickBy(state.post, lodash.identity);
+  },
+  postDescription: (state) => {
+    return state.post.description;
   }
 };
 const mutations = {
@@ -30,10 +33,13 @@ const mutations = {
     state.post.user_id = payload;
   },
   SET_DESCRIPTION(state, payload) {
-    state.post.imageposts_attributes = payload;
+    state.post.description = payload;
   },
   SET_IMAGES(state, payload) {
     state.post.description = payload;
+  },
+  ADD_DESCRIPTION(state, payload) {
+    state.post.description = state.post.description + payload;
   }
 };
 const actions = {
