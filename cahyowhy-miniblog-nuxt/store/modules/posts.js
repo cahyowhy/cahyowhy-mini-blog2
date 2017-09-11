@@ -50,6 +50,15 @@ const actions = {
         }
       }
     }
+  },
+  async save(self = null, {context, payload}){
+    const {data} = await new postService().store(payload);
+    if (data.httpstatus === 201) {
+      context.showNotification(data.httpstatus);
+      context.$router.push(`/post-detail/${data.id}`);
+    } else {
+      context.showNotification(401);
+    }
   }
 };
 const mutations = {

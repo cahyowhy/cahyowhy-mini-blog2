@@ -1,5 +1,10 @@
 import Vue from 'vue';
 import tinymce from 'vue-tinymce';
 require('tinymce');
-require('tinymce/themes/modern/theme')
+require('tinymce/plugins/image/index');
+require('tinymce/plugins/imagetools/index');
+require('tinymce/plugins/autolink/index');
+require('tinymce/plugins/codesample/index');
+require('tinymce/plugins/code/index');
+require('tinymce/themes/modern/theme');
 Vue.use(tinymce);

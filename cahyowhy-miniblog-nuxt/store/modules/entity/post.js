@@ -21,11 +21,24 @@ const getters = {
       post: lodash.pickBy(state.post, lodash.identity)
     };
   },
+  isAnyEmpty: (state) => {
+    const isTitleEmpty = state.post.title.length === 0;
+    const isCategoryEmpty = state.post.category.length === 0;
+    const isDescriptionEmpty = state.post.description.length === 0;
+
+    return isTitleEmpty || isCategoryEmpty || isDescriptionEmpty;
+  },
   postContent: (state) => {
     return lodash.pickBy(state.post, lodash.identity);
   },
   postDescription: (state) => {
     return state.post.description;
+  },
+  imagepostDescription: (state) => {
+    return JSON.parse(`${JSON.stringify(state.post.imageposts_attributes)}`);
+  },
+  getContent: (state) => {
+    return JSON.parse(`${JSON.stringify(state)}`);
   }
 };
 const mutations = {
@@ -34,6 +47,18 @@ const mutations = {
   },
   SET_DESCRIPTION(state, payload) {
     state.post.description = payload;
+  },
+  SET_DESCRIPTION_TEXT(state, payload) {
+    state.post.descriptiontext = payload;
+  },
+  SET_REVIEW(state, payload) {
+    state.post.review = payload;
+  },
+  SET_IMAGEPOST_ATTRIBUTES(state, payload) {
+    state.post.imageposts_attributes = payload;
+  },
+  PUSH_IMAGEPOST_ATTRIBUTES(state, payload) {
+    state.post.imageposts_attributes = payload.concat(state.post.imageposts_attributes);
   },
   SET_IMAGES(state, payload) {
     state.post.description = payload;

@@ -70,7 +70,6 @@
         $(`#modal-delete-photo-${this.id}`).on('shown.bs.modal', function () {
           const modal = $(this);
           modal.find('a.delete-photo').on('click', function () {
-            const modal = $(this);
             context.$store.dispatch('images/delete', {param: id, context}).then(function () {
               modal.modal('hide');
               context.$emit('onDelImage', index, id, src);
