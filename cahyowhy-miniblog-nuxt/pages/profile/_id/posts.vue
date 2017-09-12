@@ -1,6 +1,6 @@
 <template>
   <div class="work-section width800" id="work">
-    <div class="content-lg padding0px width800">
+    <div class="content-lg padding0px width800 margin-bot50">
       <div id="post-container" class="post">
         <div class="button-fly-wrapper">
           <div v-if="$store.state.auth.isLogedIn" class="btn-wrapper">

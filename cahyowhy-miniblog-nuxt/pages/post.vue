@@ -55,10 +55,10 @@
           :title="post.title"
           :review="post.review"/>
       </div>
-      <div v-if="isPostsEmpty">
+      <div v-if="$store.state.posts.isPostItemEmpty">
         <content-empty/>
       </div>
-      <div v-if="!isPostsEmpty">
+      <div v-if="!$store.state.posts.isPostItemEmpty">
         <div class="btn-wrapper-post"><a @click="onLoadPost" class="btn-primary btn-medium btn">Load more</a>
         </div>
       </div>
@@ -72,13 +72,6 @@
   import postItem from '~/components/postItem.vue';
   import contentEmpty from '~/components/content-empty.vue';
   export default {
-    computed: {
-      isPostsEmpty: {
-        get(){
-          return this.$store.state.posts.postItems.length === 0 || this.$store.state.posts.isPostItemEmpty;
-        }
-      }
-    },
     components: {
       'slider': slider,
       'post-item': postItem,

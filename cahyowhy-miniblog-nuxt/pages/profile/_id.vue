@@ -72,7 +72,7 @@
       // Must be a number
       return /^\d+$/.test(params.id)
     },
-    async asyncData(context){
+    async fetch(context){
       await context.store.dispatch('profile/fetchProfile', context.params.id);
     },
     data(){

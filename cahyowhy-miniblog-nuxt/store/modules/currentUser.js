@@ -53,7 +53,7 @@ export const actions = {
 
       context.showNotification(data.httpstatus);
       setTimeout(function () {
-        context.$router.push({name: 'profile-id', params: {id: data.user.id}});
+        context.$router.push(`/profile/${data.user.id}`);
       }, 100);
     } catch (err) {
       context.showNotification(404);

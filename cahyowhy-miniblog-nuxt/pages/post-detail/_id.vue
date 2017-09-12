@@ -43,22 +43,22 @@
           <li v-if="$store.state.auth.isLogedIn" class="list-group-item comment-input">
             <div class="comment-inner">
               <div class="title  pull-left">
-                <background className="custom-pp" :src="imageUrl(imageProfile)"/>
+                <background className="custom-pp" :src="imageUrl($store.state.auth.user.imageurl)"/>
               </div>
               <div class="contentcomment media-body">
-                <!--value=commentpost.commentpost.comment-->
-                <textarea class="form-control"></textarea>
+                <textarea class="form-control" v-model="$store.state.commentpost.commentpost.comment"/>
               </div>
             </div>
             <div class="btn-wrapper cust2">
-              <!--disabled={{isBtnDisabled}}-->
-              <a class="btn btn-sm btn-primary" @click="doSave">comment</a></div>
+              <a :disabled="$store.getters['commentpost/isAnyEmpty']" class="btn btn-sm btn-primary" @click="doSave">comment</a>
+            </div>
           </li>
-          <div v-if="isCommentEmpty">
+          <div v-if="$store.state.posts.isCommentPostsEmpty">
             <content-empty/>
           </div>
           <div v-else>
-            <li v-for="comment in commentposts" v-bind:id="'user-commentpost-'+comment.id" class="list-group-item">
+            <li v-for="comment in $store.state.posts.commentposts" v-bind:id="'user-commentpost-'+comment.id"
+                class="list-group-item">
               <!--{{fav-icon _id = comment.id likes=comment.likecommentposts action=(route-action "onFavouriteComment")}}-->
               <div class="comment-inner">
                 <div class="pull-left">
@@ -80,17 +80,19 @@
         </ul>
       </div>
     </div>
-    <div v-if="!isCommentEmpty" class="btn-wrapper-post bg-greyYoung padding-bot30">
-      <a @click="onLoadcomment" class="btn-primary btn-medium btn width800">
+    <div v-if="!$store.state.posts.isCommentPostsEmpty" class="btn-wrapper-post bg-greyYoung padding-bot30">
+      <a @click="onLoadcomment"
+         class="btn-primary btn-medium btn width800">
         Load more commment</a>
     </div>
     <div class="width920">
-      <!-- {{facebook-comment fbAPPID=fbAPPID url=url}} -->
+      <facebookComment/>
     </div>
   </div>
 </template>
 <script>
   import postService from '~/service/postService';
+  import facebookComment from '~/components/facebookComment.vue';
   import commentpostService from '~/service/commentpostService';
   import contentEmpty from '~/components/content-empty.vue';
   import background from '~/components/background-image.vue';
@@ -98,6 +100,7 @@
   export default {
     components: {
       'content-empty': contentEmpty,
+      facebookComment,
       'background': background
     },
     async fetch(context) {
@@ -105,13 +108,33 @@
         param: context.params.id.toString(),
         type: "POST_DETAIL"
       });
+      await context.store.dispatch('posts/fetchCommentPost', {
+        param: {
+          post_id: context.params.id,
+          offset: process.env.APP.DEFAULT_OFFSET,
+          limit: process.env.APP.DEFAULT_LIMIT,
+        }
+      });
+
+      if (context.store.state.auth.isLogedIn) {
+        context.store.commit('commentpost/SET_ID', {
+          userId: context.store.state.auth.user.id,
+          postId: context.params.id
+        })
+      }
       context.store.commit('posts/setPostId', context.params.id);
     },
     data(){
       return {
         commentposts: [],
         nextPost: {},
-        prevPost: {}
+        comment: '',
+        prevPost: {},
+        query: {
+          post_id: this.$route.params.id,
+          offset: process.env.APP.DEFAULT_OFFSET,
+          limit: process.env.APP.DEFAULT_LIMIT,
+        }
       }
     },
     computed: {
@@ -124,31 +147,24 @@
         get(){
           return this.nextPost !== null;
         }
-      },
-      isCommentEmpty: {
-        get(){
-          return this.commentposts.length < 0;
-        }
-      },
+      }
     },
     async mounted() {
       const state = this.$store.state.posts;
       const nextPost = await new postService().get("next/" + state.postId);
       const prevPost = await new postService().get("prev/" + state.postId);
 
-      const queryparamCommentpost = {
-        post_id: state.postId,
-        offset: process.env.APP.DEFAULT_OFFSET,
-        limit: process.env.APP.DEFAULT_LIMIT
-      };
-      const commentPost = await new commentpostService().get(queryparamCommentpost);
-      this.commentposts = commentPost.data;
       this.nextPost = nextPost.data;
       this.prevPost = prevPost.data;
     },
     methods: {
-      doSave(){
+      async doSave(){
+        await this.$store.dispatch('posts/saveCommentPost', {
+          context: this,
+          payload: this.$store.getters['commentpost/commentpost']
+        });
 
+        this.$store.commit('commentpost/CLEAN_COMMENT');
       },
       onLoadcomment(){
 

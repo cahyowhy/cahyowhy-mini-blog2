@@ -306,6 +306,10 @@ body {
   margin-bottom: 30px;
 }
 
+.margin-bot50 {
+  margin-bottom: 50px !important;
+}
+
 .margin-ri5 {
   margin-right: 5px;
 }
@@ -872,6 +876,9 @@ nav {
     }
   }
   .navigation {
+    .nuxt-link-exact-active {
+      border-bottom: 3px solid $blueInstagram;
+    }
     overflow: hidden;
     border-top: 1px solid rgb(240, 240, 240);
     border-bottom: 1px solid $almostWhite;
