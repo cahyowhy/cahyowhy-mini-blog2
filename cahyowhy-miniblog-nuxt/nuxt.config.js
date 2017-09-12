@@ -75,7 +75,6 @@ if (configuration.dev) {
   configuration.env.APP.API_POST = `"${configuration.env.APP.API_URL}posts"`;
   configuration.env.APP.API_IMAGE = `"${configuration.env.APP.API_URL}images"`;
   configuration.env.APP.API_STATUS = `"${configuration.env.APP.API_URL}statuses"`;
-  configuration.env.APP.API_STATUS = `"${configuration.env.APP.API_URL}statuses"`;
   configuration.env.APP.API_LOGIN = `"${configuration.env.APP.API_URL}authenticate"`;
   configuration.env.APP.API_IMAGE_PARAM_NAME = `"image[imagepath_data]"`;
   configuration.env.APP.API_STATUS_LIKE = `"${configuration.env.APP.API_URL}likestatuses"`;

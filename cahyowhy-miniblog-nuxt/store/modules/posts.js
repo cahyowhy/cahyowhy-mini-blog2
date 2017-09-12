@@ -1,5 +1,7 @@
 import postService from '~/service/postService';
 import commentpostService from '~/service/commentpostService';
+import likecommentpostService from '~/service/likecommentpostService';
+import likepostService from '~/service/likepostService';
 
 const state = () => {
   return {
@@ -25,11 +27,27 @@ const state = () => {
   }
 };
 const actions = {
-  async fetchPost({commit}, {param, type, method, categories}) {
+  async onLikeCommentPost(self = null, {param, context}){
+    const {data} = await new likecommentpostService().store(param)
+    if (data.httpstatus < 400) {
+      context.showNotification(data.httpstatus);
+    } else {
+      context.showNotification(401);
+    }
+  },
+  async onLiked(self = null, {param, context}){
+    const {data} = await new likepostService().store(param)
+    if (data.httpstatus < 400) {
+      context.showNotification(data.httpstatus);
+    } else {
+      context.showNotification(401);
+    }
+  },
+  async fetchPost({ commit }, { param, type, method, categories }) {
     /**
      * if categories
      */
-    const {data} = await new postService().get(param);
+    const { data } = await new postService().get(param);
     if (categories) {
       commit('setCategories', data);
     } else {
@@ -54,11 +72,11 @@ const actions = {
       }
     }
   },
-  async fetchCommentPost({commit}, {param, method}) {
+  async fetchCommentPost({ commit }, { param, method }) {
     /**
      * if categories
      */
-    const {data} = await new commentpostService().get(param);
+    const { data } = await new commentpostService().get(param);
     if (method) {
       commit('pushCommentposts', data);
     } else {
@@ -67,8 +85,8 @@ const actions = {
 
     commit('setCommentPostsEmpty', data.length === 0)
   },
-  async save(self = null, {context, payload}){
-    const {data} = await new postService().store(payload);
+  async save(self = null, { context, payload }) {
+    const { data } = await new postService().store(payload);
     if (data.httpstatus === 201) {
       context.showNotification(data.httpstatus);
       context.$router.push(`/post-detail/${data.id}`);
@@ -76,8 +94,8 @@ const actions = {
       context.showNotification(401);
     }
   },
-  async saveCommentPost({commit}, {context, payload}){
-    const {data} = await new commentpostService().store(payload);
+  async saveCommentPost({ commit }, { context, payload }) {
+    const { data } = await new commentpostService().store(payload);
     if (data.httpstatus === 201) {
       context.showNotification(data.httpstatus);
       commit('pushCommentposts', [data]);
@@ -97,7 +115,10 @@ const mutations = {
     state.commentposts = payloads;
   },
   pushCommentposts(state, payloads) {
-    state.commentposts = state.commentposts.concat(payloads);
+    state.commentposts = state.commentposts.concat(payloads).filter((thing, index, self) =>
+      self.findIndex((t) => {
+        return t.id === thing.id;
+      }) === index);
   },
   setCategories(state, payloads) {
     state.categories = payloads;
@@ -105,16 +126,16 @@ const mutations = {
   updatePostDetail(state, payloads) {
     state.postDetail = payloads;
   },
-  setPostId(state, payload){
+  setPostId(state, payload) {
     state.postId = payload;
   },
-  setPostCategory(state, payload){
+  setPostCategory(state, payload) {
     state.postItemCategory = payload;
   },
-  setPostItemEmpty(state, payload){
+  setPostItemEmpty(state, payload) {
     state.isPostItemEmpty = payload;
   },
-  setCommentPostsEmpty(state, payload){
+  setCommentPostsEmpty(state, payload) {
     state.isCommentPostsEmpty = payload;
   }
 };

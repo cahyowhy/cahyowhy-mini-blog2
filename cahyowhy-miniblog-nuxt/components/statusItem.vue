@@ -60,7 +60,7 @@
             <i class="ion-chatbubble ion margin-ri5"></i>
             <h3 class="pull-right">Komentar</h3>
           </div>
-          <!--{{fav-status isLogedIn=isLogedIn statusId=statusId likestatuses=likestatuses class="margin-ri15 pull-left"}}-->
+          <favstatus :statusId="statusId" :likestatuses="likestatuses" className="margin-ri15 pull-left"/>
         </div>
         <a href="javascript:void(0);" v-bind:data-target="'#comment-'+statusId" data-toggle="collapse"
            class="pull-right">
@@ -92,6 +92,7 @@
 </template>
 <script>
   import background from '~/components/background-image.vue';
+  import favstatus from '~/components/favstatus.vue';
   export default {
     props: [
       "username",
@@ -128,7 +129,8 @@
       }
     },
     components: {
-      'background': background
+      'background': background,
+      favstatus
     },
     methods: {
       doSaveComment() {

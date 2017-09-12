@@ -4,7 +4,7 @@
       <div class="row post-vertical">
         <div class="pull-left">
           <nuxt-link :to="{name: 'post-detail-id', params:{id: idPost}}">
-            <background :src="img" :classNames="img-content"/>
+            <background :src="img" :classNames="img-content" />
           </nuxt-link>
         </div>
         <div class="media-body">
@@ -17,20 +17,20 @@
             {{category}}
           </a>
           <a class="btn btn-default">
-            <!--{{fav-icon action="onFavouritePost" _id=idPost likes=likes}}-->
+            <favicon :id="idPost" @onLiked="onLiked" :likes="likes" />
           </a>
         </div>
       </div>
     </div>
     <div v-else class="col-sm-4 sm-margin-b-50 post-item animated fadeIn">
       <div class="post-detail-inner">
-        <!--{{fav-icon action="onFavouritePost" _id=idPost likes=likes}}-->
+        <favicon :id="idPost" @onLiked="onLiked" :likes="likes" />
         <div class="margin-b-20">
           <div class="wow zoomIn pos-relative">
             <div class="category-post">
               <h5>{{category}}</h5></div>
             <nuxt-link :to="{name: 'post-detail-id', params:{id: idPost}}">
-              <background :src="img" className="img-content"/>
+              <background :src="img" className="img-content" />
             </nuxt-link>
           </div>
         </div>
@@ -49,38 +49,49 @@
   </div>
 </template>
 <script>
-  import background from './background-image.vue';
-  export default {
-    components: {
-      'background': background
-    },
-    props: ['isVertical', 'likes', 'category', 'img', 'idPost', 'title', 'username', 'createdAt', 'review'],
-    mounted(){
-      if (!this.isVertical) {
-        this.applyLayout();
-      }
-    },
-    methods: {
-      applyLayout(){
-        const container = $('#post-container');
-        const context = this;
-        $(this.$el).find('*').addClass('opacity-0');
-        const $grid = container.imagesLoaded(function () {
-          $grid.masonry({
-            itemSelector: '.post-item',
-            percentPosition: true,
-            columnWidth: '.post-item',
-          });
-          setTimeout(function () {
-            $(context.$el).find('*').removeClass('opacity-0').addClass('hidden');
-            setTimeout(function () {
-              $(context.$el).find('*').removeClass('hidden');
-            }, 500);
-          }, 500);
-        });
+import background from './background-image.vue';
+import favicon from './favicon.vue';
+export default {
+  components: {
+    'background': background,
+    favicon
+  },
+  props: ['isVertical', 'likes', 'category', 'img', 'idPost', 'title', 'username', 'createdAt', 'review'],
+  mounted() {
+    if (!this.isVertical) {
+      this.applyLayout();
+    }
+  },
+  methods: {
+    async onLiked() {
+      const query = {
+        user_id: this.$store.state.auth.user.id,
+        post_id: this.idPost
+      };
 
-        $grid.masonry('reloadItems');
-      }
+      await this.$store.dispatch('posts/onLiked', { param: query, context: this });
+    },
+    applyLayout() {
+      const container = $('#post-container');
+      const context = this;
+      $(this.$el).find('*').addClass('opacity-0');
+      const $grid = container.imagesLoaded(function() {
+        $grid.masonry({
+          itemSelector: '.post-item',
+          percentPosition: true,
+          columnWidth: '.post-item',
+        });
+        setTimeout(function() {
+          $(context.$el).find('*').removeClass('opacity-0').addClass('hidden');
+          setTimeout(function() {
+            $(context.$el).find('*').removeClass('hidden');
+          }, 500);
+        }, 500);
+      });
+
+      $grid.masonry('reloadItems');
     }
   }
+}
+
 </script>

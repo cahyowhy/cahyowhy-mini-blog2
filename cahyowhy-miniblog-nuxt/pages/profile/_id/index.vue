@@ -48,6 +48,7 @@
          limit: process.env.APP.DEFAULT_LIMIT,
        };
        await context.store.dispatch('statuses/fetchStatus', {param: query});
+       await context.store.dispatch('statuses/fetchEmoticons');
     },
     methods: {
       async onLoadStatus() {

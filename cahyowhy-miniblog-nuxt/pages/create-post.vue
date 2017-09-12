@@ -86,7 +86,11 @@
       }
     },
     async asyncData(context) {
-      await context.store.dispatch('posts/fetchPost', {categories: true, param: '/categories/all'});
+      if(context.store.state.auth.isLogedIn){
+        await context.store.dispatch('posts/fetchPost', {categories: true, param: '/categories/all'});
+      } else {
+        context.redirect("/error");
+      }
     },
     methods: {
       async doSave() {

@@ -1,9 +1,11 @@
 import statusService from '~/service/statusService';
 import commentstatusService from '~/service/commentstatusService';
+import likestatusService from '~/service/likestatusService';
 
 const state = () => {
   return {
     statusItems: [],
+    emoticons: [],
     /**
      * if no more ajax loaded set empty to true
      */
@@ -15,6 +17,23 @@ const state = () => {
   }
 };
 const actions = {
+  async onLiked(self = null, {param, context}){
+    let {data} = await new likestatusService().store(param)
+    if (data.httpstatus < 400) {
+      context.showNotification(data.httpstatus);
+    } else {
+      context.showNotification(401);
+      data = null;
+    }
+
+    return data;
+  },
+  async fetchEmoticons({commit}){
+    const {data} = await new likestatusService().get("/emoticons/all");
+    if(data) {
+      commit('updateEmoticons', data);
+    }
+  },
   async fetchStatus({commit}, {param, method}) {
     const {data} = await new statusService().get(param);
     console.log(data);
@@ -45,6 +64,9 @@ const actions = {
 const mutations = {
   updateStatusItems(state, payloads) {
     state.statusItems = payloads;
+  },
+  updateEmoticons(state, payloads) {
+    state.emoticons = payloads;
   },
   updateCommentStatusItems(state, {data, index}){
     if (state.statusItems[index].commentstatuses) {
