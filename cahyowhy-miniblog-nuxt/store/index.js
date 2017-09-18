@@ -6,13 +6,15 @@ import currentUser from './modules/currentUser';
 import user from './modules/entity/user';
 import commentpost from './modules/entity/commentpost';
 import post from './modules/entity/post';
+import status from './modules/entity/status';
 import profile from './modules/route/profile';
 import notifications from './modules/notifications';
 
 const {state: postsState, mutations:postsMutations, actions:postsActions} = posts;
 const {state: statusesState, mutations:statusesMutations, actions:statusesActions} = statuses;
 const {state: currentUserState, mutations:currentUserMutations, actions:currentUserActions} = currentUser;
-const {state: postState, mutations:postMutations, getters:postGetters, actions:postActions} = post;
+const {state: postState, mutations:postMutations, getters:postGetters} = post;
+const {state: statusState, mutations:statusMutations, getters:statusGetters} = status;
 const {state: commentpostState, mutations:commentpostMutations, getters:commentpostGetters} = commentpost;
 const {state: userState, mutations:userMutations, getters:userGetters, actions:userActions} = user;
 const {state: profileState, mutations: profileMutation, actions: profileAction} = profile;
@@ -70,8 +72,13 @@ const createStore = () => {
         namespaced: true,
         state: postState,
         mutations: postMutations,
-        getters: postGetters,
-        actions: postActions
+        getters: postGetters
+      },
+      status: {
+        namespaced: true,
+        state: statusState,
+        mutations: statusMutations,
+        getters: statusGetters
       },
       profile: {
         namespaced: true,

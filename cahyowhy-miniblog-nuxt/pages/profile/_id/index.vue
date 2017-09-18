@@ -1,5 +1,6 @@
 <template>
   <div>
+    <createStatus :currentProfile="currentProfile"/>
     <div class="status-wrapper">
       <status-item :key="status.id" v-for="(status, index) in $store.state.statuses.statusItems"
                    :username="status.user.username"
@@ -18,15 +19,18 @@
   </div>
 </template>
 <script>
-  import statusItem from '~/components/statusItem';
+  import statusItem from '~/components/statusItem.vue';
+  import createStatus from '~/components/createStatus.vue';
   import contentEmpty from '~/components/content-empty.vue';
   export default {
     components: {
       'status-item': statusItem,
+      createStatus,
       'content-empty': contentEmpty
     },
     data() {
       return {
+        currentProfile: parseInt(this.$route.params.id) === parseInt(this.$store.state.auth.user.id),
         query: {
           user_id: this.$route.params.id,
           offset: process.env.APP.DEFAULT_OFFSET,
@@ -42,13 +46,13 @@
       }
     },
     async asyncData(context) {
-       const query = {
-         user_id: context.params.id,
-         offset: process.env.APP.DEFAULT_OFFSET,
-         limit: process.env.APP.DEFAULT_LIMIT,
-       };
-       await context.store.dispatch('statuses/fetchStatus', {param: query});
-       await context.store.dispatch('statuses/fetchEmoticons');
+      const query = {
+        user_id: context.params.id,
+        offset: process.env.APP.DEFAULT_OFFSET,
+        limit: process.env.APP.DEFAULT_LIMIT,
+      };
+      await context.store.dispatch('statuses/fetchStatus', {param: query});
+      await context.store.dispatch('statuses/fetchEmoticons');
     },
     methods: {
       async onLoadStatus() {

@@ -86,7 +86,7 @@
       }
     },
     async asyncData(context) {
-      if(context.store.state.auth.isLogedIn){
+      if (context.store.state.auth.isLogedIn) {
         await context.store.dispatch('posts/fetchPost', {categories: true, param: '/categories/all'});
       } else {
         context.redirect("/error");
@@ -123,7 +123,7 @@
         this.$store.commit('post/SET_IMAGEPOST_ATTRIBUTES', srcFilter);
         tinymce.activeEditor.execCommand('mceSetContent', false, editEl.html());
       },
-      onTypeContent(editor, content) {
+      onTypeContent(editor = null, content) {
         this.$store.commit('post/SET_DESCRIPTION', content);
       }
     }

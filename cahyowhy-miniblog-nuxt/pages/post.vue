@@ -51,6 +51,7 @@
           :username="post.user.username"
           :createdAt="post.created_at"
           :category="post.category"
+          :likes="post.likeposts"
           :img="post.image"
           :title="post.title"
           :review="post.review"/>

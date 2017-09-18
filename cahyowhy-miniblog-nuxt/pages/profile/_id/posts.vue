@@ -17,6 +17,7 @@
                    :category="post.category"
                    :img="post.image"
                    :title="post.title"
+                   :likes="post.likeposts"
                    :review="post.review"
         />
       </div>

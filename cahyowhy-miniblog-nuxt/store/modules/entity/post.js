@@ -1,4 +1,3 @@
-import postService from '~/service/postService';
 const lodash = require('lodash');
 
 const state = () => {
@@ -67,16 +66,8 @@ const mutations = {
     state.post.description = state.post.description + payload;
   }
 };
-const actions = {
-  async update(self = null, {body, param, context}){
-    const {data} = await new postService().update(body, param);
-    context.showNotification(data.httpstatus);
-    return data;
-  }
-};
 export default {
   state,
   getters,
-  mutations,
-  actions
+  mutations
 }

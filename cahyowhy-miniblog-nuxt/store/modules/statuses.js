@@ -30,7 +30,7 @@ const actions = {
   },
   async fetchEmoticons({commit}){
     const {data} = await new likestatusService().get("/emoticons/all");
-    if(data) {
+    if (data) {
       commit('updateEmoticons', data);
     }
   },
@@ -59,7 +59,22 @@ const actions = {
     const {data} = await new commentstatusService().get(param);
     commit('updateCommentStatusItems', {data, index});
     commit('setIsCommentMax', {payload: data.length === 0, index})
-  }
+  },
+  async save(self, {context, payload}) {
+    try {
+      const {data} = await new statusService().store(payload);
+      if (data.httpstatus === 201) {
+        context.showNotification(data.httpstatus);
+        self.commit('pushStatusItems', [data]);
+      } else {
+        context.showNotification(401);
+      }
+
+      return data;
+    } catch (err) {
+      return {}
+    }
+  },
 };
 const mutations = {
   updateStatusItems(state, payloads) {
@@ -74,7 +89,7 @@ const mutations = {
     }
   },
   pushStatusItems(state, payloads) {
-    state.statusItems = state.statusItems.concat(payloads);
+    state.statusItems = payloads.concat(state.statusItems);
   },
   setStatusIsEmpty(state, payload){
     state.isStatusItemsEmpty = payload;
