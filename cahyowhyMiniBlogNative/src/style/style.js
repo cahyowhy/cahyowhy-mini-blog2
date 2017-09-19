@@ -9,9 +9,23 @@ const Style = {
         marginTop: 55,
         marginBottom: 30
     },
+    TabItemTop: {
+        borderRightWidth: 0,
+        borderLeftWidth: 0
+    },
+    FooterFoot: {
+        position: 'absolute', flex: 0.1, left: 0, right: 0, bottom: 0, backgroundColor: 'green',
+        flexDirection: 'row', height: 50, alignItems: 'center'
+    },
     borderBottomDefault: {
         borderBottomColor: grey,
         borderBottomWidth: 1
+    },
+    textHeader: {
+        color: '#FFFFFF',
+        fontWeight: '700',
+        textAlign: 'center',
+        fontSize: 20
     },
     hide: {
         display: 'none'
@@ -38,6 +52,9 @@ const Style = {
     },
     leftDrawerMain: {
         left: -fullwidth * 0.8,
+    },
+    cardContentEmpty: {
+        padding: 16
     },
     DrawerMain: {
         width: fullwidth * 0.8,
