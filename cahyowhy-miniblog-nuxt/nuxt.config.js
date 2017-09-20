@@ -61,7 +61,7 @@ const configuration = {
 };
 
 if (configuration.dev) {
-  configuration.env.APP.API_URL = `http://127.0.0.1:3000/`;
+  configuration.env.APP.API_URL = `http://192.168.0.129:3000/`;
   configuration.env.APP.IMAGE_RESOURCES = `"${`http://res.cloudinary.com/dxdelmsib/`}"`;
   configuration.env.APP.API_USER = `"${configuration.env.APP.API_URL}users"`;
   configuration.env.APP.API_NOTIFICATION = `"${configuration.env.APP.API_URL}notifications"`;

@@ -1,5 +1,6 @@
 
 /.idea/
+/.tmp/
 /cahyowhy-mini-blog-backend/tmp/
 /cahyowhy-mini-blog-backend/log/
 /cahyowhy-mini-blog-frontend/node_modules/
@@ -10,7 +11,7 @@
 /cahyowhy-miniblog-nuxt/node_modules/
 /cahyowhy-miniblog-nuxt/.idea/
 /cahyowhy-miniblog-nuxt/.nuxt/
-/cahyowhyMiniBlogNative/node_modules/
-/cahyowhyMiniBlogNative/fastlane/
-/cahyowhyMiniBlogNative/build/
-/cahyowhyMiniBlogNative/.idea/
+/miniblog/node_modules/
+/miniblog/fastlane/
+/miniblog/build/
+/miniblog/.idea/
