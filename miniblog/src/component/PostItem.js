@@ -12,7 +12,7 @@ export default class PostItem extends Component {
             offset: 0,
             limit: 9,
             isPostsEmpty: true,
-            showUserImage: false
+            showUserImage: true
         };
         this.onScrollPost = this.onScrollPost.bind(this);
         this.onMovePostDetail = this.onMovePostDetail.bind(this);
@@ -37,7 +37,6 @@ export default class PostItem extends Component {
     }
 
     onMovePostDetail(item) {
-        console.log('coba')
         this.props.onMovePostDetail(item)
     }
 
