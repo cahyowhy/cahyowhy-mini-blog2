@@ -106,8 +106,17 @@ export default class Index extends Component {
                         <List>
                             <ListItem>
                                 <Left><Thumbnail source={require('../assets/user.png')}/></Left>
-                                <Body stle={{margin: -20}}><Text>Cahyo Wibowo</Text></Body>
+                                <Body stle={{margin: -20}}><Text>Cahyo</Text></Body>
                                 <Right/>
+                            </ListItem>
+                            <ListItem style={{borderBottomColor: 'transparent', borderBottomWidth: 0}}>
+                                <Left>
+                                    <Button transparent>
+                                        <Icon style={{color: '#000'}} name="md-text"/>
+                                    </Button>
+                                </Left>
+                                <Body><Text>Timeline</Text></Body>
+                                <Right></Right>
                             </ListItem>
                             <ListItem style={{borderBottomColor: 'transparent', borderBottomWidth: 0}}>
                                 <Left>

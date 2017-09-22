@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {ScrollView, View} from 'react-native';
-import {Text, List, Card, Icon, CardItem, Left, Body, Right, Thumbnail, Button} from 'native-base';
+import {Text, List, Card, Icon, CardItem, Left, Body, Right, Button, Content} from 'native-base';
 import PostService from '../services/PostService';
 import Style from '../style/style';
+import {UserDetail, FavWrapper} from './CardItems';
 
 export default class PostItem extends Component {
     constructor(props) {
@@ -47,6 +48,10 @@ export default class PostItem extends Component {
                 posts: this.state.posts.concat(data),
                 isPostsEmpty: data.length === 0
             });
+        } else {
+            this.setState({
+                isPostsEmpty: true
+            });
         }
     }
 
@@ -72,36 +77,27 @@ export default class PostItem extends Component {
                 <List dataArray={this.state.posts}
                       renderRow={(item) =>
                           <Card>
-                              <CardItem style={{borderBottomColor: '#c4c4c4', borderBottomWidth: 2}}>
-                                  <Left>
-                                      <Thumbnail
-                                          source={source(item.user.imageurl)}
-                                          onLoad={() => this.setState({showUserImage: true})}
-                                          onError={() => this.setState({showUserImage: false})}
-                                      />
-                                  </Left>
-                                  <Body>
-                                  <Text style={{fontWeight: '700', color: '#000'}}>{item.user.username}</Text>
-                                  <Text style={{fontWeight: '300', fontSize: 13, color: '#555'}}>{item.title}</Text>
-                                  </Body>
-                                  <Right></Right>
-                              </CardItem>
+                              <UserDetail imageurl={item.user.imageurl}
+                                          username={item.user.username}
+                                          created_at={item.user.created_at}/>
                               <CardItem style={{padding: 16}} button onPress={onPress(item)}>
-                                  <Text style={{
-                                      textAlign: 'justify',
-                                      color: '#555',
-                                      fontWeight: '300'
-                                  }}>{item.review}</Text>
+                                  <Content>
+                                      <Text style={{
+                                          color: '#111',
+                                          marginBottom: 8,
+                                          fontSize: 18,
+                                          fontWeight: '700'
+                                      }}>
+                                          {item.title}
+                                      </Text>
+                                      <Text style={{
+                                          textAlign: 'justify',
+                                          color: '#555',
+                                          fontWeight: '300'
+                                      }}>{item.review}</Text>
+                                  </Content>
                               </CardItem>
-                              <CardItem>
-                                  <Left>
-                                      <Button style={{backgroundColor: '#FF4181'}} iconLeft>
-                                          <Icon name="md-heart-outline"></Icon>
-                                          <Text>Favourite</Text>
-                                      </Button>
-                                  </Left>
-                                  <Right><Text>{item.created_at.split(' ')[0]}</Text></Right>
-                              </CardItem>
+                              <FavWrapper created_at={item.created_at}/>
                           </Card>
                       }>
                 </List>

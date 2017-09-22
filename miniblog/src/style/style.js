@@ -3,12 +3,24 @@ import {StyleSheet} from 'react-native';
 
 const fullwidth = Dimensions.get('window').width;
 const fullheight = Dimensions.get('window').height;
+const created_at = {fontWeight: '300', fontSize: 13, color: '#555'};
 const grey = "#EAEAEA";
 const Style = {
     DrawerContent: {
         marginTop: 55,
         marginBottom: 30
     },
+    bg: {
+        flex: 1, backgroundColor: '#eaeaea'
+    },
+    cardUser: [
+        {fontWeight: '700', color: '#000'}, //for username
+        created_at //for created_at
+    ],
+    FavWrapper: [
+        {backgroundColor: '#FF4181'}, //for button fav
+        created_at
+    ],
     TabItemTop: {
         borderRightWidth: 0,
         borderLeftWidth: 0
