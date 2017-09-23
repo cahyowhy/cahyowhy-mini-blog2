@@ -1,9 +1,6 @@
 import React, {Component} from 'react';
-import {ScrollView, View} from 'react-native';
-import {Text, List, Card, Icon, CardItem, Left, Body, Right, Button, Content} from 'native-base';
 import PostService from '../services/PostService';
-import Style from '../style/style';
-import {UserDetail, FavWrapper} from './CardItems';
+import ContentItems from './concern/ContentItems';
 
 export default class PostItem extends Component {
     constructor(props) {
@@ -19,23 +16,13 @@ export default class PostItem extends Component {
             param
         };
         this.onScrollPost = this.onScrollPost.bind(this);
-        this.onMovePostDetail = this.onMovePostDetail.bind(this);
         this.doRequest = this.doRequest.bind(this);
     }
 
-    async onScrollPost(event) {
-        const nativeEvent = event.nativeEvent;
-        const contentSize = nativeEvent.contentSize;
-        const condition = contentSize.height - nativeEvent.layoutMeasurement.height <= nativeEvent.contentOffset.y;
+    async onScrollPost() {
         const param = this.state.param;
-        if (condition) {
-            this.setState({param: Object.assign({}, param, {offset: param.offset + param.limit})});
-            this.doRequest(this.state.param)
-        }
-    }
-
-    onMovePostDetail(item) {
-        this.props.onMovePostDetail(item)
+        this.setState({param: Object.assign({}, param, {offset: param.offset + param.limit})});
+        this.doRequest(this.state.param)
     }
 
     async doRequest(param) {
@@ -57,46 +44,13 @@ export default class PostItem extends Component {
     }
 
     render() {
-        const onPress = (item) => {
-            return () => this.onMovePostDetail(item)
-        };
-        const source = (imageurl) => {
-            return this.state.showUserImage ? {uri: `http://res.cloudinary.com/dxdelmsib/${imageurl}`} : require('../assets/user.png')
-        };
-
         return (
-            <ScrollView style={{backgroundColor: '#eaeaea'}} onScroll={this.onScrollPost}>
-                <List dataArray={this.state.posts}
-                      renderRow={(item) =>
-                          <Card>
-                              <UserDetail onProfile={() => this.props.onMoveProfile(item.user.id)}
-                                          imageurl={item.user.imageurl}
-                                          username={item.user.username}
-                                          created_at={item.user.created_at}/>
-                              <CardItem style={{padding: 16}} button onPress={onPress(item)}>
-                                  <Content>
-                                      <Text style={{
-                                          color: '#111',
-                                          marginBottom: 8,
-                                          fontSize: 18,
-                                          fontWeight: '700'
-                                      }}>
-                                          {item.title}
-                                      </Text>
-                                      <Text style={{
-                                          textAlign: 'justify',
-                                          color: '#555',
-                                          fontWeight: '300'
-                                      }}>{item.review}</Text>
-                                  </Content>
-                              </CardItem>
-                              <FavWrapper created_at={item.created_at}/>
-                          </Card>
-                      }>
-                </List>
-                {this.state.isPostsEmpty &&
-                <Card style={Style.cardContentEmpty}><Text>No More item Has Been Loaded</Text></Card>}
-            </ScrollView>
+            <ContentItems onScroll={() => this.onScrollPost()}
+                          items={this.state.posts}
+                          isPost={true}
+                          onPostDetail={(item) => this.props.onMovePostDetail(item)}
+                          onProfile={(item) => this.props.onMoveProfile(item.user.id)}
+                          isItemsEmpty={this.state.isPostsEmpty}/>
         );
     }
 }

@@ -16,6 +16,19 @@ const Style = {
         paddingTop: 8,
         paddingBottom: 8,
     },
+    postContent:{
+        title:{
+            color: '#111',
+            marginBottom: 8,
+            fontSize: 18,
+            fontWeight: '700'
+        },
+        detail: {
+            textAlign: 'justify',
+            color: '#555',
+            fontWeight: '300'
+        }
+    },
     blackColor: {color: '#000'},
     LiDrawCont: {borderBottomColor: 'transparent', borderBottomWidth: 0},
     formLogin: {
