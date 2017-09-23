@@ -24,6 +24,9 @@ export default class ContentItems extends Component {
         const onMovePostDetail = (item) => {
             return context.props.isPost ? () => context.props.onPostDetail(item) : () => false
         };
+        const userDetail = (item) => {
+            return context.props.isNotification ? item.userhasresponse : item.user;
+        };
 
         return (
             <ScrollView style={Style.bg} onScroll={this.onScroll}>
@@ -31,13 +34,13 @@ export default class ContentItems extends Component {
                       renderRow={(item) =>
                           <Card>
                               <UserDetail onProfile={() => this.props.onProfile(item)}
-                                          imageurl={item.user.imageurl}
-                                          username={item.user.username}
-                                          created_at={item.user.created_at}
+                                          imageurl={userDetail(item).imageurl}
+                                          username={userDetail(item).username}
+                                          created_at={userDetail(item).created_at}
                               />
 
                               <CardItem cardBody
-                                        style={this.props.isPost || this.props.isStatus ? {padding: 16} : {}} button
+                                        style={this.props.isPost || this.props.isStatus || this.props.isNotification ? {padding: 16} : {}} button
                                         onPress={onMovePostDetail(item)}>
                                   <Content>
                                       {this.props.isPost ?
@@ -47,9 +50,9 @@ export default class ContentItems extends Component {
                                           </View> :
                                           this.props.isStatus ?
                                               <Text style={Style.postContent.detail}>{item.statustext}</Text> :
-                                              <Image source={{uri: item.path.url}}
-                                                     style={Style.images}
-                                              />
+                                              this.props.isNotification ?
+                                                  <Text style={Style.postContent.detail}>{item.message}</Text> :
+                                                  <Image source={{uri: item.path.url}} style={Style.images}/>
                                       }
                                   </Content>
                               </CardItem>

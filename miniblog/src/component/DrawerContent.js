@@ -59,7 +59,7 @@ export default class DrawerContent extends Component {
         </Content>);
         const Drawer = (<List>
             <ListItem thumbnail>
-                <Left><ThumbAvatar source={this.props.data.user.imageurl}/></Left>
+                <Left><ThumbAvatar onProfile={()=>this.props.onMoveProfile(this.props.data.user.id)} source={this.props.data.user.imageurl}/></Left>
                 <Body>
                 <Text>{this.props.data.user.name}</Text>
                 <Text style={Style.fontCreatedAt}>{this.props.data.user.username}</Text>

@@ -5,9 +5,11 @@ import {ScrollView, View} from 'react-native';
 import Style from '../style/style';
 import ThumbAvatar from '../component/ThumbAvatar';
 import PostItem from  '../component/PostItem';
+import NotificationItem from  '../component/NotificationItem';
 import StatusItem from  '../component/StatusItem';
 import ImageItem from  '../component/ImageItem';
 import BaseMethod from './concern/BaseMethod';
+import Auth from '../storage/Auth';
 
 export default class Profile extends BaseMethod {
     constructor(props) {
@@ -16,16 +18,21 @@ export default class Profile extends BaseMethod {
             user_id: this.props.navigation.state.params.id.toString(),
             isLoaded: false,
             user_data: {},
+            isCurrentProfile: false
         };
     }
 
     async componentWillMount() {
         const {data} = await new UserService(null).get(this.state.user_id);
+        const context = this;
         if (data) {
             this.setState({
                 isLoaded: true,
                 user_data: data
             });
+            Auth.getUser().then((result) => context.setState({
+                isCurrentProfile: parseInt(result.user.id) === parseInt(data.id)
+            }));
         }
     }
 
@@ -62,7 +69,9 @@ export default class Profile extends BaseMethod {
                         </Col>
                     </Row>
                     <Row>
-                        <Button small style={Style.profileUser.btnEditProd}><Text>Edit Profile</Text></Button>
+                        {this.state.isCurrentProfile && <Button small style={Style.profileUser.btnEditProd}>
+                            <Text>Edit Profile</Text>
+                        </Button>}
                     </Row>
                 </Col>
             </Grid>
@@ -70,6 +79,11 @@ export default class Profile extends BaseMethod {
                 <Tab heading={<TabHeading><Icon name="md-text"/></TabHeading>}>
                     <StatusItem user_id={this.state.user_data.id} onMoveProfile={this.onMoveProfile}/>
                 </Tab>
+                {this.state.isCurrentProfile &&
+                <Tab heading={<TabHeading><Icon name="md-information-circle"/></TabHeading>}>
+                    <NotificationItem user_id={this.state.user_data.id} onMoveProfile={this.onMoveProfile}/>
+                </Tab>
+                }
                 <Tab heading={<TabHeading><Icon name="md-list-box"/></TabHeading>}>
                     <PostItem fromProfile={true}
                               user_id={this.state.user_data.id}
@@ -84,7 +98,7 @@ export default class Profile extends BaseMethod {
 
         return (
             <ScrollView style={Style.bg}>
-                {this.state.isLoaded ? profileView : <View style={{flex: 1}}></View>}
+                {this.state.isLoaded ? profileView : <View style={{flex: 1}}/>}
             </ScrollView>
         );
     }
