@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {
     Container,
     Header,
@@ -21,9 +21,10 @@ import {StackNavigator} from "react-navigation";
 import DrawerContent from '../component/DrawerContent';
 import Dimensions from 'Dimensions';
 import Auth from '../storage/Auth';
+import BaseMethod from './concern/BaseMethod';
 
 const fullwidth = Dimensions.get('window').width;
-export default class Index extends Component {
+export default class Index extends BaseMethod {
     constructor(props) {
         super(props);
         this.state = {
@@ -39,8 +40,6 @@ export default class Index extends Component {
                 }
             }
         };
-        this.onMovePostDetail = this.onMovePostDetail.bind(this);
-        this.onMoveProfile = this.onMoveProfile.bind(this);
         this.onLogin = this.onLogin.bind(this);
         this.toggleNavDrawer = this.toggleNavDrawer.bind(this);
         this.animatedDrawer = new Animated.Value(-fullwidth * 0.8);
@@ -57,10 +56,6 @@ export default class Index extends Component {
         }
     }
 
-    onMoveProfile(id) {
-        this.props.navigation.navigate('Profile', {id});
-    }
-
     toggleNavDrawer() {
         if (this.state.isDrawerOpened) {
             Animated.spring(this.animatedDrawer, {
@@ -75,10 +70,6 @@ export default class Index extends Component {
         this.setState({
             isDrawerOpened: !this.state.isDrawerOpened
         });
-    }
-
-    onMovePostDetail(item) {
-        this.props.navigation.navigate('PostDetail', item);
     }
 
     async componentWillMount() {

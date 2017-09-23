@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {View, WebView, ScrollView} from 'react-native';
 import {Button, Icon, Text, Header, List, Left, Body, Right, Card, CardItem} from 'native-base';
 import {StackNavigator} from "react-navigation";
@@ -8,7 +8,9 @@ import WebViewBridge from 'react-native-webview-bridge';
 import ThumbAvatar from '../component/ThumbAvatar';
 import Style from '../style/style';
 import {UserDetail, FavWrapper} from '../component/CardItems';
+import BaseMethod from './concern/BaseMethod';
 
+let self = null;
 const injectScript = `
   (function() {
     if (WebViewBridge) {
@@ -20,7 +22,7 @@ const injectScript = `
 }());
 `;
 
-export default class PostDetail extends Component {
+export default class PostDetail extends BaseMethod {
     constructor(props) {
         super(props);
         this.state = {
@@ -38,6 +40,7 @@ export default class PostDetail extends Component {
         this.onBridgeMessage = this.onBridgeMessage.bind(this);
         this.doRequestCommentPost = this.doRequestCommentPost.bind(this);
         this.onScrollCommentPost = this.onScrollCommentPost.bind(this);
+        self = this;
     }
 
     async onScrollCommentPost(event) {
@@ -79,7 +82,9 @@ export default class PostDetail extends Component {
     static navigationOptions = ({navigation}) => ({
         title: navigation.state.params.title,
         headerRight: (
-            <ThumbAvatar source={navigation.state.params.user.imageurl}/>
+            <ThumbAvatar
+                onProfile={()=>{self.onMoveProfile(navigation.state.params.user.id)}}
+                source={navigation.state.params.user.imageurl}/>
         )
     });
 
@@ -120,6 +125,7 @@ export default class PostDetail extends Component {
                           renderRow={(item) =>
                               <Card>
                                   <UserDetail
+                                      onProfile={() => this.onMoveProfile(item.user.id)}
                                       imageurl={item.user.imageurl}
                                       username={item.user.username}
                                       created_at={item.user.created_at}/>
