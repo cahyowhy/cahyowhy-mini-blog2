@@ -5,6 +5,8 @@ import {ScrollView, View} from 'react-native';
 import Style from '../style/style';
 import ThumbAvatar from '../component/ThumbAvatar';
 import PostItem from  '../component/PostItem';
+import StatusItem from  '../component/StatusItem';
+import ImageItem from  '../component/ImageItem';
 import BaseMethod from './concern/BaseMethod';
 
 export default class Profile extends BaseMethod {
@@ -65,13 +67,18 @@ export default class Profile extends BaseMethod {
                 </Col>
             </Grid>
             <Tabs initialPage={0}>
-                <Tab heading={<TabHeading><Icon name="md-text"/></TabHeading>}></Tab>
+                <Tab heading={<TabHeading><Icon name="md-text"/></TabHeading>}>
+                    <StatusItem user_id={this.state.user_data.id} onMoveProfile={this.onMoveProfile}/>
+                </Tab>
                 <Tab heading={<TabHeading><Icon name="md-list-box"/></TabHeading>}>
-                    <PostItem fromProfile={true} user_id={this.state.user_data.id}
+                    <PostItem fromProfile={true}
+                              user_id={this.state.user_data.id}
                               onMoveProfile={this.onMoveProfile}
                               onMovePostDetail={this.onMovePostDetail}/>
                 </Tab>
-                <Tab heading={<TabHeading><Icon name="md-images"/></TabHeading>}></Tab>
+                <Tab heading={<TabHeading><Icon name="md-images"/></TabHeading>}>
+                    <ImageItem user_id={this.state.user_data.id} onMoveProfile={this.onMoveProfile}/>
+                </Tab>
             </Tabs>
         </View>);
 

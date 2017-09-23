@@ -16,8 +16,9 @@ const Style = {
         paddingTop: 8,
         paddingBottom: 8,
     },
-    postContent:{
-        title:{
+    images: {height: 200, width: null, flex: 1},
+    postContent: {
+        title: {
             color: '#111',
             marginBottom: 8,
             fontSize: 18,

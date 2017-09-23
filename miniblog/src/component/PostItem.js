@@ -12,7 +12,6 @@ export default class PostItem extends Component {
         this.state = {
             posts: [],
             isPostsEmpty: true,
-            showUserImage: true,
             param
         };
         this.onScrollPost = this.onScrollPost.bind(this);

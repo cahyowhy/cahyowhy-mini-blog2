@@ -12,11 +12,14 @@ export class UserDetail extends Component {
         return (
             <CardItem>
                 <Left>
-                    <ThumbAvatar onProfile={() => {this.props.onProfile()}} source={this.props.imageurl}/>
+                    <ThumbAvatar onProfile={() => {
+                        this.props.onProfile()
+                    }} source={this.props.imageurl}/>
                 </Left>
                 <Body>
                 <Text style={Style.cardUser[0]}>{this.props.username}</Text>
-                <Text style={Style.cardUser[1]}>{this.props.created_at.split(' ')[0]}</Text>
+                <Text
+                    style={Style.cardUser[1]}>{this.props.created_at !== undefined ? this.props.created_at.split(' ')[0] : '-'}</Text>
                 </Body>
                 <Right/>
             </CardItem>
@@ -39,7 +42,7 @@ export class FavWrapper extends Component {
                     </Button>
                 </Left>
                 <Right>
-                    <Text style={Style.FavWrapper[1]}>{this.props.created_at.split(' ')[0]}
+                    <Text style={Style.FavWrapper[1]}>{this.props.created_at !== undefined ? this.props.created_at.split(' ')[0] : '-'}
                     </Text>
                 </Right>
             </CardItem>
