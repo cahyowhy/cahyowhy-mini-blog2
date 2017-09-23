@@ -1,6 +1,10 @@
 import React, {Component} from 'react';
+import {TouchableOpacity} from 'react-native';
 import {Thumbnail} from 'native-base';
 
+/**
+ * always use this on thumbnail avatar
+ */
 export default class ThumbAvatar extends Component {
     constructor(props) {
         super(props);
@@ -16,10 +20,12 @@ export default class ThumbAvatar extends Component {
         };
 
         return (
+        <TouchableOpacity onPress={() => this.props.onProfile()}>
             <Thumbnail
                 source={source(this.props.source)}
                 onError={() => this.setState({useDefaultImg: false})}
             />
+        </TouchableOpacity>
         );
     }
 }

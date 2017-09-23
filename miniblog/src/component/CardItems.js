@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {CardItem, Button,Card, Right, Body, Left, Icon, Text} from 'native-base';
+import {CardItem, Button, Card, Right, Body, Left, Icon, Text} from 'native-base';
 import ThumbAvatar from './ThumbAvatar';
 import Style from '../style/style';
 
@@ -12,7 +12,7 @@ export class UserDetail extends Component {
         return (
             <CardItem>
                 <Left>
-                    <ThumbAvatar source={this.props.imageurl}/>
+                    <ThumbAvatar onProfile={() => {this.props.onProfile()}} source={this.props.imageurl}/>
                 </Left>
                 <Body>
                 <Text style={Style.cardUser[0]}>{this.props.username}</Text>

@@ -8,12 +8,15 @@ import {UserDetail, FavWrapper} from './CardItems';
 export default class PostItem extends Component {
     constructor(props) {
         super(props);
+        const param = this.props.fromProfile ?
+            {offset: 0, limit: 9, user_id: this.props.user_id} :
+            {offset: 0, limit: 9, category: this.props.category};
+
         this.state = {
             posts: [],
-            offset: 0,
-            limit: 9,
             isPostsEmpty: true,
-            showUserImage: true
+            showUserImage: true,
+            param
         };
         this.onScrollPost = this.onScrollPost.bind(this);
         this.onMovePostDetail = this.onMovePostDetail.bind(this);
@@ -24,16 +27,10 @@ export default class PostItem extends Component {
         const nativeEvent = event.nativeEvent;
         const contentSize = nativeEvent.contentSize;
         const condition = contentSize.height - nativeEvent.layoutMeasurement.height <= nativeEvent.contentOffset.y;
+        const param = this.state.param;
         if (condition) {
-            this.setState({
-                offset: this.state.offset + this.state.limit
-            });
-            const param = {
-                offset: this.state.offset,
-                limit: this.state.limit,
-                category: this.props.category
-            };
-            this.doRequest(param)
+            this.setState({param: Object.assign({}, param, {offset: param.offset + param.limit})});
+            this.doRequest(this.state.param)
         }
     }
 
@@ -42,7 +39,7 @@ export default class PostItem extends Component {
     }
 
     async doRequest(param) {
-        const {data} = await new PostService(null).get(param)
+        const {data} = await new PostService(null).get(param);
         if (data) {
             this.setState({
                 posts: this.state.posts.concat(data),
@@ -56,12 +53,7 @@ export default class PostItem extends Component {
     }
 
     async componentWillMount() {
-        const param = {
-            offset: this.state.offset,
-            limit: this.state.limit,
-            category: this.props.category
-        };
-        this.doRequest(param);
+        this.doRequest(this.state.param);
     }
 
     render() {
@@ -77,7 +69,8 @@ export default class PostItem extends Component {
                 <List dataArray={this.state.posts}
                       renderRow={(item) =>
                           <Card>
-                              <UserDetail imageurl={item.user.imageurl}
+                              <UserDetail onProfile={() => this.props.onMoveProfile(item.user.id)}
+                                          imageurl={item.user.imageurl}
                                           username={item.user.username}
                                           created_at={item.user.created_at}/>
                               <CardItem style={{padding: 16}} button onPress={onPress(item)}>

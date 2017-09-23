@@ -7,11 +7,55 @@ const created_at = {fontWeight: '300', fontSize: 13, color: '#555'};
 const grey = "#EAEAEA";
 const Style = {
     DrawerContent: {
-        marginTop: 55,
-        marginBottom: 30
+        ...StyleSheet.absoluteFillObject,
+        width: fullwidth * 0.8,
+        backgroundColor: 'white',
+        height: fullheight - 50,
+        marginTop: 50,
+        zIndex: 0,
+        paddingTop: 8,
+        paddingBottom: 8,
+    },
+    blackColor: {color: '#000'},
+    LiDrawCont: {borderBottomColor: 'transparent', borderBottomWidth: 0},
+    formLogin: {
+        item1: {borderBottomWidth: 0},
+        item1Text: {fontSize: 30, color: '#111', borderBottomWidth: 4, borderBottomColor: '#111'},
+        item2: {marginTop: 16},
+        item4: {borderBottomWidth: 0, marginTop: 16, paddingRight: 8},
+        item4Button: {flex: 1}
     },
     bg: {
         flex: 1, backgroundColor: '#eaeaea'
+    },
+    profileUser: {
+        detail: {
+            padding: 16
+        },
+        username: {
+            marginTop: 8,
+            color: '#111',
+            fontWeight: '700'
+        },
+        colLeft: {
+            width: fullwidth * 0.4
+        },
+        folWrapper: {
+            alignItems: 'center',
+            alignSelf: 'center',
+            padding: 4,
+            borderColor: '#c4c4c4',
+            borderWidth: 1,
+            borderRadius: 12
+        },
+        folTextDet: created_at,
+        folTextTotal: {
+            fontWeight: '700',
+            fontSize: 18
+        },
+        btnEditProd: {
+            borderColor: '#111',
+        }
     },
     cardUser: [
         {fontWeight: '700', color: '#000'}, //for username
@@ -21,6 +65,7 @@ const Style = {
         {backgroundColor: '#FF4181'}, //for button fav
         created_at
     ],
+    fontCreatedAt: created_at,
     TabItemTop: {
         borderRightWidth: 0,
         borderLeftWidth: 0

@@ -1,7 +1,7 @@
 import BaseService from './BaseServices';
 import Config from 'react-native-config'
-export default class PostService extends BaseService {
+export default class UserService extends BaseService {
     constructor(token) {
-        super(Config.apiPost, token);
+        super(Config.apiUser, token);
     }
 }

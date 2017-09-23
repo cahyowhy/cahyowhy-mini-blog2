@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 export default class BaseService {
     constructor(API, token) {
         this.API = API;
