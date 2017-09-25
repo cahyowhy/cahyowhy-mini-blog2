@@ -1,13 +1,17 @@
 import React, {Component} from 'react';
 import PostService from '../services/PostService';
 import ContentItems from './concern/ContentItems';
+import {onAddPostItem} from '../redux/actions/actions';
 
 export default class PostItem extends Component {
     constructor(props) {
         super(props);
+        // the props come from profile => add user_id field
+        // the props come from no category use no category
         const param = this.props.fromProfile ?
             {offset: 0, limit: 9, user_id: this.props.user_id} :
-            {offset: 0, limit: 9, category: this.props.category};
+            this.props.allPost ? {offset: 0, limit: 9} :
+                {offset: 0, limit: 9, category: this.props.category};
 
         this.state = {
             posts: [],
@@ -27,6 +31,10 @@ export default class PostItem extends Component {
     async doRequest(param) {
         const {data} = await new PostService(null).get(param);
         if (data) {
+            data.forEach(function(item){
+                item.user.savedDate = new Date();
+                onAddPostItem(item);
+            });
             this.setState({
                 posts: this.state.posts.concat(data),
                 isPostsEmpty: data.length === 0

@@ -13,7 +13,7 @@ import {
     Right
 } from 'native-base';
 import {View, Animated, Transform, TouchableWithoutFeedback} from 'react-native';
-import Style from '../style/style';
+import Style from '../miniblog/src/style/style';
 import Dimensions from 'Dimensions';
 const fullwidth = Dimensions.get('window').width;
 const fullheight = Dimensions.get('window').height;

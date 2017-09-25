@@ -57,7 +57,7 @@ export default class DrawerContent extends Component {
                 </Item>
             </Form>
         </Content>);
-        const Drawer = (<List>
+        const Drawer = (this.props.isLoggedIn ? <List>
             <ListItem thumbnail>
                 <Left><ThumbAvatar onProfile={()=>this.props.onMoveProfile(this.props.data.user.id)} source={this.props.data.user.imageurl}/></Left>
                 <Body>
@@ -111,7 +111,7 @@ export default class DrawerContent extends Component {
                 <Body><Text>Images</Text></Body>
                 <Right/>
             </ListItem>
-        </List>);
+        </List> : <View/>);
 
         return (
             <Animated.View style={DrawerStyle}>

@@ -12,11 +12,16 @@ import {
     View
 } from 'react-native';
 import Route from './src/router/router';
+import createReduxStore from './src/redux/createReduxStore';
+import {Provider} from 'react-redux';
+const store = createReduxStore()
 
 export default class miniblog extends Component {
     render() {
         return (
-            <Route/>
+            <Provider store={store}>
+                <Route/>
+            </Provider>
         );
     }
 }

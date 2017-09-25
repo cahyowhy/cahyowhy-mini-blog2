@@ -1,6 +1,6 @@
 class NotificationsController < BaseController
   before_action :set_entity, only: [:show, :destroy]
-  before_action :authenticate_request, only: [:show, :destroy]
+  before_action :authenticate_request, only: [:show, :destroy, :index]
 
   private
   def init_value

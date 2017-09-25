@@ -99,6 +99,11 @@ export default class Index extends BaseMethod {
                     <Right/>
                 </Header>
                 <Tabs renderTabBar={() => <ScrollableTab />}>
+                    <Tab style={Style.TabItemTop} heading="Semua">
+                        <PostItem onMoveProfile={this.onMoveProfile}
+                                  allPost={true}
+                                  onMovePostDetail={this.onMovePostDetail}/>
+                    </Tab>
                     {this.state.postCategories.map((item, index) => {
                         return <Tab key={index} style={Style.TabItemTop} heading={item.name}>
                             <PostItem
